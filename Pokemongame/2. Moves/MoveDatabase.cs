@@ -11,7 +11,7 @@ namespace Pokemongame
 
         public static void LoadMoveDatabase()
         {
-           string filePath = "pokemonMovesData.json";
+           string filePath = "MoveData.json";
 
             if (!File.Exists(filePath))
             {

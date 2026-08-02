@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Pokemongame
 {
-
-    public static class PokemonCategory
+    public static class PokemonDatabase
     {
         private static readonly Dictionary<int, PokemonData> _pokemons = new();
 
@@ -12,7 +11,7 @@ namespace Pokemongame
         
         public static void LoadPokemonDatabase()
         {
-            string filePath = "pokemonsData.json";
+            string filePath = "PokemonData.json";
 
             if (!File.Exists(filePath))
             {

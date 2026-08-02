@@ -2,9 +2,9 @@ namespace Pokemongame
 {
     public class TrainerRuntime : IBattleParticipant, ISwitchable,  IInventoryHolder
     {
-        private readonly PokemonRuntime[] _party = new PokemonRuntime[MaxPartySize];
         private readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
-
+        private readonly PokemonRuntime[] _party = new PokemonRuntime[MaxPartySize];
+    
         public IReadOnlyList<PokemonRuntime> Party => _party;
 
         public PokemonRuntime ActivePokemon => _party[_activeIndex];
