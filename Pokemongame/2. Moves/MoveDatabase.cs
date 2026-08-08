@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Pokemongame
 {
-    public static class MoveCategory
+    public static class MoveDatabase
     {
         private static readonly Dictionary<int, MoveData> _moves = new();
 
@@ -40,14 +40,17 @@ namespace Pokemongame
 
         public static bool TryGet(int key, out MoveData? move)
         {
-            if (_moves.TryGetValue(key, out move)) 
-                return true;
-            else
-            {    
-                GameLog.Warn($"key [{key}]번에 해당하는 기술이 존재하지 않습니다.");
-                move = null;
-                return false;
+            return _moves.TryGetValue(key, out move);
+        }
+
+        public static MoveData Get(int key)
+        {
+            if (_moves.TryGetValue(key, out var move))
+            {
+                return move;
             }
+            // TryGet이 아닌 Get에서는 데이터가 없으면 심각한 에러이므로 예외를 던짐
+            throw new KeyNotFoundException($"MoveDatabase: {key}번 기술 데이터가 누락되었습니다. 엑셀 데이터를 확인하세요.");
         }
     }   
 }

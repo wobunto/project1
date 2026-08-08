@@ -10,5 +10,10 @@ namespace Pokemongame
             Data = data;
             CurrentPP = data.BasePP;
         }
+
+        public void ConsumePP()
+        {  
+            CurrentPP--;  
+        }
     }
 }

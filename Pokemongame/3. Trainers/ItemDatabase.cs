@@ -38,7 +38,8 @@ namespace Pokemongame
         }
         
         public static bool TryGetItem(int key, out ItemData? data)
-            => _items.TryGetValue(key, out data);
-
+        {
+            return _items.TryGetValue(key, out data);
+        }
     }   
 }

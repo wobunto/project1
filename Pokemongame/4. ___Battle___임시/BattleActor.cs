@@ -1,5 +1,6 @@
 namespace Pokemongame
 {
+    /*
     public abstract class BattleActor
     {
         public IBattleParticipant Participant {get;}
@@ -13,4 +14,5 @@ namespace Pokemongame
 
         public abstract BattleAction SelectAction();
     }
+    */
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 namespace Pokemongame
 {
+    /*
     public class BattleSystem
     {
         public void StartBattle(BattleActor player, BattleActor enemy)
@@ -83,6 +84,8 @@ namespace Pokemongame
         public void ExecuteAttack(PokemonRuntime attacker, PokemonRuntime deffender,MoveRuntime move)
         {
             // 내 공격력, 기술의 타입, 상대방의 타입을 가져와서 배틀 시스템 공식 적용
+            move.ConsumePP(); 
+            
             float TypeMultiplier = move.Data.Type.CalculateTypeMultipler(deffender.Data.Types);
             int currentAttack = attacker.CurrentAttack;
             int damage = Calculator.CalculateDamage(currentAttack,TypeMultiplier);
@@ -92,4 +95,5 @@ namespace Pokemongame
             attacker.LogBattleResult(deffender,move.Data,damage,TypeMultiplier);
         }
     }
+    */
 }

@@ -3,26 +3,28 @@
     class Program{
         static void Main(string[] args)
         {
-            PokemonCategory.LoadPokemonDatabase();
-            MoveCategory.LoadMoveDatabase();
+            PokemonDatabase.LoadPokemonDatabase();
+            MoveDatabase.LoadMoveDatabase();
             BattleSystem battle = new BattleSystem();
             
             var PlayerRuntime = new TrainerRuntime();
             var NpcRuntime = new TrainerRuntime();
 
+            
 
             var rizard = PokemonFactory.Create(6 ,50);
-            rizard.InsertMove(102,0);
-            rizard.InsertMove(105,1);
-            rizard.InsertMove(106,2);
-            rizard.InsertMove(107,3);
+            rizard.TryLearn(102);
+            rizard.TryLearn(105);
+            rizard.TryLearn(106);
+            rizard.TryLearn(107);
 
             var laflas = PokemonFactory.Create(3,50);
-            laflas.InsertMove(101,0);
-            laflas.InsertMove(103,1);
-    
+            laflas.TryLearn(101);
+            laflas.TryLearn(103);
+            
             PlayerRuntime.CapturePokemon(rizard);
             NpcRuntime.CapturePokemon(laflas);
+
 
             BattleActor Player = new PlayerActor(PlayerRuntime);
             BattleActor Enemy = new EnemyActor(NpcRuntime);

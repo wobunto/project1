@@ -68,5 +68,17 @@ namespace Pokemongame
                     Info($" {i+1}.[ 없음 ]\n");
             }
         }
+
+        public static void LogInventory(IReadOnlyDictionary<int, int> inventory)
+        {
+            Info("[ 아이템 목록 ]");
+            int i = 0;
+            foreach (var (key, count) in inventory)
+            {
+                ItemDatabase.TryGetItem(key, out var data);
+                Info($" {i}.[ {data?.Name ?? "알 수 없음"} x{count} ]");
+                i++;
+            }
+        }
     }
 }

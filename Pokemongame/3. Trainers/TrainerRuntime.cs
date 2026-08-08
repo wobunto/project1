@@ -1,19 +1,21 @@
 namespace Pokemongame
-{
-    public class TrainerRuntime : IBattleParticipant, ISwitchable,  IInventoryHolder
+{   
+    public class TrainerRuntime : 
+        ISwitchable,  
+        IInventoryHolder   
     {
-        private readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
-        private readonly PokemonRuntime[] _party = new PokemonRuntime[MaxPartySize];
-    
+        protected readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
+        protected readonly PokemonRuntime[] _party = new PokemonRuntime[MaxPartySize];
+        
+        public IReadOnlyDictionary<int, int> Inventory => _inventory;
         public IReadOnlyList<PokemonRuntime> Party => _party;
 
         public PokemonRuntime ActivePokemon => _party[_activeIndex];
 
-        private const int MaxPartySize = 6;
+        protected const int MaxPartySize = 6;
 
-        private int CurrentSlotIndex;
-        private int _activeIndex;
-
+        protected int _activeIndex;
+    
         public SwitchResult CanSwitchTo(int index)
         {
             if (index < 0 || index >= MaxPartySize)
@@ -31,40 +33,32 @@ namespace Pokemongame
         public SwitchResult SwitchActive(int index)
         {
             var result = CanSwitchTo(index);
+            
             if (result == SwitchResult.Success)
                 _activeIndex = index;
-            return result;
-        }
 
-        public void CapturePokemon(PokemonRuntime pokemon)
-        {
-            if(CurrentSlotIndex == MaxPartySize)
-                GameLog.Info("포켓몬 슬롯이 꽉 차있습니다.");
-            else
-                {
-                    _party[CurrentSlotIndex] = pokemon;
-                    CurrentSlotIndex++;
-                }
+            return result;
         }
 
         public bool HasItem(int itemKey) 
         => _inventory.TryGetValue(itemKey, out var count) && count > 0;
 
         public bool TryUseItem(int itemKey)
-        {
-            if (!HasItem(itemKey)) return false;
+        => ConsumeItem(itemKey,1);
 
-            _inventory[itemKey]--;
+        public bool ConsumeItem(int itemKey, int amount)
+        {
+            if (!_inventory.TryGetValue(itemKey, out var current) || 
+                current < amount)
+                return false;
+
+            _inventory[itemKey] = current - amount;
             if (_inventory[itemKey] == 0)
+            {
                 _inventory.Remove(itemKey);
-
+                //아이템을 모두 사용하셨습니다. 라는 메세지 출력
+            }
             return true;
-        }
-
-        public void AddItem(int itemKey, int amount = 1)
-        {
-            _inventory.TryGetValue(itemKey, out var current);
-            _inventory[itemKey] = current + amount;
         }
     }
 }

@@ -63,25 +63,6 @@ namespace Pokemongame
             return -1;
         }
 
-        public MoveRuntime SelectMove()
-        {
-            if (GetFirstEmptyIndex() == 0)
-                throw new InvalidOperationException("[내 포켓몬]은 사용할 수 있는 기술이 없습니다.");
-
-            this.LogChoiceMove();
-
-            while (true)
-            {
-                int input = InputManager.GetSlotChoice(InputManager.MAX_MOVE_SLOTS);
-                // GetSlotChoice가 이미 0~3 범위를 보장 
-
-                if (TryGetMove(input, out MoveRuntime? move))
-                    return move!;
-
-                GameLog.Error("그 슬롯에는 기술이 없습니다.");
-            }
-        }
-
         public bool TryGetMove(int index, out MoveRuntime? move)
         {
             if (_moves[index] != null)
@@ -93,46 +74,29 @@ namespace Pokemongame
             return false;
         }
 
-        public bool TryGetPendingLevelUpMove(out MoveData? move)
+        public bool TryGetPendingLevelUpMoveKey(out int key)
         {
             var autoMoves = Data.LevelUpAutoMoves;
 
-            if (_nextLevelUpMoveIndex >= autoMoves.Count || autoMoves[_nextLevelUpMoveIndex].Level != Level)
+            if (_nextLevelUpMoveIndex >= autoMoves.Count || 
+                autoMoves[_nextLevelUpMoveIndex].Level != Level)
             {
-                move = null;
+                key = default;
                 return false;
             }
 
-            int key = autoMoves[_nextLevelUpMoveIndex].MoveKey;
-            if (!MoveCategory.TryGet(key, out move))
-                throw new InvalidOperationException($"기술 키 {key}가 존재하지 않습니다."); // 데이터 오류, 게임 상황 아님
+            key = autoMoves[_nextLevelUpMoveIndex].MoveKey;
 
             return true;
         }
         
-        public void LearnMove(int moveKey, int? forgetSlotIndex = null)
+        public void InsertMove(MoveData movedata, int changeMoveSlot)
         {
-            int slot = forgetSlotIndex ?? GetFirstEmptyIndex();
-            
-            if (slot == -1)
-                throw new InvalidOperationException("빈 슬롯이 없는데 교체할 슬롯이 지정되지 않았습니다.");
-
-            InsertMove(moveKey, slot);
+             var Move = new MoveRuntime(movedata); // 무브데이터로 새로운 런타임 초기화
+             _moves[changeMoveSlot] = Move;
         }
         
         public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
 
-        public MoveRuntime InsertMove(int moveKey, int slotIndex)
-        {
-            if(slotIndex < 0 || slotIndex >= _maxMoveCount)    
-                throw new ArgumentOutOfRangeException(nameof(slotIndex));     //기술 교체
-            
-            if(!MoveCategory.TryGet(moveKey, out MoveData? data))   
-                throw new InvalidOperationException($"기술 키 {moveKey}가 존재하지 않습니다.");
-        
-            var move = new MoveRuntime(data!);
-            _moves[slotIndex] = move;
-            return move;
-        }
     }
 }

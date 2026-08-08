@@ -11,5 +11,5 @@ namespace Pokemongame
         string Name, 
         string Description, 
         ItemEffectType Effect, 
-        int Value);
+        int EffectValue);
 }

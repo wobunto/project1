@@ -1,5 +1,6 @@
 namespace Pokemongame
 {
+    /*
     public enum BattleActionType  
     {
         //행동
@@ -23,7 +24,7 @@ namespace Pokemongame
     {
         public MoveRuntime Move { get; }
         
-        public AttackAction(BattleActor actor,MoveRuntime move)
+        public AttackAction(BattleActor actor, MoveRuntime move)
             : base(actor)
         {
             Move = move;
@@ -32,16 +33,19 @@ namespace Pokemongame
 
     public class ItemAction : BattleAction
     {
-        public ItemAction (BattleActor actor)
+        public ItemData Item {get;}
+
+        public ItemAction (BattleActor actor, ItemData item)
             : base(actor)
         {
-        // 아이템을 받는 코드
+            Item = item;
         }
     }
 
     public class SwitchAction : BattleAction
     {
         public int TargetIndex {get;}
+        
         public SwitchAction(BattleActor actor, int targetIndex)
             : base(actor)
             {
@@ -58,4 +62,5 @@ namespace Pokemongame
             // 도망가는 코드 
             }
     }
+ */   
 }

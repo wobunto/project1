@@ -1,0 +1,135 @@
+namespace Pokemongame
+{
+    /*
+    public class PlayerActor : BattleActor
+    {
+        public PlayerActor(IBattleParticipant pokemon)
+            : base(pokemon)
+        {
+        }
+
+        public override BattleAction SelectAction()
+        {
+            BattleLog.LogSelectAction();
+           
+            int input = InputManager.GetSlotChoice(InputManager.MAX_SELECT_SLOTS);
+            
+            switch(input)
+            {
+                case 0:
+                    return SelectMoveAction();
+
+                case 1:
+                    return SelectItemAction();
+                    
+                case 2:
+                    return SelectSwitchAction();
+                    
+                default:
+                    return TryRunAction();
+            }
+        }
+
+    
+        private BattleAction SelectMoveAction()
+        {
+            if (Pokemon.GetFirstEmptyIndex() == 0)
+                throw new InvalidOperationException("[내 포켓몬]은 사용할 수 있는 기술이 없습니다.");
+                //본가 포켓몬에서는 사용할 수 있는 기술이 없다면 난동부리기 라는 기술을 사용하니 나중에 바꿀 것!
+
+            while (true)
+            {
+                Pokemon.LogChoiceMove();
+                int input = InputManager.GetSlotChoice(InputManager.MAX_MOVE_SLOTS);
+
+                if (Pokemon.TryGetMove(input, out MoveRuntime? move))
+                {
+                    GameLog.Error("그 슬롯에는 기술이 없습니다.");
+                    continue;
+                }
+        
+                if(move!.CurrentPP <= 0)
+                { GameLog.Info("pp가 부족합니다.");
+                    continue;
+                }
+                return new AttackAction(this, move);   
+            }
+        }
+ttleAction 
+        private BaSelectSwitchAction()
+        {
+            if (Participant is not ISwitchable switchable)
+            {
+                GameLog.Error("이 참가자는 교체를 지원하지 않습니다.");
+                return SelectAction();                  // 메뉴로 복귀, 턴 소모 없음
+            }
+
+            while (true)
+            {
+                int targetIndex = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
+                SwitchResult result = switchable.CanSwitchTo(targetIndex);
+
+                if (result == SwitchResult.Success)
+                    return new SwitchAction(this, targetIndex);
+
+                BattleLog.LogSwitchFailed(result); // 사유별 메시지 출력
+                // 루프가 다시 돌아 재선택 — 턴은 아직 시작도 안 했으므로 소모될 게 없음
+            }
+        }
+    
+        private BattleAction SelectItemAction()
+        {
+            if (Participant is not IInventoryHolder holder)
+            {
+                GameLog.Error("이 참가자는 아이템을 사용할 수 없습니다.");
+                return SelectAction();
+            }
+
+            if (holder.Inventory.Count == 0)
+            {
+                GameLog.Info("가지고 있는 아이템이 없습니다.");
+                return SelectAction();
+            }
+
+            var keys = holder.Inventory.Keys.ToList();
+
+            while (true)
+            {
+                BattleLog.LogInventory(holder.Inventory);
+                    
+                int input = InputManager.GetSlotChoice(keys.Count);
+                int itemKey = keys[input];
+                    
+                if (!ItemDatabase.TryGetItem(itemKey, out ItemData? data))
+                {
+                    GameLog.Error("아이템 데이터가 존재하지 않습니다."); // 데이터 무결성 문제
+                    continue;
+                }
+                
+                return new ItemAction(this, data!);
+            }
+        }
+
+        private BattleAction TryRunAction()
+        {
+            if (Participant is not ISwitchable switchable)
+            {
+                GameLog.Error("이 참가자는 교체를 지원하지 않습니다.");
+                return SelectAction();                  // 메뉴로 복귀, 턴 소모 없음
+            }
+
+            while (true)
+            {
+                int targetIndex = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
+                SwitchResult result = switchable.CanSwitchTo(targetIndex);
+
+                if (result == SwitchResult.Success)
+                    return new SwitchAction(this, targetIndex);
+
+                BattleLog.LogSwitchFailed(result); // 사유별 메시지 출력
+                // 루프가 다시 돌아 재선택 — 턴은 아직 시작도 안 했으므로 소모될 게 없음
+            }
+        }
+    }
+    */
+}

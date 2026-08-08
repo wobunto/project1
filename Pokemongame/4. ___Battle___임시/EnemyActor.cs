@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace Pokemongame
 {
+    /*
     public class EnemyActor : BattleActor
     {
         public EnemyActor(IBattleParticipant pokemon)
@@ -31,4 +32,5 @@ namespace Pokemongame
             return validMoves[index]!;
         }
     }
+    */
 }

@@ -5,7 +5,7 @@ namespace Pokemongame
     {
         public static PokemonRuntime Create(int key, int level)
         {
-            if (!PokemonCategory.TryGetPokemon(key, out var data))
+            if (!PokemonDatabase.TryGetPokemon(key, out var data))
                     throw new InvalidOperationException(
                     $"포켓몬 ID {key}가 존재하지 않습니다.");
             
