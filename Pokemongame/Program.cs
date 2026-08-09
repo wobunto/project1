@@ -5,10 +5,11 @@
         {
             PokemonDatabase.LoadPokemonDatabase();
             MoveDatabase.LoadMoveDatabase();
+            
             BattleSystem battle = new BattleSystem();
             
-            var PlayerRuntime = new TrainerRuntime();
-            var NpcRuntime = new TrainerRuntime();
+            var playerRuntime = new PlayerRuntime();
+            var enemyRuntime = new EnemyRuntime();
 
             
 
@@ -22,14 +23,10 @@
             laflas.TryLearn(101);
             laflas.TryLearn(103);
             
-            PlayerRuntime.CapturePokemon(rizard);
-            NpcRuntime.CapturePokemon(laflas);
-
-
-            BattleActor Player = new PlayerActor(PlayerRuntime);
-            BattleActor Enemy = new EnemyActor(NpcRuntime);
+            playerRuntime.CapturePokemon(rizard);
+            enemyRuntime.CapturePokemon(laflas);
                 
-            battle.StartBattle(Player,Enemy);
+            battle.StartBattle(playerRuntime,enemyRuntime);
        }
     }
 }

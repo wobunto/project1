@@ -158,8 +158,7 @@ namespace Pokemongame
 
             var validMoves = enemyPokemon.CurrentMoves;
 
-            Random rand = new Random();
-            int index = rand.Next(firstEmptyindex == -1 ? 4 : firstEmptyindex);    //Enemy는 항상 Moves가 앞에서부터 채워지므로
+            int index = Random.Shared.Next(firstEmptyindex == -1 ? 4 : firstEmptyindex);    //Enemy는 항상 Moves가 앞에서부터 채워지므로
             
             MoveRuntime move = validMoves[index]!;
 

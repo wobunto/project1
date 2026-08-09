@@ -15,6 +15,7 @@ namespace Pokemongame
         protected const int MaxPartySize = 6;
 
         protected int _activeIndex;
+        private int CurrentSlotIndex;
     
         public SwitchResult CanSwitchTo(int index)
         {
@@ -59,6 +60,17 @@ namespace Pokemongame
                 //아이템을 모두 사용하셨습니다. 라는 메세지 출력
             }
             return true;
+        }
+    
+        public void CapturePokemon(PokemonRuntime pokemon)
+        {
+            if(CurrentSlotIndex == MaxPartySize)
+                GameLog.Info("포켓몬 슬롯이 꽉 차있습니다.");
+            else
+                {
+                    _party[CurrentSlotIndex] = pokemon;
+                    CurrentSlotIndex++;
+                }
         }
     }
 }

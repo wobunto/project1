@@ -33,7 +33,7 @@ namespace Pokemongame
             {
                 foreach (var move in moveList)
                 {
-                     _moves[move.key] = move;
+                     _moves[move.Key] = move;
                 }
             }
         }

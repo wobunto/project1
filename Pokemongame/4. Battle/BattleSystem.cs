@@ -2,7 +2,7 @@ namespace Pokemongame
 {
     public class BattleSystem
     {
-        private readonly List<IBattleAction> _turnActions = new();
+        private List<IBattleAction> _turnActions = new();
         
         public void StartBattle(PlayerRuntime player, EnemyRuntime enemy)
         {
@@ -35,7 +35,7 @@ namespace Pokemongame
         public void ResolveTurn()
         {
             // 1. 우선순위(Priority)가 높은 순서대로 내림차순 정렬
-            _turnActions.Sort((a, b) => b.Priority.CompareTo(a.Priority));  //플레이어가 항상 먼저 담기니 속도가 같을 경우 플레이어 우선
+            _turnActions = _turnActions.OrderByDescending(a => a.Priority).ToList();  //플레이어가 항상 먼저 담기니 속도가 같을 경우 플레이어 우선
 
             // 2. 정렬된 순서대로 행동 실행
             foreach (var action in _turnActions)
