@@ -80,5 +80,23 @@ namespace Pokemongame
                 i++;
             }
         }
+
+        public static void LogParty(IReadOnlyList<PokemonRuntime> party)
+        {
+            Info("[ 포켓몬 목록 ]");
+
+            for (int i = 0; i < party.Count; i++)
+            {
+                PokemonRuntime? pokemon = party[i];
+
+                if (pokemon is null)
+                {
+                    Info($" {i + 1}.[ 없음 ]");
+                    continue;
+                }
+
+                Info($" {i + 1}.[ {pokemon.Name} Lv.{pokemon.Level} HP:{pokemon.CurrentHp}/{pokemon.MaxHp} ]");
+            }
+        }
     }
 }
