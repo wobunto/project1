@@ -9,7 +9,7 @@ namespace Pokemongame
         public required int BaseAttack {get; init; }
 
         public List<PokemonType> Types {get; init;} = new();
-        public List<int> LearnMovesKeys {get; init;} = new();
+        public List<int> LearnMovesKey {get; init;} = new();
         public List<LevelUpMove> LevelUpAutoMoves {get; init;} = new();
     }
     

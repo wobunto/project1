@@ -6,11 +6,7 @@
     "BaseHp": 45,
     "BaseAttack": 49,
     "Types": ["Grass"],
-    "LearnMovesKey": [
-        {"MoveKey" : 101},
-        {"MoveKey" : 104}
-    ]
-    ,
+    "LearnMovesKey": [101, 104],
     "LevelUpAutoMoves": [
       { "Level": 5, "MoveKey": 101 },
       { "Level": 7, "MoveKey": 104 }
@@ -22,12 +18,12 @@
     "BaseSpeed": 6,
     "BaseHp": 355,
     "BaseAttack": 65,
-     "Types": ["Water"],
-    "LearnMovesKey": [101,103,107],
+    "Types": ["Water"],
+    "LearnMovesKey": [101, 103, 107],
     "LevelUpAutoMoves": [
       { "Level": 32, "MoveKey": 103 },
       { "Level": 38, "MoveKey": 107 }
-  ]
+    ]
   },
   {
     "Id": 4,
@@ -36,22 +32,23 @@
     "BaseHp": 39,
     "BaseAttack": 52,
     "Types": ["Fire"],
+    "LearnMovesKey": [101, 102],
     "LevelUpAutoMoves": [
       { "Level": 5, "MoveKey": 101 },
       { "Level": 7, "MoveKey": 102 }
     ]
   },
-    {
+  {
     "Id": 6,
     "Name": "리자몽",
     "BaseSpeed": 10,
     "BaseHp": 220,
     "BaseAttack": 84,
-    "Types": ["Fire","Wind"],
+    "Types": ["Fire", "Wind"],
     "LearnMovesKey": [101, 102, 104, 105, 106, 107],
     "LevelUpAutoMoves": [
-       { "Level": 33, "MoveKey": 105 },
-        { "Level": 39, "MoveKey": 107 }
+      { "Level": 33, "MoveKey": 105 },
+      { "Level": 39, "MoveKey": 107 }
     ]
   }
 ]

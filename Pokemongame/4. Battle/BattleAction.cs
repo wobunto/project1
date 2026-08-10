@@ -22,8 +22,6 @@ namespace Pokemongame
             _attacker = attacker;
             _defender = defender;
             _move = move;
-
-          
         }
 
         public void Execute()
@@ -35,19 +33,18 @@ namespace Pokemongame
             int damage = Calculator.CalculateDamage(currentAttack, TypeMultiplier);
             
             _defender.TakeDamage(damage);
-
             _attacker.LogBattleResult(_defender, _move.Data,damage, TypeMultiplier);
         }
     }
 
-    public class SwapAction : IBattleAction
+    public class SwitchAction : IBattleAction
     {    
         private TrainerRuntime _trainer;
         private int _index;
 
         MovePriority IBattleAction.Priority => MovePriority.NonAttackAction;
 
-        public SwapAction(TrainerRuntime trainer, int index)
+        public SwitchAction(TrainerRuntime trainer, int index)
         {
             _trainer = trainer; 
             _index = index;
@@ -98,7 +95,6 @@ namespace Pokemongame
         public void Execute()
         {
             //어차피 RunAction을 반환하지 않으므로 실행 X
-
             //나중에 야생 적과 조우시 추가
         }
     }   

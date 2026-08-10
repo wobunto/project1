@@ -33,6 +33,10 @@ namespace Pokemongame
             }
         } 
 
+        public IBattleAction ForceSwitchAction()
+        {
+            return SelectSwitchAction();
+        }
         
         private IBattleAction SelectMoveAction()
         {
@@ -47,7 +51,7 @@ namespace Pokemongame
             while (true)
             {
                 playerPokemon.LogChoiceMove();
-                int input = InputManager.GetSlotChoice(InputManager.MAX_MOVE_SLOTS);
+                int input = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
 
                 if (!playerPokemon.TryGetMove(input, out MoveRuntime? move))
                 {
@@ -67,12 +71,12 @@ namespace Pokemongame
         {      
             while (true)
             {
-                BattleLog.LogParty(_player.Party);
+                BattleLog.LogParty(_player.Party!);
                 int targetIndex = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
                 SwitchResult result = _player.CanSwitchTo(targetIndex);
 
                 if (result == SwitchResult.Success)
-                    return new SwapAction(_player, targetIndex);
+                    return new SwitchAction(_player, targetIndex);
 
                 BattleLog.LogSwitchFailed(result); // 사유별 메시지 출력
                 // 루프가 다시 돌아 재선택 — 턴은 아직 시작도 안 했으므로 소모될 게 없음
@@ -102,24 +106,24 @@ namespace Pokemongame
                     continue;
                 }
                 
-                BattleLog.LogParty(_player.Party);
+                BattleLog.LogParty(_player.Party!);
                 int targetIndex = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
-
-                var targetPokemon = _player.Party[targetIndex];
-
-                if (targetPokemon == null)
+                
+                if (targetIndex > _player.NullSlotIndex())
                 {
-                    GameLog.Error("그 슬롯에는 포켓몬이 없습니다.");
+                     GameLog.Error("그 슬롯에는 포켓몬이 없습니다.");
                     continue;
                 }
 
-                if (targetPokemon.IsFainted)   // 나중에 부활초, 기력의 조각처럼 기절한 포켓몬을 회복시키는 아이템이 나오면 수정
+                var targetPokemon = _player.Party[targetIndex];
+
+                if (targetPokemon!.IsFainted)   // 나중에 부활초, 기력의 조각처럼 기절한 포켓몬을 회복시키는 아이템이 나오면 수정
                 {
                     GameLog.Info("포켓몬이 기절하여 아이템을 사용할 수 없습니다.");
                     continue;
                 }
 
-                return new ItemAction(_player ,_player.Party[targetIndex] ,data!);
+                return new ItemAction(_player ,_player.Party[targetIndex]! ,data!);
             }
         }
 
@@ -129,40 +133,6 @@ namespace Pokemongame
                                                     //나중에 야생 포켓몬을 만들시 구현
             return SelectAction();                  // 메뉴로 복귀, 턴 소모 없음
             
-        }
-    }
-
-    public class EnemyActionSelector : IActionSelector
-    {
-        private EnemyRuntime _Enemy;
-        private PlayerRuntime _player;
-
-        public EnemyActionSelector(BattleContext context)
-        {
-            _Enemy = context.Enemy;
-            _player = context.Player;
-        }
-
-        public IBattleAction SelectAction()
-        {
-            return SelectMove(_Enemy.ActivePokemon, _player.ActivePokemon);
-            // 아직 미완성, 우선 무작위 공격만 
-
-        }   
-        public AttackAction SelectMove(PokemonRuntime enemyPokemon, PokemonRuntime playerPokemon)
-        {    
-            int firstEmptyindex = enemyPokemon.GetFirstEmptyIndex();   //제일 앞에 있는 null 칸)
-
-            if (firstEmptyindex == 0)
-            throw new InvalidOperationException("[적 포켓몬]이 사용할 기술이 없습니다.");
-
-            var validMoves = enemyPokemon.CurrentMoves;
-
-            int index = Random.Shared.Next(firstEmptyindex == -1 ? 4 : firstEmptyindex);    //Enemy는 항상 Moves가 앞에서부터 채워지므로
-            
-            MoveRuntime move = validMoves[index]!;
-
-            return new AttackAction(enemyPokemon, playerPokemon, move);   
         }
     }
 }

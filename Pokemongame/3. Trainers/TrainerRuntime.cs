@@ -1,31 +1,70 @@
+using Microsoft.VisualBasic;
+
 namespace Pokemongame
 {   
     public class TrainerRuntime : 
         ISwitchable,  
         IInventoryHolder   
     {
-        protected readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
-        protected readonly PokemonRuntime[] _party = new PokemonRuntime[MaxPartySize];
-        
-        public IReadOnlyDictionary<int, int> Inventory => _inventory;
-        public IReadOnlyList<PokemonRuntime> Party => _party;
-
-        public PokemonRuntime ActivePokemon => _party[_activeIndex];
-
         protected const int MaxPartySize = 6;
+        public const int MaxMoveSlot = 4;
 
-        protected int _activeIndex;
-        private int CurrentSlotIndex;
-    
+        protected readonly PokemonRuntime?[] _party = new PokemonRuntime?[MaxPartySize];
+        public IReadOnlyList<PokemonRuntime?> Party => _party;
+
+        public PokemonRuntime ActivePokemon => _party[_activeIndex]!;
+
+        protected readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
+        public IReadOnlyDictionary<int, int> Inventory => _inventory;
+
+        protected int _activeIndex = 0;
+        protected int _nullSlotIndex;
+       
+        public int NullSlotIndex()
+            => _nullSlotIndex;
+        
+        public bool CanBattle()
+        {
+            if(GetAlivePokemonCount() <= 0)
+                return false;
+            
+            return true;
+        }
+
+        public void CapturePokemon(PokemonRuntime pokemon)
+        {
+            if(_nullSlotIndex == MaxPartySize)
+                GameLog.Info("포켓몬 슬롯이 꽉 차있습니다.");
+            else
+                {
+                    _party[_nullSlotIndex] = pokemon;
+                    _nullSlotIndex++;
+                }
+        }
+
+        public int GetAlivePokemonCount()
+        {
+            int count = 0;
+
+            for(int i = 0; i < _nullSlotIndex; i++)
+            {
+                if(_party[i]!.IsFainted)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         public SwitchResult CanSwitchTo(int index)
         {
             if (index < 0 || index >= MaxPartySize)
                 throw new ArgumentOutOfRangeException(nameof(index)); // 게임 상황 아님, 버그
 
-            if (_party[index] is null)
+            if (index >= _nullSlotIndex)
                 return SwitchResult.NoPokemonInSlot;
 
-            if (_party[index].IsFainted)
+            if (_party[index]!.IsFainted)
                 return SwitchResult.Fainted;
 
             return SwitchResult.Success;
@@ -60,17 +99,6 @@ namespace Pokemongame
                 //아이템을 모두 사용하셨습니다. 라는 메세지 출력
             }
             return true;
-        }
-    
-        public void CapturePokemon(PokemonRuntime pokemon)
-        {
-            if(CurrentSlotIndex == MaxPartySize)
-                GameLog.Info("포켓몬 슬롯이 꽉 차있습니다.");
-            else
-                {
-                    _party[CurrentSlotIndex] = pokemon;
-                    CurrentSlotIndex++;
-                }
         }
     }
 }

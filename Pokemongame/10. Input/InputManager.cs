@@ -2,7 +2,6 @@ namespace Pokemongame
 {
     public static class InputManager
     {
-        public const int MAX_MOVE_SLOTS = 4;
         public const int MAX_SELECT_SLOTS = 4;
         public const int MAX_PARTY_SLOTS = 6;
 

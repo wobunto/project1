@@ -23,10 +23,12 @@ namespace Pokemongame
         public int CurrentSpeed => Calculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
         public int CurrentAttack =>  Calculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
 
-        public bool IsFainted => CurrentHp <= 0;
-
         private int _nextLevelUpMoveIndex = 0;
 
+        //public event Action? OnFainted;
+        
+        public bool IsFainted => CurrentHp <= 0;
+        
         public PokemonRuntime(PokemonData data, int level)
         {
             Reinitialize(data, level);
@@ -43,9 +45,18 @@ namespace Pokemongame
                 _moves[i] = null; // 이전 종의 기술 잔재 제거
         }
 
+
         public void TakeDamage(int damage)
-             => CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);
-        
+            { 
+                if(damage < 0)
+                {
+                    GameLog.Error("damage 값이 음수 입니다.");
+                    return;
+                }
+                
+                CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);
+            }
+
         public void Heal(int amount)
             => CurrentHp = Math.Clamp(CurrentHp + amount, 0, MaxHp);
         
