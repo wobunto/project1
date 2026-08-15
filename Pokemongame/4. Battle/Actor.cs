@@ -1,24 +1,33 @@
+
 namespace Pokemongame
 {
     public class Actor
     {
         private ActionState _currentState;
-        public IActionSelector _selecter;
+        private IActionSelector _selector;
+        private readonly ISwitchable self;   
 
+        public EffectState CurrentEffectState => self.ActivePokemon.CurrentEffectState;
+        public int MaxHp => self.ActivePokemon.MaxHp;
+
+        public void TakeDamage(int damage) => self.ActivePokemon.TakeDamage(damage);
+       
         public int EffectStateTurn {get; private set;}
+        
+        private const int _start = 1; 
 
-        public Actor(ActionState menu, IActionSelector selecter)
+        public Actor(IActionSelector selector, ISwitchable trainer)
         {
-            _currentState = menu;
-            _selecter = selecter;
+            _currentState = new ErrorState(); //Select 가 정상적으로 실행되면 바뀜
+            _selector = selector;
+            self = trainer;
+
+            EffectTurnStart();   //상태이상 턴 1로 초기화.
         }
 
         public void Select()
-        {
-            _currentState = new MenuState();
-            _currentState.Execute(this);     //메뉴에서 _state 상태를 지정.
-        }
-
+            =>_currentState = _selector.SelectAction();
+        
         public void Execute()
         {   
             Update();                   
@@ -31,36 +40,39 @@ namespace Pokemongame
             _currentState.Update(this);
         }
 
-        public void ChangeState(ActionState state)
-        {
-            _currentState = state;
-            EffectStateTurnReset();
-        }
+        public void ChangeSkipTurnState()
+            => _currentState = new SkipTurnState(this);
         
-        public void EffectStateTurnPP()
+        public void ChangeForceSwitchState()
+            => _currentState = new ForceSwitchState(self);
+
+        public void EffectStateReset()
         {
-            EffectStateTurn++;
+            self.ActivePokemon.SetEffectState(EffectState.None);
+            EffectTurnStart();
         }
+
+        public void EffectTurnPP()
+            => EffectStateTurn++;
         
-        public void EffectStateTurnReset()
-        {
-            EffectStateTurn = 0;
-        }
+        private void EffectTurnStart()
+            => EffectStateTurn = _start;
+    
     }
 
     public abstract class ActionState
     {
         public abstract void Update(Actor actor);
         public abstract void Execute(Actor actor);
-
-        protected static readonly MenuState Selecting = new();
     }
 
     public static class EffectProcessor
     {
         public static void Process(Actor actor)
         {
-            EffectState effectState = actor._selecter.GetEffectState();
+            int damage;
+
+            EffectState effectState = actor.CurrentEffectState;
 
             switch (effectState)
             {
@@ -70,59 +82,71 @@ namespace Pokemongame
                 case EffectState.Sleep:
                     if(IsSleep(actor))
                     {
-                        actor.EffectStateTurnPP();
-                        actor.ChangeState(new SkipTurnState(actor));
+                        actor.ChangeSkipTurnState();
+                        actor.EffectTurnPP();
                     }
+                    else
+                        actor.EffectStateReset();
+
                     break;
 
                 case EffectState.Paralysis:
                     if(Chance.TryChance(25))  //25% 확률로 true;
-                        actor.ChangeState(new SkipTurnState(actor));  
+                        actor.ChangeSkipTurnState();
                     break;
 
                 case EffectState.Burn:
+                    damage = Math.Max(1, actor.MaxHp / 16);
+                    actor.TakeDamage(damage);
                     break;
 
                 case EffectState.Poison:
+                    damage = Math.Max(1, actor.MaxHp / 8);
+                    actor.TakeDamage(damage);
                     break;
 
                 case EffectState.Toxic:
+                    damage = Math.Max(1, actor.MaxHp / 16 * actor.EffectStateTurn);
+                    actor.TakeDamage(damage);
+                    actor.EffectTurnPP();
                     break;
 
                 case EffectState.Freeze:
+                    if(IsFreeze(actor))
+                    {
+                        actor.ChangeSkipTurnState();
+                        actor.EffectTurnPP();
+                    }
+                    else
+                        actor.EffectStateReset();
+
                     break;
             }
         }
+
         public static bool IsSleep(Actor actor)
         {
-            if(actor.EffectStateTurn <= 0)
-                return true;                   //잠듦
+            if(actor.EffectStateTurn >= 3)
+                return false;                   //3번째 턴에는 무조건 풀림
 
-            else if(actor.EffectStateTurn > 2)  //2이상 깨어남
-                return false;
-
-            else
-                if(Chance.TryChance(33))       // 33% 확률로 깨어남
+            else if(actor.EffectStateTurn == 2)   
+                if(Chance.TryChance(33))         // 2번째 턴에선 33% 확률로 깨어남
                     return false;
 
-                return true;
+            return true;                  // // 1번째 턴에서는 잠듬    
+        }
+
+        public static bool IsFreeze(Actor actor)
+        {
+            if(actor.EffectStateTurn > 3)  //3턴이 지나면 자동으로 풀림
+                return false;
+
+            else if(Chance.TryChance(25))   //25% 확률로 풀림        
+                return false;
+            
+            return true;
         }
     }
-
-    public class MenuState : ActionState
-    {
-        public override void Execute(Actor actor)
-        {
-            ActionState actionState = actor._selecter.SelectAction();
-            actor.ChangeState(actionState);
-        }
-
-        public override void Update(Actor actor)
-        {
-           
-        }
-    }
-
 
     public class AttackState : ActionState
     {
@@ -167,6 +191,25 @@ namespace Pokemongame
         }
     }
 
+    public class ForceSwitchState : ActionState    // 미완성! ActionSeletor에서 받아올지 여기서 받아올지 모름!
+    {
+        private ISwitchable _trainer;
+        private int _index;
+
+        public ForceSwitchState(ISwitchable trainer)
+        {
+            _trainer = trainer;
+        }
+        public override void Execute(Actor actor)
+        {
+            _trainer.SwitchActive(_index);         // 현재 0 인 상태  나중에 수정해야 함
+        }
+
+        public override void Update(Actor actor)
+        {
+            // 교체 상태 업데이트
+        }
+    }
 
     public class SwitchState : ActionState
     {
@@ -251,6 +294,18 @@ namespace Pokemongame
     {
         public override void Execute(Actor actor)
         {
+        }
+
+        public override void Update(Actor actor)
+        {
+        }
+    }
+    
+    public class ErrorState : ActionState
+    {
+         public override void Execute(Actor actor)
+        {
+            GameLog.Error("액션이 선택되지 않았습니다!");
         }
 
         public override void Update(Actor actor)

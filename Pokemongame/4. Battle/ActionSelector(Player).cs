@@ -5,6 +5,8 @@ namespace Pokemongame
         private TrainerRuntime _player;
         private TrainerRuntime _enemy;
 
+        public PokemonRuntime ActivePokemon => _player.ActivePokemon; 
+
         public PlayerActionSelector(BattleContext context)
         {
             _player = context.Player;
@@ -15,7 +17,7 @@ namespace Pokemongame
         {
             BattleLog.LogSelectAction();
 
-            int input = InputManager.GetSlotChoice(InputManager.MAX_SELECT_SLOTS);
+            int input = InputManager.GetSlotChoice(TrainerRuntime.MaxPartySize);
             
             switch(input)
             {
@@ -44,7 +46,7 @@ namespace Pokemongame
             while (true)
             {
                 playerPokemon.LogChoiceMove();
-                int input = InputManager.GetSlotChoice(InputManager.MAX_PARTY_SLOTS);
+                int input = InputManager.GetSlotChoice(TrainerRuntime.MaxMoveSlot);
 
                 if (!playerPokemon.TryGetMove(input, out MoveRuntime? move))
                 {
@@ -68,9 +70,7 @@ namespace Pokemongame
             {
                 BattleLog.LogParty(_player.Party!);
 
-                int targetIndex = InputManager.GetSlotChoice(
-                    InputManager.MAX_PARTY_SLOTS
-                );
+                int targetIndex = InputManager.GetSlotChoice(TrainerRuntime.MaxPartySize);
 
                 SwitchResult result = _player.CanSwitchTo(targetIndex);
 
@@ -86,7 +86,7 @@ namespace Pokemongame
             if (_player.Inventory.Count == 0)
             {
                 GameLog.Info("가지고 있는 아이템이 없습니다.");
-                return SelectAction();
+                SelectAction();
             }
 
             var keys = _player.Inventory.Keys.ToList();
@@ -106,9 +106,7 @@ namespace Pokemongame
                 
                 BattleLog.LogParty(_player.Party!);
 
-                int targetIndex = InputManager.GetSlotChoice(
-                    InputManager.MAX_PARTY_SLOTS
-                );
+                int targetIndex = InputManager.GetSlotChoice(TrainerRuntime.MaxPartySize);
                 
                 if (targetIndex > _player.NullSlotIndex())
                 {
@@ -135,12 +133,9 @@ namespace Pokemongame
         private ActionState TryRunAction()
         {
             GameLog.Info("지금은 도망칠 수 없다.");
-            return SelectAction();
-        }
-
-        public EffectState GetEffectState()
-        {
-            return _player.ActivePokemon.effectState;
+            SelectAction();
+            
+            return new ErrorState();
         }
     }
 }

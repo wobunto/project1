@@ -3,7 +3,6 @@ namespace Pokemongame
     public interface IActionSelector
     {
         public ActionState SelectAction();
-        public EffectState GetEffectState();
     }
 
     public enum EffectState

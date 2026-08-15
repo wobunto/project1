@@ -5,6 +5,8 @@ namespace Pokemongame
         private EnemyRuntime _enemy;
         private PlayerRuntime _player;
 
+        public PokemonRuntime ActivePokemon => _enemy.ActivePokemon; 
+
         public EnemyActionSelector(BattleContext context)
         {
             _enemy = context.Enemy;
@@ -61,11 +63,6 @@ namespace Pokemongame
                 playerPokemon,
                 move
             );
-        }
-
-        public EffectState GetEffectState()
-        {
-            return _enemy.ActivePokemon.effectState;
         }
     }
 }

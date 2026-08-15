@@ -8,6 +8,8 @@ namespace Pokemongame
             player.SetFirstActivePokemon();
             
             var context = new BattleContext(player, enemy);
+    
+            var playerActor = new Actor();
 
             GameLog.Info("포켓몬 배틀을 시작합니다!");
 

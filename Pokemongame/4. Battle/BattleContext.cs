@@ -11,7 +11,6 @@ namespace Pokemongame
         {
             Player = player;
             Enemy = enemy;
-            //Trainer Runtime이 가지고 있는 모든 포켓몬 등록
         }
     }
 }

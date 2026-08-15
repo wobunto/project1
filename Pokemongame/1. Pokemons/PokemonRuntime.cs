@@ -15,10 +15,11 @@ namespace Pokemongame
         public int CurrentHp {get; private set;}
         public int AttackStage{get; set;}              //공격 랭크
         public int SpeedStage{get;set;}                //속도 랭크
-        public EffectState effectState;               //저림, 수면 등의 상태
+        public EffectState CurrentEffectState {get; private set;}               //저림, 수면 등의 상태
 
         public string Name => Data.Name;
         public List<PokemonType> Types => Data.Types;
+        
         public int MaxHp => Calculator.CalculateMaxHp(Data.BaseHp, Level);
         public int CurrentSpeed => Calculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
         public int CurrentAttack =>  Calculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
@@ -73,6 +74,7 @@ namespace Pokemongame
                 return true;
             }
             move = null;
+
             return false;
         }
 
@@ -100,5 +102,7 @@ namespace Pokemongame
         
         public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
 
+        public void SetEffectState(EffectState effect)
+            => CurrentEffectState = effect;
     }
 }

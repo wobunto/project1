@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.VisualBasic;
 
 namespace Pokemongame
@@ -6,7 +7,7 @@ namespace Pokemongame
         ISwitchable,  
         IInventoryHolder   
     {
-        protected const int MaxPartySize = 6;
+        public const int MaxPartySize = 6;
         public const int MaxMoveSlot = 4;
 
         protected readonly PokemonRuntime?[] _party = new PokemonRuntime?[MaxPartySize];
