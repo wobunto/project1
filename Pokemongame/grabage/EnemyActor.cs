@@ -1,7 +1,4 @@
-using System.Runtime.CompilerServices;
 
-namespace Pokemongame
-{
     /*
     public class EnemyActor : BattleActor
     {
@@ -33,4 +30,3 @@ namespace Pokemongame
         }
     }
     */
-}

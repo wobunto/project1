@@ -1,6 +1,7 @@
+  /*
 namespace Pokemongame
 {
-    /*
+  
     public enum BattleActionType  
     {
         //행동
@@ -61,6 +62,6 @@ namespace Pokemongame
             {
             // 도망가는 코드 
             }
-    }
- */   
+    }  
 }
+ */ 

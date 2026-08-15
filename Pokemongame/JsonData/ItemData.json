@@ -4,41 +4,41 @@
     "Name": "상처약",
     "Description": "포켓몬의 HP를 20 회복한다.",
     "Effect": "Heal",
-    "Value": 20
+    "EffectValue": 20
   },
   {
     "Key": 2,
     "Name": "좋은 상처약",
     "Description": "포켓몬의 HP를 50 회복한다.",
     "Effect": "Heal",
-    "Value": 50
+    "EffectValue": 50
   },
   {
     "Key": 3,
     "Name": "고급 상처약",
     "Description": "포켓몬의 HP를 200 회복한다.",
     "Effect": "Heal",
-    "Value": 200
+    "EffectValue": 200
   },
   {
     "Key": 101,
     "Name": "몬스터볼",
     "Description": "야생 포켓몬을 잡기 위한 기본 볼.",
     "Effect": "Capture",
-    "Value": 1
+    "EffectValue": 1
   },
   {
     "Key": 102,
     "Name": "하이퍼볼",
     "Description": "몬스터볼보다 포획률이 높은 볼.",
     "Effect": "Capture",
-    "Value": 2
+    "EffectValue": 2
   },
   {
     "Key": 103,
     "Name": "마스터볼",
     "Description": "야생 포켓몬을 반드시 잡을 수 있는 최고의 볼.",
     "Effect": "Capture",
-    "Value": 255
+    "EffectValue": 255
   }
 ]

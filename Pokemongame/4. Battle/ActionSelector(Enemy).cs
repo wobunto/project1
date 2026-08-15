@@ -1,9 +1,5 @@
-using Pokemongame;
-
 namespace Pokemongame
 {
-    
-
     public class EnemyActionSelector : IActionSelector
     {
         private EnemyRuntime _enemy;
@@ -15,42 +11,61 @@ namespace Pokemongame
             _player = context.Player;
         }
 
-        public IBattleAction SelectAction()
+        public ActionState SelectAction()
         {
-            return SelectMove(_enemy.ActivePokemon, _player.ActivePokemon);
-            // 아직 미완성, 우선 무작위 공격만 
+            return SelectMove(
+                _enemy.ActivePokemon,
+                _player.ActivePokemon
+            );
+            // 아직 미완성, 우선 무작위 공격만
+        }
 
-        }   
-
-        public IBattleAction ForceSwitchAction()
+        public ActionState ForceSwitchAction()
         {
             int index = 0;
-            for(int i = 0; i < _enemy.NullSlotIndex(); i++)
+
+            for (int i = 0; i < _enemy.NullSlotIndex(); i++)
             {
-                if(!_enemy.Party[i]!.IsFainted)             //알고리즘 만들기 전 우선 앞에 있는 적부터 Swap
+                if (!_enemy.Party[i]!.IsFainted)
                 {
+                    // 알고리즘 만들기 전 우선 앞에 있는 적부터 Swap
                     index = i;
                     break;
                 }
             }
-            
-            return new SwitchAction(_enemy ,index);
+
+            return new SwitchState(_enemy, index);
         }
 
-        public AttackAction SelectMove(PokemonRuntime enemyPokemon, PokemonRuntime playerPokemon)
-        {    
-            int firstEmptyindex = enemyPokemon.GetFirstEmptyIndex();   //제일 앞에 있는 null 칸)
+        public ActionState SelectMove(
+            PokemonRuntime enemyPokemon,
+            PokemonRuntime playerPokemon)
+        {
+            int firstEmptyIndex = enemyPokemon.GetFirstEmptyIndex();
 
-            if (firstEmptyindex == 0)
-            throw new InvalidOperationException("[적 포켓몬]이 사용할 기술이 없습니다.");
+            if (firstEmptyIndex == 0)
+                throw new InvalidOperationException(
+                    "[적 포켓몬]이 사용할 기술이 없습니다."
+                );
 
             var validMoves = enemyPokemon.CurrentMoves;
 
-            int index = Random.Shared.Next(firstEmptyindex == -1 ? 4 : firstEmptyindex);    //Enemy는 항상 Moves가 앞에서부터 채워지므로
-            
+            int index = Random.Shared.Next(
+                firstEmptyIndex == -1 ? 4 : firstEmptyIndex
+            );
+
             MoveRuntime move = validMoves[index]!;
 
-            return new AttackAction(enemyPokemon, playerPokemon, move);   
+            return new AttackState(
+                enemyPokemon,
+                playerPokemon,
+                move
+            );
+        }
+
+        public EffectState GetEffectState()
+        {
+            return _enemy.ActivePokemon.effectState;
         }
     }
 }

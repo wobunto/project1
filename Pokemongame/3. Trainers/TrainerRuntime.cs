@@ -48,7 +48,7 @@ namespace Pokemongame
 
             for(int i = 0; i < _nullSlotIndex; i++)
             {
-                if(_party[i]!.IsFainted)
+                if(!_party[i]!.IsFainted)
                 {
                     count++;
                 }

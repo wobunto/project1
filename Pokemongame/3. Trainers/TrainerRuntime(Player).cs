@@ -10,7 +10,7 @@ namespace Pokemongame
             {
                 if(_party[i] != null)
                 {
-                    _party[insertIndex] = _party[insertIndex];
+                    _party[insertIndex] = _party[i];
                     insertIndex++;
                 }
             }

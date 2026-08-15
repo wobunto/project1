@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 namespace Pokemongame
 {       
-    public class PokemonRuntime
+    public class PokemonRuntime 
     {     //전투 중에 변하는 포켓몬 스탯
         private const int _maxMoveCount = 4;         //기술 개수는 총 4개
 
@@ -15,20 +15,18 @@ namespace Pokemongame
         public int CurrentHp {get; private set;}
         public int AttackStage{get; set;}              //공격 랭크
         public int SpeedStage{get;set;}                //속도 랭크
+        public EffectState effectState;               //저림, 수면 등의 상태
 
         public string Name => Data.Name;
         public List<PokemonType> Types => Data.Types;
-
         public int MaxHp => Calculator.CalculateMaxHp(Data.BaseHp, Level);
         public int CurrentSpeed => Calculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
         public int CurrentAttack =>  Calculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
 
-        private int _nextLevelUpMoveIndex = 0;
 
-        //public event Action? OnFainted;
-        
+        private int _nextLevelUpMoveIndex = 0;
         public bool IsFainted => CurrentHp <= 0;
-        
+
         public PokemonRuntime(PokemonData data, int level)
         {
             Reinitialize(data, level);
@@ -45,17 +43,10 @@ namespace Pokemongame
                 _moves[i] = null; // 이전 종의 기술 잔재 제거
         }
 
-
-        public void TakeDamage(int damage)
-            { 
-                if(damage < 0)
-                {
-                    GameLog.Error("damage 값이 음수 입니다.");
-                    return;
-                }
-                
-                CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);
-            }
+    
+        public void TakeDamage(int damage) //데미지가 음수 일 수 있지만 재미 요소
+            => CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);  
+        
 
         public void Heal(int amount)
             => CurrentHp = Math.Clamp(CurrentHp + amount, 0, MaxHp);

@@ -1,5 +1,4 @@
-namespace Pokemongame
-{
+
     /*
     public class PlayerActor : BattleActor
     {
@@ -132,4 +131,4 @@ ttleAction
         }
     }
     */
-}
+

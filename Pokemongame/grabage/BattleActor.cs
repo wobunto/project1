@@ -1,5 +1,4 @@
-namespace Pokemongame
-{
+
     /*
     public abstract class BattleActor
     {
@@ -15,4 +14,3 @@ namespace Pokemongame
         public abstract BattleAction SelectAction();
     }
     */
-}

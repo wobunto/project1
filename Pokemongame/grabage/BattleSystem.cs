@@ -1,6 +1,4 @@
-using System.Collections;
-namespace Pokemongame
-{
+
     /*
     public class BattleSystem
     {
@@ -96,4 +94,4 @@ namespace Pokemongame
         }
     }
     */
-}
+

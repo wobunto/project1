@@ -6,7 +6,7 @@
 "Power": 40,
 "Accuracy": 100,
 "BasePP": 30,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 102,
@@ -15,7 +15,7 @@
 "Power": 90,
 "Accuracy": 100,
 "BasePP": 10,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 103,
@@ -24,7 +24,7 @@
 "Power": 90,
 "Accuracy": 100,
 "BasePP": 15,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 104,
@@ -33,7 +33,7 @@
 "Power": 120,
 "Accuracy": 100,
 "BasePP": 10,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 105,
@@ -42,7 +42,7 @@
 "Power": 75,
 "Accuracy": 100,
 "BasePP": 15,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 106,
@@ -51,7 +51,7 @@
 "Power": 90,
 "Accuracy": 95,
 "BasePP": 15,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 },
 {
 "key": 107,
@@ -60,6 +60,6 @@
 "Power": 75,
 "Accuracy": 90,
 "BasePP": 10,
-"Priority": "SpeedBased"
+"Priority": "SpeedSlower"
 }
 ]
