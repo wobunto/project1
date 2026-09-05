@@ -1,10 +1,5 @@
-namespace Pokemongame
+namespace MyGame.States
 {
-    public interface IActionSelector
-    {
-        public ActionState SelectAction();
-    }
-
     public enum EffectState
     {
         None,

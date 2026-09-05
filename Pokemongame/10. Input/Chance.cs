@@ -1,17 +1,26 @@
-namespace Pokemongame
+namespace MyGame.Utilities
 {
 
     public static class Chance
     {
-        private static readonly Random Random = new Random();
-
-        public static bool TryChance(int value)
+        /// <summary>
+        /// 지정한 정수 백분율(0 ~ 100)로 성공 여부를 반환합니다.
+        /// 사용 예: if (Chance.TryChance(50)) // 50% 확률
+        /// </summary>
+        public static bool TryChance(int percentage)
         {
-            int rand = Random.Shared.Next(100) + 1;  //1~100까지 
-            if(rand <= value)              //value가 25일 때, 1~25 숫자는 true. 즉 25% 확률
-                return true;
-            else
-                return false;
+            if (percentage <= 0) return false;
+            if (percentage >= 100) return true;
+
+            return Random.Shared.Next(100) < percentage;
+        }
+
+        public static bool TryChance(float percentage)
+        {
+            if (percentage <= 0f) return false;
+            if (percentage >= 100f) return true;
+
+            return (Random.Shared.NextDouble() * 100.0) < percentage;
         }
     }
 }

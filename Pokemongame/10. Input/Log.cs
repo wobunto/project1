@@ -1,4 +1,4 @@
-namespace Pokemongame
+namespace MyGame.Logs
 { 
     public static class GameLog
     {

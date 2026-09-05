@@ -1,3 +1,5 @@
+using MyGame.Trainers;
+
 namespace Pokemongame
 {
     public class EnemyRuntime : TrainerRuntime

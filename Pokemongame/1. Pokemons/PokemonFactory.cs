@@ -1,5 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-namespace Pokemongame
+namespace MyGame.Pokemons
 {
     public static class PokemonFactory
     {

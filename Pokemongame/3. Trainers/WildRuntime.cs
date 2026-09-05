@@ -1,4 +1,6 @@
-namespace Pokemongame
+using MyGame.Pokemons;
+
+namespace MyGame.Trainers
 {
     public class WildRuntime
     {

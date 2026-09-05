@@ -1,6 +1,6 @@
-namespace Pokemongame
+namespace MyGame.Types
 {
-        public static class TypeChart
+    public static class TypeChart
     {
         private static int Max => (int)PokemonType.Max;
         private static readonly float[] _chart = new float[Max * Max];
@@ -86,15 +86,39 @@ namespace Pokemongame
             =>(int)attack * Max + (int)defend;
 
         private static void Set(this PokemonType attack, (PokemonType defend, float multiplier)[] values)
+        {
+            int atkIdx = (int)attack;
+            foreach (var (defend, multiplier) in values)
             {
-                int atkIdx = (int)attack;
-                foreach (var (defend, multiplier) in values)
-                {
-                    _chart[GetIndex(attack,defend)] = multiplier;  //나중에 함수로 만들어서 실수 없이 
-                }
+                _chart[GetIndex(attack,defend)] = multiplier;   
             }
+        }
 
         public static float GetTypeMultiplier(this PokemonType attack, PokemonType defend)
             =>_chart[GetIndex(attack,defend)];
+    }
+
+    public static class TypeEffectiveness
+    {
+        /// <summary>
+        /// 듀얼 타입 방어 상성 누적 계산 (조기 탈출 최적화 포함)
+        /// </summary>
+        public static float CalculateTypeMultiplier(this PokemonType attackType, IReadOnlyList<PokemonType> defenseTypes)
+        {
+            float finalMultiplier = 1.0f;
+
+            for (int i = 0; i < defenseTypes.Count; i++)
+            {
+                float multiplier = attackType.GetTypeMultiplier(defenseTypes[i]);
+                
+                // 0배(무효) 상성이 하나라도 있으면 즉시 0 반환
+                if (multiplier <= 0f)
+                    return 0f;
+
+                finalMultiplier *= multiplier;
+            }
+
+            return finalMultiplier;
+        }
     }
 }

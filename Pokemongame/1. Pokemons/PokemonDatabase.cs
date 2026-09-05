@@ -1,7 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using MyGame.Log;
 
-namespace Pokemongame
+namespace MyGame.Pokemons
 {
     public static class PokemonDatabase
     {

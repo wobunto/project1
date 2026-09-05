@@ -25,7 +25,7 @@ namespace Pokemongame
             _move = move;
         }
 
-        public BattleResult Execute()
+        public void Execute()
         {
             _move.ConsumePP(); 
             
@@ -34,9 +34,8 @@ namespace Pokemongame
             int damage = Calculator.CalculateDamage(currentAttack, TypeMultiplier);
             
             _defender.TakeDamage(damage);
-            _attacker.LogBattleResult(_defender, _move.Data,damage, TypeMultiplier);
+            _attacker.Logvoid(_defender, _move.Data,damage, TypeMultiplier);
             
-             return _defender.CurrentState; 
         }
     }
 
@@ -53,11 +52,10 @@ namespace Pokemongame
             _index = index;
         }
 
-        public BattleResult Execute()
+        public void Execute()
         {
             _trainer.SwitchActive(_index);
             
-            return BattleResult.None;
         }
     }
 
@@ -76,7 +74,7 @@ namespace Pokemongame
             _item = item;
         }
 
-        public BattleResult Execute() //현재는 회복 아이템만 가능
+        public void Execute() //현재는 회복 아이템만 가능
         {
             _trainer.ConsumeItem(_item.Key, 1);
             
@@ -91,7 +89,6 @@ namespace Pokemongame
                     break;
             }
 
-            return BattleResult.None;
         }
        
     }   
@@ -100,13 +97,13 @@ namespace Pokemongame
     {
         MovePriority IBattleAction.Priority => MovePriority.NonAttackAction;
 
-        public BattleResult Execute()
+        public void Execute()
         {
             //어차피 RunAction을 반환하지 않으므로 실행 X
             //나중에 야생 적과 조우시 추가
 
-             return BattleResult.Run;
         }
     }
 }   
 */
+

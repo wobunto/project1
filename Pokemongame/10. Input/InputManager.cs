@@ -1,5 +1,19 @@
-namespace Pokemongame
+using MyGame.Logs;
+
+namespace MyGame.Inputs
 {
+    public readonly struct Input
+    {
+        public int Value { get; }
+        public bool IsCancel { get; }
+
+        public Input(int value = 0, bool isCancel = false)
+        {
+            Value = value;
+            IsCancel = isCancel;
+        }
+    }
+    
     public static class InputManager
     {
         public static bool GetYesOrNo()

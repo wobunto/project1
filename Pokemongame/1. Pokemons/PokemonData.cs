@@ -1,4 +1,6 @@
-namespace Pokemongame
+using MyGame.Types;
+
+namespace MyGame.Pokemons
 {
     public class PokemonData 
     {    // 포켓몬 데이터

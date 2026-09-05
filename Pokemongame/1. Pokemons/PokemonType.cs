@@ -1,4 +1,4 @@
-namespace Pokemongame
+namespace MyGame.Types
 {
     public enum PokemonType 
     { 

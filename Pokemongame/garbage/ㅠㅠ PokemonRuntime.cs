@@ -1,19 +1,15 @@
+/*
 using System.Diagnostics.CodeAnalysis;
-using MyGame.Logs;
-using MyGame.Moves;
-using MyGame.Types;
-using MyGame.States;
-using MyGame.BattleCalculators;
-
-namespace MyGame.Pokemons
-{
-    public class PokemonRuntime : IBattlePokemon, IItemTarget
+namespace Pokemongame
+{       
+    public class PokemonRuntime 
     {     //전투 중에 변하는 포켓몬 스탯
-        public const int MaxMoveCount = 4;         //기술 개수는 총 4개
-        
-        private readonly List<MoveRuntime> _moves = new(MaxMoveCount);    //기술 리스트
-        public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     //기술 리스트
+        private const int _maxMoveCount = 4;         //기술 개수는 총 4개
 
+        private readonly MoveRuntime?[] _moves = new MoveRuntime?[_maxMoveCount];     //기술 리스트
+
+        public IReadOnlyList<MoveRuntime?> CurrentMoves => _moves;
+        
         public PokemonData Data {get; private set;}
         public int Level {get; private set;}
         public int Exp {get; private set;}
@@ -23,11 +19,12 @@ namespace MyGame.Pokemons
         public EffectState CurrentEffectState {get; private set;}               //저림, 수면 등의 상태
 
         public string Name => Data.Name;
-        public IReadOnlyList<PokemonType> Types => Data.Types;
+        public List<PokemonType> Types => Data.Types;
         
         public int MaxHp => Calculator.CalculateMaxHp(Data.BaseHp, Level);
         public int CurrentSpeed => Calculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
         public int CurrentAttack =>  Calculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
+
 
         private int _nextLevelUpMoveIndex = 0;
         public bool IsFainted => CurrentHp <= 0;
@@ -44,53 +41,42 @@ namespace MyGame.Pokemons
             Level = Math.Clamp(level,1,100);
             CurrentHp = MaxHp;
 
-            //_moves.Clear(); 필요한지 안한지 고민좀 해봐야 할 듯
+            for (int i = 0; i < _moves.Length; i++)
+                _moves[i] = null; // 이전 종의 기술 잔재 제거
         }
 
+    
         public void TakeDamage(int damage) //데미지가 음수 일 수 있지만 재미 요소
             => CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);  
         
+
         public void Heal(int amount)
             => CurrentHp = Math.Clamp(CurrentHp + amount, 0, MaxHp);
-
-        public void FullHeal()
-            => CurrentHp = MaxHp;
-        
-        public void Revive()           //꼭 필요한가..?
-            => CurrentHp = MaxHp/2;
         
         public bool IsMoveSlotsFull()
-            => _moves.Count >= MaxMoveCount;
+            => GetFirstEmptyIndex() == -1;
 
-        public bool IsAbleMove()
+        public int GetFirstEmptyIndex()
         {
-            for(int i = 0; i < CurrentMoves.Count; i++)
+            //첫번째 빈슬롯을 반환. 꽉차있다면 -1
+            for (int i = 0; i< _maxMoveCount; i++)
             {
-                if(!(CurrentMoves[i].CurrentPP <= 0)) // 나중에 || move.UseMove 가 true 인지 추가
-                    return true;     
+                if(_moves[i] == null)
+                    return i;
             }
-            return false;
+            return -1;
         }
-        
-        public bool TryGetUseableMove(int index, out MoveRuntime? move)
+
+        public bool TryGetMove(int index, out MoveRuntime? move)
         {
-            if (index < 0 || index > _moves.Count)
+            if (_moves[index] != null)
             {
-                GameLog.Error("입력한 기술의 번호가 너무 크거나 작습니다.");
-
-                move = null;
-                return false;
+                move = _moves[index];
+                return true;
             }
+            move = null;
 
-            if(_moves[index].CurrentPP <= 0)
-            {
-                move = null;
-                return false;
-            }
-
-            move = _moves[index];
-            return true;
-
+            return false;
         }
 
         public bool TryGetPendingLevelUpMoveKey(out int key)
@@ -108,28 +94,11 @@ namespace MyGame.Pokemons
 
             return true;
         }
-        public bool TryAddMove(MoveData move)
-        {
-            if(_moves.Count >= 4)
-                return false;
-            
-            var runtime = new MoveRuntime(move);
-            _moves.Add(runtime);
-
-            return true;
-        }
-
+        
         public void InsertMove(MoveData movedata, int changeMoveSlot)
         {
-             var move = new MoveRuntime(movedata); // 무브데이터로 새로운 런타임 초기화
-             _moves[changeMoveSlot] = move;
-        }
-
-        public MoveRuntime GetStruggle()
-        {
-             MoveData struggle = MoveDatabase.Get(999);
-            
-             return new MoveRuntime(struggle);
+             var Move = new MoveRuntime(movedata); // 무브데이터로 새로운 런타임 초기화
+             _moves[changeMoveSlot] = Move;
         }
         
         public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
@@ -138,3 +107,4 @@ namespace MyGame.Pokemons
             => CurrentEffectState = effect;
     }
 }
+*/

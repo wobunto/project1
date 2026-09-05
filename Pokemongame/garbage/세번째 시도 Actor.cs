@@ -1,21 +1,23 @@
-
+/*
 namespace Pokemongame
 {
     public class Actor
-    {
+    {   
+        private const int _start = 1; 
+
         private ActionState _currentState;
         private IActionSelector _selector;
         private readonly ISwitchable self;   
 
-        public EffectState CurrentEffectState => self.ActivePokemon.CurrentEffectState;
-        public int MaxHp => self.ActivePokemon.MaxHp;
-
-        public void TakeDamage(int damage) => self.ActivePokemon.TakeDamage(damage);
-       
         public int EffectStateTurn {get; private set;}
-        
-        private const int _start = 1; 
+        public ActionPriority priority = ActionPriority.Normal;
 
+        public PokemonRuntime ActivePokemon => self.ActivePokemon;
+        public EffectState CurrentEffectState => ActivePokemon.CurrentEffectState;
+        public int MaxHp => ActivePokemon.MaxHp;
+
+        public void TakeDamage(int damage) => ActivePokemon.TakeDamage(damage);
+       
         public Actor(IActionSelector selector, ISwitchable trainer)
         {
             _currentState = new ErrorState(); //Select 가 정상적으로 실행되면 바뀜
@@ -57,13 +59,6 @@ namespace Pokemongame
         
         private void EffectTurnStart()
             => EffectStateTurn = _start;
-    
-    }
-
-    public abstract class ActionState
-    {
-        public abstract void Update(Actor actor);
-        public abstract void Execute(Actor actor);
     }
 
     public static class EffectProcessor
@@ -148,6 +143,12 @@ namespace Pokemongame
         }
     }
 
+    public abstract class ActionState
+    {
+        public abstract void Update(Actor actor);
+        public abstract void Execute(Actor actor);
+    }
+
     public class AttackState : ActionState
     {
         private PokemonRuntime _attacker;
@@ -187,7 +188,9 @@ namespace Pokemongame
 
         public override void Update(Actor actor)
         {
-            // 공격 상태 업데이트
+            if(_attacker.CurrentSpeed > _defender.CurrentSpeed)
+                actor.priority = ActionPriority.SpeedFaster;
+            
         }
     }
 
@@ -208,6 +211,7 @@ namespace Pokemongame
         public override void Update(Actor actor)
         {
             // 교체 상태 업데이트
+            actor.priority = ActionPriority.NonAttackAction;
         }
     }
 
@@ -229,7 +233,7 @@ namespace Pokemongame
 
         public override void Update(Actor actor)
         {
-            // 교체 상태 업데이트
+            actor.priority = ActionPriority.NonAttackAction;
         }
     }
 
@@ -268,6 +272,7 @@ namespace Pokemongame
 
         public override void Update(Actor actor)
         {
+            actor.priority = ActionPriority.NonAttackAction;
         }
     }
 
@@ -286,6 +291,7 @@ namespace Pokemongame
 
         public override void Update(Actor actor)
         {
+            
         }
     }
 
@@ -313,3 +319,4 @@ namespace Pokemongame
         }
     }
 }
+*/
