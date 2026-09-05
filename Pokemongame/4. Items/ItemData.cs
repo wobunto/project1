@@ -8,6 +8,7 @@ namespace MyGame.Items
         Capture           //아직 구현 x
     
     }
+    public readonly record struct InventoryItem(ItemData Data, int Count);
 
     public record ItemData(
         int Key, 

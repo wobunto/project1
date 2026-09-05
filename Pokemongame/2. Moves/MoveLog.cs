@@ -1,5 +1,5 @@
 using MyGame.Pokemons;
-using MyGame.Log;
+using MyGame.Logs;
 
 namespace MyGame.Moves
 {

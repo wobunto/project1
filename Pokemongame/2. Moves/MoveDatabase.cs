@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using MyGame.Log;
+using MyGame.Logs;
 
 namespace MyGame.Moves
 {

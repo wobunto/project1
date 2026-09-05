@@ -8,8 +8,7 @@ namespace MyGame.Trainers
    public class TrainerRuntime : IBattleTrainer
    {
         public const int MaxPartySlot = 6;
-        public const int MaxMoveSlot = 4;
-
+    
         public IBattlePokemon ActivePokemon {get; private set;}
 
         private readonly List<PokemonRuntime> _party = new(MaxPartySlot);

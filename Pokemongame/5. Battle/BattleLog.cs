@@ -40,18 +40,6 @@ namespace MyGame.BattleSystem
             GameLog.Info("-------------------------------------");
         }
 
-        public static void LogSwitchFailed(SwitchResult result)
-        {
-            if(result == SwitchResult.NoPokemonInSlot)
-            {
-                GameLog.Info("포켓몬이 없습니다.");
-            }
-            else
-            {
-                GameLog.Info("포켓몬이 기절하여 교체할 수 없습니다.");
-            }
-        }
-
         public static void LogSelectAction()
         {
             GameLog.Info("[1. 공격  ]  [3. 교체  ]");

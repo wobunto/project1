@@ -1,95 +1,12 @@
+using System.Linq;
 using MyGame.Pokemons;
-using MyGame.Moves;
-using MyGame.Trainers;
 using MyGame.Items;
 using MyGame.Commands;
 using MyGame.Logs;
-using MyGame.Views;
 using MyGame.Inputs;
 
 namespace MyGame.Controllers
 {
-    public class PlayerController : IBattleController
-    {   
-        public IPlayerView View { get; }
-        public IBattleTrainer Player { get; }
-        public IBattleTrainer Enemy { get; }
-        
-        public bool ForceSwitch {get; private set;}
-        public bool IsTurnFinished { get; private set; }
-        public Command SelectedCommand { get; private set; }
-        
-        private readonly Stack<PlayerState> _stateStack = new Stack<PlayerState>();
-        
-        public PlayerState CurrentState => _stateStack.Peek();
-
-        public PlayerController(
-            IBattleTrainer player,
-            IBattleTrainer enemy,
-            IPlayerView view)
-        {
-            Player = player;
-            Enemy = enemy;
-            View = view;
-
-            SelectedCommand = new ErrorCommand();
-
-            PushState(PlayerState.MenuSte);
-        }
-        
-        public void HandleInput(Input input)
-        {
-            CurrentState?.HandleInput(this, input);
-        }
-    
-        public void Update()
-        {
-            CurrentState?.Update(this);
-        }
-
-        public void PushState(PlayerState nextState)
-        {
-            _stateStack.Push(nextState); 
-            CurrentState?.Enter(this);
-        }
-        
-        public void PopState()
-        {
-            if (_stateStack.Count <= 1)
-            {
-                GameLog.Warn("메뉴에서는 돌아갈 수 없습니다.");
-                return;
-            }
-
-            _stateStack.Pop();
-        }
-
-        public void ResetState()
-        {
-            while (_stateStack.Count > 0)
-            {
-                _stateStack.Pop();
-            }
-
-            PushState(PlayerState.MenuSte);
-            IsTurnFinished = false;
-        }
-
-        public bool IsBack(Input input)
-        {
-            if (!input.IsCancel) return false;
-            
-            this.PopState();
-            return true;
-        }
-
-        public void FinishedTurn(Command command)
-        {
-            SelectedCommand = command;
-            IsTurnFinished = true;
-        }
-    }
-
     public abstract class PlayerState
     {
         public static readonly PlayerState MenuSte = new MenuState();
@@ -124,7 +41,7 @@ namespace MyGame.Controllers
             switch (input.Value)
             {
                 case 1:
-                    if (activePokemon.IsAbleMove())
+                    if (!activePokemon.IsAbleMove())
                     {
                         context.PushState(StruggleSte);  
                         break;
@@ -164,8 +81,9 @@ namespace MyGame.Controllers
             var _moves = _attacker.CurrentMoves;
             
             if(context.IsBack(input)) return;
-
-            if (_attacker.TryGetUseableMove(input.Value, out var move))
+            
+            int index = input.Value -1;
+            if (_attacker.TryGetUseableMove(index, out var move))
             {
             // 성공: 기술이 있고 PP도 있음
                 Command attack = new AttackCommand(_attacker,
@@ -178,14 +96,14 @@ namespace MyGame.Controllers
             GameLog.Warn("그 기술은 지금 사용할 수 없습니다.");
         }
     }
-    
-    
+
     public class ItemState : PlayerState
     {
         public override void Enter(PlayerController context)
         {
-            var _inventory = context.Player.Inventory;
-            context.View.DisplayItemMenu(_inventory);
+            IReadOnlyList<InventoryItem> items = GetValidInventory(context);
+        
+            context.View.DisplayItemMenu(items);
         }
         
         public override void HandleInput(
@@ -193,42 +111,58 @@ namespace MyGame.Controllers
             Input input)
         {
             if(context.IsBack(input)) return; 
-            
-            var player = context.Player;
-            var keys = player.Inventory.Keys.ToList();
-            
-            if (player.Inventory.Count == 0)
-                return;
+       
+            var items = GetValidInventory(context);
 
             int index = input.Value - 1;
-            int itemKey = keys[index];
 
-             if (!ItemDatabase.TryGetItem(itemKey, out ItemData? item))
+            if (index < 0 || index >= items.Count)
             {
-                GameLog.Error("아이템 데이터가 존재하지 않습니다.");
+                GameLog.Error("잘못된 번호를 선택하셨습니다.");
                 return;
             }
-            IItemEffect effect = ItemEffectFactory.Create(item!.Effect);
+            
+            var selectedItem = items[index];
+            ItemData itemData = selectedItem.Data;
+
+            IItemEffect effect = ItemEffectFactory.Create(itemData.Effect);
             
             var selectState = new SelectPokemonState(
                 onSelected: (index) =>
                 {
-                    IItemTarget pokemon = player.Party[index];
+                    IItemTarget pokemon = context.Player.Party[index];
 
                     var itemCmd = new UseItemCommand(
                         context.Player, 
                         pokemon,
-                        item
+                        itemData
                         );
                     context.FinishedTurn(itemCmd);
                 },
                 filter: effect.CanApply // 도메인에 위임된 규칙
             );
-    
             context.PushState(selectState);
-
-           //아이템으로 회복은 물론 상태회복,PP회복, 
+            //아이템으로 회복은 물론 상태회복,PP회복, 
             //데미지, 스피드 등의 랭크업도 가능하니 IBattle로 많은 기능
+        }
+        private List<InventoryItem> GetValidInventory(PlayerController context)
+        {
+            var result = new List<InventoryItem>();
+
+            foreach(var (itemId, count) in context.Player.Inventory)
+            {
+                if (ItemDatabase.TryGetItem(itemId, out var data))
+                {
+                    var invenItem = new InventoryItem(data, count);
+                  
+                }
+                else 
+                {
+                    GameLog.Error("존재하지 않는 아이템 ID({item.Key})가 인벤토리에 있습니다.");
+                }
+            }
+
+            return result;
         }
     }
 
@@ -328,7 +262,7 @@ namespace MyGame.Controllers
 
             int index = input.Value - 1;
             
-            if(index < 0  || index >= context.Player.Party.Count)
+            if(index < 0 || index >= context.Player.Party.Count)
             {
                 GameLog.Warn("선택 가능한 포켓몬 번호를 입력해주세요.");
                 return;

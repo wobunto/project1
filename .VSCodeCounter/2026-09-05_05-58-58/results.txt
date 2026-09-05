@@ -1,0 +1,91 @@
+Date : 2026-09-05 05:58:58
+Directory : /workspaces/project1
+Total : 48 files,  2469 codes, 83 comments, 355 blanks, all 2907 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| C#         |         38 |      1,566 |         83 |        350 |      1,999 |
+| JSON       |          5 |        859 |          0 |          0 |        859 |
+| XML        |          3 |         25 |          0 |          3 |         28 |
+| Properties |          1 |         17 |          0 |          1 |         18 |
+| Markdown   |          1 |          2 |          0 |          1 |          3 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                     | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                        |         48 |      2,469 |         83 |        355 |      2,907 |
+| . (Files)                                                                                                |          1 |          2 |          0 |          1 |          3 |
+| Pokemongame                                                                                              |         47 |      2,467 |         83 |        354 |      2,904 |
+| Pokemongame (Files)                                                                                      |          2 |         17 |          0 |          4 |         21 |
+| Pokemongame/1. Pokemons                                                                                  |          9 |        363 |         25 |         74 |        462 |
+| Pokemongame/2. Moves                                                                                     |          5 |        173 |         11 |         41 |        225 |
+| Pokemongame/3. Trainers                                                                                  |          6 |        152 |          2 |         35 |        189 |
+| Pokemongame/4. Items                                                                                     |          3 |        129 |          2 |         23 |        154 |
+| Pokemongame/5. Battle                                                                                    |          5 |        289 |         22 |         74 |        385 |
+| Pokemongame/6. BattleCotroller                                                                           |          3 |        362 |          5 |         86 |        453 |
+| Pokemongame/9. Input                                                                                     |          3 |         70 |          5 |          9 |         84 |
+| Pokemongame/JsonData                                                                                     |          3 |        172 |          0 |          0 |        172 |
+| Pokemongame/obj                                                                                          |          8 |        740 |         11 |          8 |        759 |
+| Pokemongame/obj (Files)                                                                                  |          4 |        704 |          0 |          0 |        704 |
+| Pokemongame/obj/Debug                                                                                    |          4 |         36 |         11 |          8 |         55 |
+| Pokemongame/obj/Debug/net10.0                                                                            |          4 |         36 |         11 |          8 |         55 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                 | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /workspaces/project1/Pokemongame/1. Pokemons/IBattlePokemon.cs                                           | C#         |         33 |          0 |          7 |         40 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonChart.cs                                             | C#         |         96 |         11 |         17 |        124 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonData.cs                                              | C#         |         24 |          0 |          4 |         28 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonDatabase.cs                                          | C#         |         45 |          0 |         10 |         55 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonFactory.cs                                           | C#         |         13 |         12 |          3 |         28 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonLog.cs                                               | C#         |         16 |          1 |          1 |         18 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonRuntime.cs                                           | C#         |        108 |          1 |         32 |        141 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonState.cs                                             | C#         |         13 |          0 |          0 |         13 |
+| /workspaces/project1/Pokemongame/1. Pokemons/PokemonType.cs                                              | C#         |         15 |          0 |          0 |         15 |
+| /workspaces/project1/Pokemongame/2. Moves/MoveData.cs                                                    | C#         |         27 |          1 |          3 |         31 |
+| /workspaces/project1/Pokemongame/2. Moves/MoveDatabase.cs                                                | C#         |         54 |          1 |         17 |         72 |
+| /workspaces/project1/Pokemongame/2. Moves/MoveLearningService.cs                                         | C#         |         32 |          6 |          7 |         45 |
+| /workspaces/project1/Pokemongame/2. Moves/MoveLog.cs                                                     | C#         |         28 |          1 |          6 |         35 |
+| /workspaces/project1/Pokemongame/2. Moves/MoveRuntime.cs                                                 | C#         |         32 |          2 |          8 |         42 |
+| /workspaces/project1/Pokemongame/3. Trainers/IBattleTrainer.cs                                           | C#         |         17 |          0 |          5 |         22 |
+| /workspaces/project1/Pokemongame/3. Trainers/TrainerLog.cs                                               | C#         |          3 |          0 |          1 |          4 |
+| /workspaces/project1/Pokemongame/3. Trainers/TrainerRuntime(Enemy).cs                                    | C#         |          7 |          1 |          1 |          9 |
+| /workspaces/project1/Pokemongame/3. Trainers/TrainerRuntime(Player).cs                                   | C#         |         24 |          0 |          2 |         26 |
+| /workspaces/project1/Pokemongame/3. Trainers/TrainerRuntime.cs                                           | C#         |         80 |          1 |         21 |        102 |
+| /workspaces/project1/Pokemongame/3. Trainers/WildRuntime.cs                                              | C#         |         21 |          0 |          5 |         26 |
+| /workspaces/project1/Pokemongame/4. Items/ItemData.cs                                                    | C#         |         17 |          0 |          2 |         19 |
+| /workspaces/project1/Pokemongame/4. Items/ItemDatabase.cs                                                | C#         |         38 |          0 |          8 |         46 |
+| /workspaces/project1/Pokemongame/4. Items/ItemEffect.cs                                                  | C#         |         74 |          2 |         13 |         89 |
+| /workspaces/project1/Pokemongame/5. Battle/BattleLog.cs                                                  | C#         |         85 |          0 |         14 |         99 |
+| /workspaces/project1/Pokemongame/5. Battle/BattleParticipant.cs                                          | C#         |         31 |          0 |          7 |         38 |
+| /workspaces/project1/Pokemongame/5. Battle/BattleSystem.cs                                               | C#         |         20 |          0 |         15 |         35 |
+| /workspaces/project1/Pokemongame/5. Battle/Calculator.cs                                                 | C#         |         38 |         18 |         11 |         67 |
+| /workspaces/project1/Pokemongame/5. Battle/Command.cs                                                    | C#         |        115 |          4 |         27 |        146 |
+| /workspaces/project1/Pokemongame/6. BattleCotroller/BattleView.cs                                        | C#         |         76 |          0 |         20 |         96 |
+| /workspaces/project1/Pokemongame/6. BattleCotroller/IBattelController.cs                                 | C#         |          6 |          0 |          1 |          7 |
+| /workspaces/project1/Pokemongame/6. BattleCotroller/PlayerController.cs                                  | C#         |        280 |          5 |         65 |        350 |
+| /workspaces/project1/Pokemongame/9. Input/Chance.cs                                                      | C#         |         18 |          4 |          3 |         25 |
+| /workspaces/project1/Pokemongame/9. Input/InputManager.cs                                                | C#         |         43 |          1 |          6 |         50 |
+| /workspaces/project1/Pokemongame/9. Input/Log.cs                                                         | C#         |          9 |          0 |          0 |          9 |
+| /workspaces/project1/Pokemongame/JsonData/ItemData.json                                                  | JSON       |         44 |          0 |          0 |         44 |
+| /workspaces/project1/Pokemongame/JsonData/MoveData.json                                                  | JSON       |         74 |          0 |          0 |         74 |
+| /workspaces/project1/Pokemongame/JsonData/PokemonData.json                                               | JSON       |         54 |          0 |          0 |         54 |
+| /workspaces/project1/Pokemongame/Pokemongame.csproj                                                      | XML        |          8 |          0 |          3 |         11 |
+| /workspaces/project1/Pokemongame/Program.cs                                                              | C#         |          9 |          0 |          1 |         10 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs       | C#         |          3 |          1 |          1 |          5 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.AssemblyInfo.cs                           | C#         |          9 |          9 |          5 |         23 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.GeneratedMSBuildEditorConfig.editorconfig | Properties |         17 |          0 |          1 |         18 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.GlobalUsings.g.cs                         | C#         |          7 |          1 |          1 |          9 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.dgspec.json                                | JSON       |        341 |          0 |          0 |        341 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.g.props                                    | XML        |         15 |          0 |          0 |         15 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.g.targets                                  | XML        |          2 |          0 |          0 |          2 |
+| /workspaces/project1/Pokemongame/obj/project.assets.json                                                 | JSON       |        346 |          0 |          0 |        346 |
+| /workspaces/project1/README.md                                                                           | Markdown   |          2 |          0 |          1 |          3 |
+| Total                                                                                                    |            |      2,469 |         83 |        355 |      2,907 |
++----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

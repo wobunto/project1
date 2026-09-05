@@ -3,14 +3,13 @@ using MyGame.Moves;
 using MyGame.Items;
 using MyGame.Logs;
 
-
 namespace MyGame.Views
 {
     public interface IPlayerView
     {
         void DisplayCommandMenu();
         void DisplayAttackMenu(IReadOnlyList<MoveRuntime?> CurrentMoves);
-        void DisplayItemMenu(IReadOnlyDictionary<int, int> inventory);
+        void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
         void DisplayPartyMenu(IReadOnlyList<PokemonRuntime> party);
     }
     
@@ -35,22 +34,25 @@ namespace MyGame.Views
 
             
             GameLog.Info("========================================");
-            GameLog.Info($" 1. {FormatMove(move1),-18} 2. {FormatMove(move2),-18}");
-            GameLog.Info($" 3. {FormatMove(move3),-18} 4. {FormatMove(move4),-18}");
+            GameLog.Info($" 1. {FormatMove(move1!),-18} 2. {FormatMove(move2!),-18}");
+            GameLog.Info($" 3. {FormatMove(move3!),-18} 4. {FormatMove(move4!),-18}");
             GameLog.Info("========================================");
         }
 
-        public void DisplayItemMenu(IReadOnlyDictionary<int, int> inventory)
-        { 
-            int i = 1;
-            
+        public void DisplayItemMenu(IReadOnlyList<InventoryItem> items)
+        {   
             GameLog.Info("[ 아이템 목록 ]");
            
-            foreach (var (key, count) in inventory)
+            if (items.Count == 0)
             {
-                ItemDatabase.TryGetItem(key, out var data);
-                GameLog.Info($" {i}.[ {data?.Name ?? "알 수 없음"} x{count} ]");
-                i++;
+                GameLog.Info(" 가방이 비어 있습니다.");
+                return;
+            }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                GameLog.Info($" {i + 1}.[ {item.Name} x {item.Count} ]");
             }
         }
         

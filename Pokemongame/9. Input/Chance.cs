@@ -1,6 +1,5 @@
 namespace MyGame.Utilities
 {
-
     public static class Chance
     {
         /// <summary>

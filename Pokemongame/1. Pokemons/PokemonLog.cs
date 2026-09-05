@@ -1,4 +1,4 @@
-using MyGame.Log;
+using MyGame.Logs;
 
 namespace MyGame.Pokemons
 {
@@ -14,9 +14,5 @@ namespace MyGame.Pokemons
             GameLog.Info($"속도 : {pokemon.CurrentSpeed}(속도 랭크:{pokemon.SpeedStage})");
             GameLog.Info($"타입 : {typeInfo}");
         }
-
-     
-
-
     }
 }
