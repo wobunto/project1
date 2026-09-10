@@ -1,0 +1,142 @@
+Date : 2026-09-06 08:38:43
+Directory : /workspaces/project1
+Total : 71 files,  2706 codes, 84 comments, 394 blanks, all 3184 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| C#         |         61 |      1,803 |         84 |        389 |      2,276 |
+| JSON       |          5 |        859 |          0 |          0 |        859 |
+| XML        |          3 |         25 |          0 |          3 |         28 |
+| Properties |          1 |         17 |          0 |          1 |         18 |
+| Markdown   |          1 |          2 |          0 |          1 |          3 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                            | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                               |         71 |      2,706 |         84 |        394 |      3,184 |
+| . (Files)                                                                                                                       |          1 |          2 |          0 |          1 |          3 |
+| Pokemongame                                                                                                                     |         70 |      2,704 |         84 |        393 |      3,181 |
+| Pokemongame (Files)                                                                                                             |          2 |         17 |          0 |          4 |         21 |
+| Pokemongame/JsonData                                                                                                            |          3 |        172 |          0 |          0 |        172 |
+| Pokemongame/obj                                                                                                                 |          8 |        740 |         11 |          8 |        759 |
+| Pokemongame/obj (Files)                                                                                                         |          4 |        704 |          0 |          0 |        704 |
+| Pokemongame/obj/Debug                                                                                                           |          4 |         36 |         11 |          8 |         55 |
+| Pokemongame/obj/Debug/net10.0                                                                                                   |          4 |         36 |         11 |          8 |         55 |
+| Pokemongame/src                                                                                                                 |         57 |      1,775 |         73 |        381 |      2,229 |
+| Pokemongame/src/MyGame                                                                                                          |         57 |      1,775 |         73 |        381 |      2,229 |
+| Pokemongame/src/MyGame/Battle                                                                                                   |         25 |        744 |         27 |        159 |        930 |
+| Pokemongame/src/MyGame/Battle (Files)                                                                                           |          2 |         93 |          0 |         28 |        121 |
+| Pokemongame/src/MyGame/Battle/Calculators                                                                                       |          2 |         50 |         18 |         13 |         81 |
+| Pokemongame/src/MyGame/Battle/Commands                                                                                          |          7 |        136 |          4 |         26 |        166 |
+| Pokemongame/src/MyGame/Battle/Commands (Files)                                                                                  |          6 |        129 |          4 |         26 |        159 |
+| Pokemongame/src/MyGame/Battle/Commands/Command                                                                                  |          1 |          7 |          0 |          0 |          7 |
+| Pokemongame/src/MyGame/Battle/Cotroller                                                                                         |         11 |        344 |          5 |         66 |        415 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController                                                                       |         11 |        344 |          5 |         66 |        415 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController (Files)                                                               |          1 |          6 |          0 |          1 |          7 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Ai                                                                    |          1 |          6 |          0 |          1 |          7 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player                                                                |          9 |        332 |          5 |         64 |        401 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player (Files)                                                        |          1 |         73 |          0 |         17 |         90 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs                                                 |          8 |        259 |          5 |         47 |        311 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs (Files)                                         |          7 |        240 |          5 |         44 |        289 |
+| Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/PlayerState                                     |          1 |         19 |          0 |          3 |         22 |
+| Pokemongame/src/MyGame/Battle/Particpant                                                                                        |          2 |         42 |          0 |          7 |         49 |
+| Pokemongame/src/MyGame/Battle/View                                                                                              |          1 |         79 |          0 |         19 |         98 |
+| Pokemongame/src/MyGame/Input                                                                                                    |          3 |         70 |          5 |          9 |         84 |
+| Pokemongame/src/MyGame/Items                                                                                                    |          3 |        130 |          2 |         23 |        155 |
+| Pokemongame/src/MyGame/Moves                                                                                                    |          5 |        160 |         12 |         40 |        212 |
+| Pokemongame/src/MyGame/ObjectRuntime                                                                                            |          5 |        149 |          2 |         34 |        185 |
+| Pokemongame/src/MyGame/ObjectRuntime/Runtime                                                                                    |          5 |        149 |          2 |         34 |        185 |
+| Pokemongame/src/MyGame/ObjectRuntime/Runtime/Trainers                                                                           |          4 |        127 |          2 |         29 |        158 |
+| Pokemongame/src/MyGame/ObjectRuntime/Runtime/Wilds                                                                              |          1 |         22 |          0 |          5 |         27 |
+| Pokemongame/src/MyGame/PokemonTypes                                                                                             |          2 |        111 |         11 |         17 |        139 |
+| Pokemongame/src/MyGame/Pokemons                                                                                                 |         14 |        411 |         14 |         99 |        524 |
+| Pokemongame/src/MyGame/Pokemons (Files)                                                                                         |          2 |         29 |         13 |          4 |         46 |
+| Pokemongame/src/MyGame/Pokemons/Data                                                                                            |          2 |         69 |          0 |         14 |         83 |
+| Pokemongame/src/MyGame/Pokemons/Runtime                                                                                         |         10 |        313 |          1 |         81 |        395 |
+| Pokemongame/src/MyGame/Pokemons/Runtime (Files)                                                                                 |          2 |        142 |          1 |         39 |        182 |
+| Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates                                                                           |          8 |        171 |          0 |         42 |        213 |
+| Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates (Files)                                                                   |          2 |         30 |          0 |          4 |         34 |
+| Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States                                                                    |          6 |        141 |          0 |         38 |        179 |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                        | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /workspaces/project1/Pokemongame/JsonData/ItemData.json                                                                         | JSON       |         44 |          0 |          0 |         44 |
+| /workspaces/project1/Pokemongame/JsonData/MoveData.json                                                                         | JSON       |         74 |          0 |          0 |         74 |
+| /workspaces/project1/Pokemongame/JsonData/PokemonData.json                                                                      | JSON       |         54 |          0 |          0 |         54 |
+| /workspaces/project1/Pokemongame/Pokemongame.csproj                                                                             | XML        |          8 |          0 |          3 |         11 |
+| /workspaces/project1/Pokemongame/Program.cs                                                                                     | C#         |          9 |          0 |          1 |         10 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs                              | C#         |          3 |          1 |          1 |          5 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.AssemblyInfo.cs                                                  | C#         |          9 |          9 |          5 |         23 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.GeneratedMSBuildEditorConfig.editorconfig                        | Properties |         17 |          0 |          1 |         18 |
+| /workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.GlobalUsings.g.cs                                                | C#         |          7 |          1 |          1 |          9 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.dgspec.json                                                       | JSON       |        341 |          0 |          0 |        341 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.g.props                                                           | XML        |         15 |          0 |          0 |         15 |
+| /workspaces/project1/Pokemongame/obj/Pokemongame.csproj.nuget.g.targets                                                         | XML        |          2 |          0 |          0 |          2 |
+| /workspaces/project1/Pokemongame/obj/project.assets.json                                                                        | JSON       |        346 |          0 |          0 |        346 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/BattleLog.cs                                                                 | C#         |         73 |          0 |         13 |         86 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/BattleSystem.cs                                                              | C#         |         20 |          0 |         15 |         35 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Calculators/BattleCalculator.cs                                              | C#         |         38 |         18 |         11 |         67 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Calculators/StatusCaclulator.cs                                              | C#         |         12 |          0 |          2 |         14 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/AttackCommand.cs                                                    | C#         |         46 |          0 |         10 |         56 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/Command/command.cs                                                  | C#         |          7 |          0 |          0 |          7 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/ErrorCommand.cs                                                     | C#         |         11 |          0 |          1 |         12 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/ExitCommand.cs                                                      | C#         |          9 |          1 |          1 |         11 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/SkipTurnCommand.cs                                                  | C#         |         14 |          1 |          2 |         17 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/SwitchCommand.cs                                                    | C#         |         20 |          0 |          5 |         25 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Commands/UseItemCommand.cs                                                   | C#         |         29 |          2 |          7 |         38 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Ai/AiController.cs                               | C#         |          6 |          0 |          1 |          7 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/IBattelController.cs                             | C#         |          6 |          0 |          1 |          7 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerController.cs                       | C#         |         73 |          0 |         17 |         90 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/AttackState.cs             | C#         |         33 |          1 |          7 |         41 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/ItemState.cs               | C#         |         63 |          2 |         13 |         78 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/MenuState.cs               | C#         |         39 |          0 |          7 |         46 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/PlayerState/PlayerState.cs | C#         |         19 |          0 |          3 |         22 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/RunState.cs                | C#         |         19 |          0 |          3 |         22 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/SelectState.cs             | C#         |         37 |          0 |          8 |         45 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/StruggleState.cs           | C#         |         20 |          0 |          2 |         22 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Cotroller/IBattleController/Player/PlayerState.cs/SwitchState.cs             | C#         |         29 |          2 |          4 |         35 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Particpant/BattleParticipant.cs                                              | C#         |         31 |          0 |          7 |         38 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/Particpant/StatusTurnResult.cs                                               | C#         |         11 |          0 |          0 |         11 |
+| /workspaces/project1/Pokemongame/src/MyGame/Battle/View/BattleView.cs                                                           | C#         |         79 |          0 |         19 |         98 |
+| /workspaces/project1/Pokemongame/src/MyGame/Input/Chance.cs                                                                     | C#         |         18 |          4 |          3 |         25 |
+| /workspaces/project1/Pokemongame/src/MyGame/Input/InputManager.cs                                                               | C#         |         43 |          1 |          6 |         50 |
+| /workspaces/project1/Pokemongame/src/MyGame/Input/Log.cs                                                                        | C#         |          9 |          0 |          0 |          9 |
+| /workspaces/project1/Pokemongame/src/MyGame/Items/ItemData.cs                                                                   | C#         |         18 |          0 |          2 |         20 |
+| /workspaces/project1/Pokemongame/src/MyGame/Items/ItemDatabase.cs                                                               | C#         |         38 |          0 |          8 |         46 |
+| /workspaces/project1/Pokemongame/src/MyGame/Items/ItemEffect.cs                                                                 | C#         |         74 |          2 |         13 |         89 |
+| /workspaces/project1/Pokemongame/src/MyGame/Moves/MoveData.cs                                                                   | C#         |         14 |          1 |          2 |         17 |
+| /workspaces/project1/Pokemongame/src/MyGame/Moves/MoveDatabase.cs                                                               | C#         |         54 |          1 |         17 |         72 |
+| /workspaces/project1/Pokemongame/src/MyGame/Moves/MoveLearningService.cs                                                        | C#         |         32 |          7 |          7 |         46 |
+| /workspaces/project1/Pokemongame/src/MyGame/Moves/MoveLog.cs                                                                    | C#         |         28 |          1 |          6 |         35 |
+| /workspaces/project1/Pokemongame/src/MyGame/Moves/MoveRuntime.cs                                                                | C#         |         32 |          2 |          8 |         42 |
+| /workspaces/project1/Pokemongame/src/MyGame/ObjectRuntime/Runtime/Trainers/IBattleTrainer.cs                                    | C#         |         17 |          0 |          5 |         22 |
+| /workspaces/project1/Pokemongame/src/MyGame/ObjectRuntime/Runtime/Trainers/TrainerRuntime(Enemy).cs                             | C#         |          7 |          1 |          1 |          9 |
+| /workspaces/project1/Pokemongame/src/MyGame/ObjectRuntime/Runtime/Trainers/TrainerRuntime(Player).cs                            | C#         |         24 |          0 |          2 |         26 |
+| /workspaces/project1/Pokemongame/src/MyGame/ObjectRuntime/Runtime/Trainers/TrainerRuntime.cs                                    | C#         |         79 |          1 |         21 |        101 |
+| /workspaces/project1/Pokemongame/src/MyGame/ObjectRuntime/Runtime/Wilds/WildRuntime.cs                                          | C#         |         22 |          0 |          5 |         27 |
+| /workspaces/project1/Pokemongame/src/MyGame/PokemonTypes/PokemonChart.cs                                                        | C#         |         96 |         11 |         17 |        124 |
+| /workspaces/project1/Pokemongame/src/MyGame/PokemonTypes/PokemonType.cs                                                         | C#         |         15 |          0 |          0 |         15 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Data/PokemonData.cs                                                        | C#         |         24 |          0 |          4 |         28 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Data/PokemonDatabase.cs                                                    | C#         |         45 |          0 |         10 |         55 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/PokemonFactory.cs                                                          | C#         |         13 |         12 |          3 |         28 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/PokemonLog.cs                                                              | C#         |         16 |          1 |          1 |         18 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/IBattlePokemon.cs                                                  | C#         |         33 |          0 |          7 |         40 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonRuntime.cs                                                  | C#         |        109 |          1 |         32 |        142 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/EnumEffectState.cs                                   | C#         |         13 |          0 |          0 |         13 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/PokemonState.cs                                      | C#         |         17 |          0 |          4 |         21 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/BurnState.cs                                  | C#         |         20 |          0 |          5 |         25 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/FreezeState.cs                                | C#         |         29 |          0 |          8 |         37 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/ParalysisState.cs                             | C#         |         19 |          0 |          5 |         24 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/PoisonState.cs                                | C#         |         19 |          0 |          5 |         24 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/SleepState.cs                                 | C#         |         30 |          0 |          8 |         38 |
+| /workspaces/project1/Pokemongame/src/MyGame/Pokemons/Runtime/PokemonStates/States/ToxicState.cs                                 | C#         |         24 |          0 |          7 |         31 |
+| /workspaces/project1/README.md                                                                                                  | Markdown   |          2 |          0 |          1 |          3 |
+| Total                                                                                                                           |            |      2,706 |         84 |        394 |      3,184 |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
