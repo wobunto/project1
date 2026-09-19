@@ -1,7 +1,6 @@
 using MyGame.Pokemons;
 using MyGame.Moves;
 using MyGame.Items;
-using MyGame.Logs;
 
 namespace MyGame.Views
 {
@@ -11,17 +10,22 @@ namespace MyGame.Views
         void DisplayAttackMenu(IReadOnlyList<MoveRuntime?> CurrentMoves);
         void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
         void DisplayPartyMenu(IReadOnlyList<PokemonRuntime> party);
+        void DisplayMessage(String message);
     }
     
     public class ConsolePlayerView : IPlayerView
     {
-        
+        public void DisplayMessage(String message)
+        {
+            Console.WriteLine(message);
+        }
+
         public void DisplayCommandMenu()
         {
-            GameLog.Info("==============================");
-            GameLog.Info("1. 싸운다  2. 가방");
-            GameLog.Info("3. 교체    4. 도망친다");
-            GameLog.Info("==============================");
+            DisplayMessage("==============================");
+            DisplayMessage("1. 싸운다  2. 가방");
+            DisplayMessage("3. 교체    4. 도망친다");
+            DisplayMessage("==============================");
         }
 
         public void DisplayAttackMenu(IReadOnlyList<MoveRuntime?> CurrentMoves)
@@ -33,26 +37,26 @@ namespace MyGame.Views
             var move4 = CurrentMoves.ElementAtOrDefault(3);
 
             
-            GameLog.Info("========================================");
-            GameLog.Info($" 1. {FormatMove(move1!),-18} 2. {FormatMove(move2!),-18}");
-            GameLog.Info($" 3. {FormatMove(move3!),-18} 4. {FormatMove(move4!),-18}");
-            GameLog.Info("========================================");
+            DisplayMessage("========================================");
+            DisplayMessage($" 1. {FormatMove(move1!),-18} 2. {FormatMove(move2!),-18}");
+            DisplayMessage($" 3. {FormatMove(move3!),-18} 4. {FormatMove(move4!),-18}");
+            DisplayMessage("========================================");
         }
 
         public void DisplayItemMenu(IReadOnlyList<InventoryItem> items)
         {   
-            GameLog.Info("[ 아이템 목록 ]");
+            DisplayMessage("[ 아이템 목록 ]");
            
             if (items.Count == 0)
             {
-                GameLog.Info(" 가방이 비어 있습니다.");
+                DisplayMessage(" 가방이 비어 있습니다.");
                 return;
             }
 
             for (int i = 0; i < items.Count; i++)
             {
                 var item = items[i];
-                GameLog.Info($" {i + 1}.[ {item.Name} x {item.Count} ]");
+                DisplayMessage($" {i + 1}.[ {item.Data.Name} x {item.Count} ]");
             }
         }
         
@@ -66,11 +70,11 @@ namespace MyGame.Views
             var pokemon5 = party.ElementAtOrDefault(4);
             var pokemon6 = party.ElementAtOrDefault(5);
 
-            GameLog.Info("========================================");
-            GameLog.Info($" 1. {FormatPokemon(pokemon1!),-18} 2. {FormatPokemon(pokemon2!),-18}");
-            GameLog.Info($" 3. {FormatPokemon(pokemon3!),-18} 4. {FormatPokemon(pokemon4!),-18}");
-            GameLog.Info($" 5. {FormatPokemon(pokemon5!),-18} 6. {FormatPokemon(pokemon6!),-18}");
-            GameLog.Info("========================================");
+            DisplayMessage("========================================");
+            DisplayMessage($" 1. {FormatPokemon(pokemon1!),-18} 2. {FormatPokemon(pokemon2!),-18}");
+            DisplayMessage($" 3. {FormatPokemon(pokemon3!),-18} 4. {FormatPokemon(pokemon4!),-18}");
+            DisplayMessage($" 5. {FormatPokemon(pokemon5!),-18} 6. {FormatPokemon(pokemon6!),-18}");
+            DisplayMessage("========================================");
         }
 
         private string FormatMove(MoveRuntime move)

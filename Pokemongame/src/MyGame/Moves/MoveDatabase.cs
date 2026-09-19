@@ -11,6 +11,8 @@ namespace MyGame.Moves
 
         public static IReadOnlyDictionary<int, MoveData> Moves => _moves;
 
+        public static int IdStruggle = 999;
+
         private static readonly JsonSerializerOptions _jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,

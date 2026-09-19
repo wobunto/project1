@@ -1,7 +1,8 @@
 using MyGame.Controllers;
 using MyGame.Commands;
-using MyGame.Inputs;
 using MyGame.Logs;
+using MyGame.Inputs;
+using MyGame.Utilities;
 using MyGame.Items;
 using MyGame.Pokemons;
 
@@ -26,9 +27,9 @@ namespace MyGame.ControllerStates
 
             int index = input.Value - 1;
 
-            if (index < 0 || index >= items.Count)
+            if(!Utility.IsValidIndex(index,items.Count))
             {
-                GameLog.Error("잘못된 번호를 선택하셨습니다.");
+                context.View.DisplayMessage("잘못된 번호를 선택하셨습니다.");
                 return;
             }
             
@@ -51,6 +52,8 @@ namespace MyGame.ControllerStates
                 },
                 filter: effect.CanApply // 도메인에 위임된 규칙
             );
+
+            context.View.DisplayPartyMenu(context.Player.Party);
             context.PushState(selectState);
             //아이템으로 회복은 물론 상태회복,PP회복, 
             //데미지, 스피드 등의 랭크업도 가능하니 IBattle로 많은 기능
@@ -63,12 +66,12 @@ namespace MyGame.ControllerStates
             {
                 if (ItemDatabase.TryGetItem(itemId, out var data))
                 {
-                    var invenItem = new InventoryItem(data, count);
-                  
+                    var invenItem = new InventoryItem(data!, count);
+                    result.Add(invenItem);
                 }
                 else 
                 {
-                    GameLog.Error("존재하지 않는 아이템 ID({item.Key})가 인벤토리에 있습니다.");
+                    GameLog.Error($"존재하지 않는 아이템 ID({itemId})가 인벤토리에 있습니다.");
                 }
             }
 

@@ -1,4 +1,10 @@
-  public class SelectPokemonState : PlayerState
+using MyGame.Controllers;
+using MyGame.Inputs;
+using MyGame.Logs;
+using MyGame.Pokemons;
+namespace MyGame.ControllerStates
+{
+    public class SelectPokemonState : PlayerState
     {
         private readonly Action<int> _onSelected;
         private readonly Func<PokemonRuntime, bool> _filter;
@@ -13,7 +19,7 @@
             
         public override void Enter(PlayerController context)
         {
-            context.View.DisplayPartyMenu(context.Player.Party);
+            
         }
         
          public override void HandleInput(
@@ -29,6 +35,8 @@
                 GameLog.Warn("선택 가능한 포켓몬 번호를 입력해주세요.");
                 return;
             }
+
+            
     
             var pokemon = context.Player.Party[index];
             

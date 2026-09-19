@@ -5,7 +5,7 @@ using MyGame.Inputs;
 
 namespace MyGame.ControllerStates
 {
-       public class MenuState : PlayerState
+    public class MenuState : PlayerState
     {
         public override void Enter(PlayerController context)
         {
@@ -41,6 +41,6 @@ namespace MyGame.ControllerStates
                     context.PushState(RunSte);
                     break;
             }   
-        }  
+        } 
     }
 }

@@ -1,0 +1,38 @@
+// 1. 공격 직전
+var actionResult = attacker.CurrentState.OnBeforeAction();
+
+switch (actionResult)
+{
+    case BeforeActionResult.Paralyzed:
+        UI.ShowMessage($"{attacker.Name}는 몸이 저려 움직일 수 없다!");
+        return; // 기술 사용 취소
+
+    case BeforeActionResult.Frozen:
+        UI.ShowMessage($"{attacker.Name}는 꽁꽁 얼어붙어 있다!");
+        return; // 기술 사용 취소
+
+    case BeforeActionResult.Thawed:
+        UI.ShowMessage($"{attacker.Name}의 얼음이 녹았다!");
+        // 얼음이 풀렸으므로 아래로 내려가 기술 실행
+        break;
+
+    case BeforeActionResult.CanAct:
+        // 정상 진행
+        break;
+}
+
+// 기술 실행 로직...
+attacker.UseMove(selectedMove, target);
+
+
+// 2. 턴 종료 시점
+var turnEndResult = pokemon.CurrentState.OnTurnEnd();
+
+if (turnEndResult == TurnEndResult.Damaged)
+{
+    UI.ShowMessage($"{pokemon.Name}는 상태이상 데미지를 입었다!");
+}
+else if (turnEndResult == TurnEndResult.Fainted)
+{
+    UI.ShowMessage($"{pokemon.Name}는 쓰러졌다!");
+}

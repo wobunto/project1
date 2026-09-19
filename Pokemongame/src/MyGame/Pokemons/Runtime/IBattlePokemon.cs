@@ -20,10 +20,8 @@ namespace MyGame.Pokemons
         IReadOnlyList<MoveRuntime> CurrentMoves {get;}
         
         bool IsAbleMove();
-        bool TryGetUseableMove(int index, out MoveRuntime? move);
+        MoveUsageResult TryGetUsableMove(int index, out MoveRuntime? move);
         void TakeDamage(int damage); 
-
-        MoveRuntime GetStruggle();
     }
 
     public interface IItemTarget

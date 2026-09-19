@@ -4,23 +4,19 @@ using MyGame.BattleParticipant;
 
 namespace MyGame.States
 {
-    public class PoisonState : PokemonState
+    public class ToxicState : PokemonState
     {
-        public PoisonState(IBattlePokemon pokemon)
-            : base(pokemon)
-        {
-        }
+        private int _stateTurn = 0;
 
-        public override StatusTurnResult TryExecute()
-        {
-            var damage = StatusEffectCalculator.PoisonDamage(_pokemon.MaxHp);
+        public ToxicState(IBattlePokemon pokemon) : base(pokemon) { }
 
+        public override TurnEndResult OnTurnEnd()
+        {
+            _stateTurn++;
+            var damage = StatusEffectCalculator.ToxicDamage(_pokemon.MaxHp, _stateTurn);
             _pokemon.TakeDamage(damage);
 
-            if (IsDead())
-                return StatusTurnResult.Death;
-
-            return StatusTurnResult.None;
+            return _pokemon.IsFainted ? TurnEndResult.Fainted : TurnEndResult.Damaged;
         }
     }
 }

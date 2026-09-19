@@ -7,7 +7,7 @@ using MyGame.BattleSystem;
 
 namespace MyGame.Commands
 {
-        public class AttackCommand : Command
+    public class AttackCommand : Command
     {
         private IBattlePokemon  _attacker;
         private IBattleTrainer _defendTrainer;
@@ -52,5 +52,4 @@ namespace MyGame.Commands
             );
         }
     }
-
 }

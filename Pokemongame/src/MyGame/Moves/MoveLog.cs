@@ -31,5 +31,15 @@ namespace MyGame.Moves
    
         public static void LogGiveUpLearning(this PokemonRuntime pokemon, MoveData newMove)
             => GameLog.Info($"{pokemon.Name}은(는) {newMove.Name} 배우기를 포기했다.");
+
+
+
+        public static string GetErrorMessage(MoveUsageResult result) 
+        => result switch
+        {
+            MoveUsageResult.NoPP => "PP가 모두 소진되어 사용할 수 없습니다.",
+            MoveUsageResult.EmptySlot => "배우지 않은 기술 슬롯입니다.",
+            _ => "지금은 그 기술을 사용할 수 없습니다."
+        };
     }
 }

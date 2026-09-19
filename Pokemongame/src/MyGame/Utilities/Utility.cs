@@ -1,6 +1,6 @@
 namespace MyGame.Utilities
 {
-    public static class Utilitiy
+    public static class Utility
     {
         /// <summary>
         /// 지정한 정수나 실수 백분율(0 ~ 100)로 성공 여부를 반환합니다.
@@ -21,8 +21,10 @@ namespace MyGame.Utilities
 
             return (Random.Shared.NextDouble() * 100.0) < percentage;
         }
-
+        /// <summary>
+        /// index >= 0 && index < count
+        /// </summary>
         public static bool IsValidIndex(int index, int count)
-            => index >= 0 && index < count;
+            => index >= 0 && index < count ;
     }
 }

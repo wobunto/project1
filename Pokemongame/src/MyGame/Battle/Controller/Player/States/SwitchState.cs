@@ -1,8 +1,19 @@
+using MyGame.Controllers;
+using MyGame.Commands;
+using MyGame.Inputs;
+
 namespace MyGame.ControllerStates
 {
-      public class SwitchState : PlayerState
+    public class SwitchState : PlayerState
     {
         public override void Enter(PlayerController context)
+        {
+            context.View.DisplayPartyMenu(context.Player.Party);
+        }
+        
+        public override void HandleInput(
+            PlayerController context,
+            Input input)
         {
             var player = context.Player;
             // 선택 완료 시 실행될 액션을 람다로 전달  (AI 도움)
@@ -15,21 +26,13 @@ namespace MyGame.ControllerStates
                 filter: player.CanSwitch, // 도메인에 위임된 규칙
                 canCancel: !context.ForceSwitch
             );
-    
-            context.PushState(selectState);
-        }
-        
-        public override void HandleInput(
-            PlayerController context,
-            Input input)
-        {
-            //Debug("선택 단계에서 취소"); 디버그를 아직 구현 안했으니 대충 주석
-            context.PopState();          
-        }
-        
-        public override void Update(PlayerController context)
-        {
             
+            context.PushState(selectState);        
+        }
+
+        public override void Resume(PlayerController context)
+        {
+              context.PopState(); 
         }
     }
 }

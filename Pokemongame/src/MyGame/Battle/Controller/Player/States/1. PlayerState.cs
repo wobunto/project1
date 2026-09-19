@@ -15,7 +15,7 @@ namespace MyGame.ControllerStates
         public abstract void HandleInput(
             PlayerController context,
             Input input);
-        
+        public virtual void Resume(PlayerController context) { }
         public virtual void Update(PlayerController context) { }
         public virtual void Enter(PlayerController context) { }
     }

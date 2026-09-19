@@ -1,6 +1,7 @@
-using MyGame.Utilities;
 using MyGame.Pokemons;
 using MyGame.BattleParticipant;
+using static MyGame.Utilities.Utility;
+
 
 namespace MyGame.States
 {
@@ -30,7 +31,7 @@ namespace MyGame.States
             if (_stateTurn >= 3)
                 return false;
 
-            if (_stateTurn == 2 && Chance.TryChance(33))
+            if (_stateTurn == 2 && TryChance(33))
                 return false;
 
             return true;

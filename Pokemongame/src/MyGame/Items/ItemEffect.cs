@@ -6,7 +6,7 @@ namespace MyGame.Items
     public interface IItemEffect
     {
         bool CanApply(IItemTarget pokemon);
-        void Apply(IItemTarget pokemon, int value);
+        void Apply(IItemTarget pokemon, int value = 0);
     }
     
     public class HealEffect : IItemEffect

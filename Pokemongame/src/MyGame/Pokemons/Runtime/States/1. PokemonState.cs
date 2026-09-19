@@ -12,11 +12,17 @@ namespace MyGame.States
             _pokemon = pokemon;
         }
 
-        public abstract StatusTurnResult TryExecute();
+        public virtual BeforeActionResult OnBeforeAction() => BeforeActionResult.CanAct;
 
-        protected bool IsDead()
-        {
-            return _pokemon.IsFainted;
-        }
+           
+        public virtual void OnAciton() { }
+
+        public virtual TurnEndResult OnTurnEnd() => TurnEndResult.None;
+        
+      
+
+        public virtual float ModifyAttack(float currentAttack) => currentAttack;
+        
+        public virtual float ModifySpeed(float currentSpeed) => currentSpeed;
     }
 }

@@ -1,6 +1,6 @@
 using MyGame.Pokemons;
 using MyGame.Logs;
-using static MyGame.Utilities.Utilitiy;
+using static MyGame.Utilities.Utility;
 
 namespace MyGame.Trainers
 {   
@@ -31,15 +31,23 @@ namespace MyGame.Trainers
             return true;
         }
 
-        public void SetActivePokemon(int index)
+        public void SetActivePokemon(int input)
         {
-            if(!CheckIndexMaxParty(index))
-                throw new InvalidOperationException("현재 잘못된 포켓몬 슬롯을 선택했습니다.");
+            if(!CheckIndexMaxParty(input))
+                throw new InvalidOperationException("현재 범위를 벗어난 포켓몬 슬롯을 선택했습니다.");
+
+            int index = input - 1;
+
+            if(index > Party.Count)
+            {
+                GameLog.Info("현재 범위를 벗어난 포켓몬 슬롯을 선택했습니다.");
+                return;
+            }
 
             PokemonRuntime pokemon = Party[index];
 
             if(pokemon.IsFainted)
-                throw new InvalidOperationException("현재 기절 포켓몬 슬롯을 선택했습니다.");
+                throw new InvalidOperationException("현재 기절한 포켓몬을 선택했습니다.");
             
             ActivePokemon = pokemon;
         }

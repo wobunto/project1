@@ -34,6 +34,10 @@ namespace MyGame.Controllers
 
             PushState(PlayerState.MenuSte);
         }
+        public void Enter()
+        {
+            CurrentState?.Enter(this);
+        }
         
         public void HandleInput(Input input)
         {
@@ -60,6 +64,7 @@ namespace MyGame.Controllers
             }
 
             _stateStack.Pop();
+            Enter();
         }
 
         public void ResetState()
@@ -77,7 +82,8 @@ namespace MyGame.Controllers
         {
             if (!input.IsCancel) return false;
             
-            this.PopState();
+            PopState();
+            
             return true;
         }
 

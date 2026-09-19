@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
-using MyGame.Logs;
 using MyGame.Moves;
 using MyGame.Types;
 using MyGame.States;
 using MyGame.PokemonDatas;
 using MyGame.BattleCalculators;
-using static MyGame.Utilities.Utilitiy;
+using MyGame.Utilities;
 
 namespace MyGame.Pokemons
 {
@@ -68,34 +67,30 @@ namespace MyGame.Pokemons
         {
             for(int i = 0; i < CurrentMoves.Count; i++)
             {
-                if(!(CurrentMoves[i].CurrentPP <= 0)) // 나중에 || move.UseMove 가 true 인지 추가
+                if(!CurrentMoves[i].HasPP) // 나중에 || move.UseMove 가 true 인지 추가
                     return true;     
             }
             return false;
         }
         
-        public bool TryGetUseableMove(int index, out MoveRuntime? move)
+        public MoveUsageResult TryGetUsableMove(int index, out MoveRuntime? move)
         {
-            if (!IsValidIndex(index, MaxMoveSlot))
-            {
-                GameLog.Error("입력한 기술의 번호가 너무 크거나 작습니다.");
+            move = null;
 
-                move = null;
-                return false;
-            }
+            if (!Utility.IsValidIndex(index, MaxMoveSlot))
+                return MoveUsageResult.InvalidSlot;
+
+            if(index >= _moves.Count)   //기술의 개수보다 더 큰 인덱스.
+                return MoveUsageResult.EmptySlot;
 
             if(_moves[index].CurrentPP <= 0)
-            {
-                move = null;
-                return false;
-            }
+                 return MoveUsageResult.NoPP;
 
             move = _moves[index];
-            return true;
-
+            return MoveUsageResult.Success;
         }
 
-        public bool TryGetPendingLevelUpMoveKey(out int key)
+        public bool TryGetPendingLevelUpMoveKey(out int key)   //일정 레벨이 되었는지 판단하는 메서드인데, 무브 데이터 쪽에 있어도 될지도
         {
             var autoMoves = Data.LevelUpAutoMoves;
 
@@ -110,6 +105,7 @@ namespace MyGame.Pokemons
 
             return true;
         }
+
         public bool TryAddMove(MoveData move)
         {
             if(_moves.Count >= MaxMoveSlot)
@@ -123,23 +119,17 @@ namespace MyGame.Pokemons
 
         public void InsertMove(MoveData movedata, int changeMoveSlot)
         {
-            if(!IsValidIndex(changeMoveSlot, MaxMoveSlot))
+            if(!Utility.IsValidIndex(changeMoveSlot, MaxMoveSlot))
                 throw new InvalidOperationException("현재 잘못된 기술 슬롯을 선택했습니다..");
             
             var move = new MoveRuntime(movedata); // 무브데이터로 새로운 런타임 초기화
-            _moves[changeMoveSlot] = move;
+
+            _moves.Add(move);
         }
 
-        public MoveRuntime GetStruggle()
-        {
-             MoveData struggle = MoveDatabase.Get(999);
-            
-             return new MoveRuntime(struggle);
-        }
-        
         public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
 
-        public void SetEffectState(EffectState effect)
+        public void SetEffectState(EffectState effect)   //포켓몬은 화상 상태에서 감전으로 바뀌지 않으니 try로 바꿔야 함
             => CurrentEffectState = effect;
     }
 }
