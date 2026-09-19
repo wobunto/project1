@@ -1,7 +1,7 @@
 using MyGame.Controllers;
 using MyGame.Pokemons;
 using MyGame.Inputs;
-
+using MyGame.Commands;
 
 namespace MyGame.ControllerStates
 {
@@ -34,7 +34,7 @@ namespace MyGame.ControllerStates
                     break;
 
                 case 3:
-                    context.PushState(SwitchSte);
+                    GetSelectPokemonState(context);
                     break;
 
                 case 4:
@@ -42,5 +42,22 @@ namespace MyGame.ControllerStates
                     break;
             }   
         } 
+
+        private void GetSelectPokemonState(PlayerController context)
+        {
+            var player = context.Player;
+            // 선택 완료 시 실행될 액션을 람다로 전달  (AI 도움)
+            var selectState = new SelectPokemonState(
+                onSelected: (index) =>
+                {
+                    var switchCmd = new SwitchCommand(player, index);
+                    context.FinishedTurn(switchCmd);
+                },
+                filter: player.CanSwitch, // 도메인에 위임된 규칙
+                canCancel: !context.ForceSwitch
+            );
+            
+            context.PushState(selectState);      
+        }
     }
 }

@@ -10,12 +10,12 @@ namespace MyGame.Commands
     public class AttackCommand : Command
     {
         private IBattlePokemon  _attacker;
-        private IBattleTrainer _defendTrainer;
+        private IBattleTarget _defendTrainer;
         private MoveRuntime _move;
 
         public AttackCommand(
             IBattlePokemon attacker,
-            IBattleTrainer defendTrainer,
+            IBattleTarget defendTrainer,
             MoveRuntime move)
         {
             _attacker = attacker;

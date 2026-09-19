@@ -8,7 +8,6 @@ namespace MyGame.ControllerStates
         public static readonly PlayerState MenuSte = new MenuState();
         public static readonly PlayerState AttackSte = new AttackState();
         public static readonly PlayerState ItemSte = new ItemState();
-        public static readonly PlayerState SwitchSte = new SwitchState();
         public static readonly PlayerState RunSte = new RunState();
         public static readonly PlayerState StruggleSte = new StruggleState();
      

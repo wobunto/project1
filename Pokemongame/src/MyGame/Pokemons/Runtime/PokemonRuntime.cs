@@ -67,7 +67,7 @@ namespace MyGame.Pokemons
         {
             for(int i = 0; i < CurrentMoves.Count; i++)
             {
-                if(!CurrentMoves[i].HasPP) // 나중에 || move.UseMove 가 true 인지 추가
+                if(CurrentMoves[i].HasPP) // 나중에 || move.UseMove 가 true 인지 추가
                     return true;     
             }
             return false;

@@ -11,7 +11,7 @@ namespace MyGame.Controllers
     {   
         public IPlayerView View { get; }
         public IBattleTrainer Player { get; }
-        public IBattleTrainer Enemy { get; }
+        public IBattleTarget Enemy { get; }
         
         public bool ForceSwitch {get; private set;}
         public bool IsTurnFinished { get; private set; }
@@ -23,14 +23,14 @@ namespace MyGame.Controllers
 
         public PlayerController(
             IBattleTrainer player,
-            IBattleTrainer enemy,
+            IBattleTarget enemy,
             IPlayerView view)
         {
             Player = player;
             Enemy = enemy;
             View = view;
 
-            SelectedCommand = new ErrorCommand();
+            SelectedCommand = BattleCommandFactory.CreateErrorCommand();
 
             PushState(PlayerState.MenuSte);
         }

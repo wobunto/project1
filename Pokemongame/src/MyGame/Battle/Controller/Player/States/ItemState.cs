@@ -53,7 +53,6 @@ namespace MyGame.ControllerStates
                 filter: effect.CanApply // 도메인에 위임된 규칙
             );
 
-            context.View.DisplayPartyMenu(context.Player.Party);
             context.PushState(selectState);
             //아이템으로 회복은 물론 상태회복,PP회복, 
             //데미지, 스피드 등의 랭크업도 가능하니 IBattle로 많은 기능

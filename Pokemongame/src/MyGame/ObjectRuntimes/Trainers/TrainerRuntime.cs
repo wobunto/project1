@@ -1,6 +1,6 @@
 using MyGame.Pokemons;
 using MyGame.Logs;
-using static MyGame.Utilities.Utility;
+using MyGame.Utilities;
 
 namespace MyGame.Trainers
 {   
@@ -8,7 +8,6 @@ namespace MyGame.Trainers
    {
         public const int MaxPartySlot = 6;
         
-    
         public IBattlePokemon ActivePokemon {get; private set;}
 
         private readonly List<PokemonRuntime> _party = new(MaxPartySlot);
@@ -25,24 +24,16 @@ namespace MyGame.Trainers
         
         public bool CheckIndexMaxParty(int index)
         { 
-             if(!IsValidIndex(index, MaxPartySlot))
+             if(!Utility.IsValidIndex(index, MaxPartySlot))
                 return false;
          
             return true;
         }
 
-        public void SetActivePokemon(int input)
+        public void SetActivePokemon(int index)
         {
-            if(!CheckIndexMaxParty(input))
-                throw new InvalidOperationException("현재 범위를 벗어난 포켓몬 슬롯을 선택했습니다.");
-
-            int index = input - 1;
-
-            if(index > Party.Count)
-            {
-                GameLog.Info("현재 범위를 벗어난 포켓몬 슬롯을 선택했습니다.");
-                return;
-            }
+            if(index >= Party.Count)
+                throw new InvalidOperationException("현재 범위를 벗어난 포켓몬 슬롯이 났습니다.");
 
             PokemonRuntime pokemon = Party[index];
 

@@ -7,11 +7,12 @@ namespace MyGame.Commands
 {
     public static class BattleCommandFactory
     {
+        private static ErrorCommand? _cashedErrorCommand;
         // 일반 공격 커맨드 생성
-        public static AttackCommand CreateAttackCommand(IBattlePokemon attacker, IBattleTrainer defender, MoveRuntime move)
+        public static AttackCommand CreateAttackCommand(IBattlePokemon attacker, IBattleTarget defender, MoveRuntime move)
             => new AttackCommand(attacker, defender, move);
         
-        public static AttackCommand CreateStruggleCommand(IBattlePokemon attacker, IBattleTrainer defender)
+        public static AttackCommand CreateStruggleCommand(IBattlePokemon attacker, IBattleTarget defender)
         {
             var struggleMove = MoveFactory.GetStruggle();
             return new AttackCommand(attacker, defender, struggleMove);
@@ -28,5 +29,10 @@ namespace MyGame.Commands
 
         public static ExitCommand CreateExitCommand()
             => new ExitCommand();    
+
+        public static ErrorCommand CreateErrorCommand()
+        {
+            return _cashedErrorCommand ??= new ErrorCommand();
+        }
     }
 }

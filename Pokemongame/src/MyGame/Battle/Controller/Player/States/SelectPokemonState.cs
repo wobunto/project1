@@ -19,7 +19,7 @@ namespace MyGame.ControllerStates
             
         public override void Enter(PlayerController context)
         {
-            
+            context.View.DisplayPartyMenu(context.Player.Party);
         }
         
          public override void HandleInput(

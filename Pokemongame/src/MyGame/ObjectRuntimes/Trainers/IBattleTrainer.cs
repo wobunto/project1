@@ -1,12 +1,15 @@
 using MyGame.Pokemons;
-using MyGame.Moves;
 
 namespace MyGame.Trainers
 {
-    public interface IBattleTrainer 
+    public interface IBattleTarget
+    {
+        IBattlePokemon ActivePokemon { get; }   // 호출할 때마다 "현재" 포켓몬을 반환
+    }
+
+    public interface IBattleTrainer : IBattleTarget
     {     
         IReadOnlyList<PokemonRuntime> Party { get; }
-        IBattlePokemon ActivePokemon { get; }
         IReadOnlyDictionary<int, int> Inventory {get; }
 
         void SetActivePokemon(int index);
@@ -17,6 +20,4 @@ namespace MyGame.Trainers
         bool ConsumeItem(int itemKey, int amount);
         bool CanSwitch(IBattlePokemon pokemon);
     }
-
-
 }
