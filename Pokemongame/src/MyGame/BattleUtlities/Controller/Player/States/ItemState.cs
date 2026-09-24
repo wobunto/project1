@@ -21,7 +21,7 @@ namespace MyGame.ControllerStates
             PlayerController context,
             Input input)
         {
-            if(context.IsBack(input)) return; 
+            if(context.TryBackState(input)) return; 
        
             var items = GetValidInventory(context);
 

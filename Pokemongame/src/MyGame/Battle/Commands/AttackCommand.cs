@@ -27,8 +27,6 @@ namespace MyGame.Commands
         {
             var _defender = _defendTrainer.ActivePokemon;
             
-            _move.TryConsumePP();
-
             float typeMultiplier = 
                     TypeEffectiveness.CalculateTypeMultiplier(
                     _move.MoveType,

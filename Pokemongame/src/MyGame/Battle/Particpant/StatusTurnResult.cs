@@ -1,4 +1,4 @@
- namespace MyGame.BattleParticipant
+ namespace MyGame.BattleParticipants
  {
     public enum BeforeActionResult
     {

@@ -10,8 +10,13 @@ namespace MyGame.Commands
         private static ErrorCommand? _cashedErrorCommand;
         // 일반 공격 커맨드 생성
         public static AttackCommand CreateAttackCommand(IBattlePokemon attacker, IBattleTarget defender, MoveRuntime move)
-            => new AttackCommand(attacker, defender, move);
-        
+        {
+            if(move.TryConsumePP())
+              throw new InvalidOperationException("현재 pp가 0인 기술을 사용했습니다.");
+
+            return new AttackCommand(attacker, defender, move);
+         }
+
         public static AttackCommand CreateStruggleCommand(IBattlePokemon attacker, IBattleTarget defender)
         {
             var struggleMove = MoveFactory.GetStruggle();

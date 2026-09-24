@@ -1,10 +1,11 @@
 using MyGame.Pokemons;
 using MyGame.States;
 using MyGame.Trainers;
+using MyGame.NameTables;
 using MyGame.Controllers;
 using MyGame.Commands;
 
-namespace MyGame.BattleParticipant
+namespace MyGame.BattleParticipants
 {
     public class BattleParticipant
     {
@@ -14,7 +15,10 @@ namespace MyGame.BattleParticipant
 
         public EffectState CurrentPokemonState
             =>  _trainer.ActivePokemon.CurrentEffectState;
-
+        
+        public string Name 
+            => NameTable.GetTrainer(_trainer.NameId);
+        
         public int MaxHp
             => _trainer.ActivePokemon.MaxHp;
 
@@ -30,9 +34,9 @@ namespace MyGame.BattleParticipant
             _trainer = trainer;
         }
 
-        public void HandleInput()
+        public void SelectCommand()
         {
-          
+            _controller.Start();
         }
     }
 }

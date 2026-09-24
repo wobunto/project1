@@ -17,7 +17,7 @@ namespace MyGame.ControllerStates
             var _attacker = context.Player.ActivePokemon;  
             var _defender = context.Enemy;        
             
-            if(context.IsBack(input)) return;
+            if(context.TryBackState(input)) return;
             
             int index = input.Value - 1;
 

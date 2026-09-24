@@ -13,7 +13,7 @@ namespace MyGame.Controllers
         public IBattleTrainer Player { get; }
         public IBattleTarget Enemy { get; }
         
-        public bool ForceSwitch {get; private set;}
+        public bool ForceSwitch {get; private set;}       //얘가 여기 필요한가? 아직 미구현 
         public bool IsTurnFinished { get; private set; }
         public Command SelectedCommand { get; private set; }
         
@@ -31,9 +31,12 @@ namespace MyGame.Controllers
             View = view;
 
             SelectedCommand = BattleCommandFactory.CreateErrorCommand();
-
-            PushState(PlayerState.MenuSte);
         }
+        public void Start()
+        {
+            
+        }
+
         public void Enter()
         {
             CurrentState?.Enter(this);
@@ -64,21 +67,19 @@ namespace MyGame.Controllers
             }
 
             _stateStack.Pop();
-            Enter();
         }
 
         public void ResetState()
         {
-            while (_stateStack.Count > 0)
-            {
-                _stateStack.Pop();
-            }
-
-            PushState(PlayerState.MenuSte);
+             _stateStack.Clear();
+            
+            SelectedCommand = BattleCommandFactory.CreateErrorCommand();
+            
             IsTurnFinished = false;
+            PushState(PlayerState.MenuSte);
         }
 
-        public bool IsBack(Input input)
+        public bool TryBackState(Input input)
         {
             if (!input.IsCancel) return false;
             

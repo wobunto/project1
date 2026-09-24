@@ -12,12 +12,13 @@ namespace MyGame.Trainers
         IReadOnlyList<PokemonRuntime> Party { get; }
         IReadOnlyDictionary<int, int> Inventory {get; }
 
+        int NameId {get;}
+
         void SetActivePokemon(int index);
 
         bool CanBattle();
+        bool CanSwitch(IBattlePokemon pokemon);
         bool HasItem(int itemKey);
         bool TryUseItem(int itemKey);    // 성공 시 수량 -1, 0 되면 슬롯 제거
-        bool ConsumeItem(int itemKey, int amount);
-        bool CanSwitch(IBattlePokemon pokemon);
     }
 }

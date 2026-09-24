@@ -1,5 +1,5 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipant;
+using MyGame.BattleParticipants;
 
 namespace MyGame.States
 {   

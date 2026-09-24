@@ -21,8 +21,9 @@ namespace MyGame.Utilities
 
             return (Random.Shared.NextDouble() * 100.0) < percentage;
         }
+
         /// <summary>
-        /// index >= 0 && index < count
+        /// index가 양수이며 count 보다 작은지 검사하는 함수.
         /// </summary>
         public static bool IsValidIndex(int index, int count)
             => index >= 0 && index < count ;

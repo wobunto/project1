@@ -40,6 +40,10 @@ namespace MyGame.ControllerStates
                 case 4:
                     context.PushState(RunSte);
                     break;
+                    
+                default:            
+                    context.View.DisplayMessage("잘못된 번호입니다.");
+                    break;
             }   
         } 
 

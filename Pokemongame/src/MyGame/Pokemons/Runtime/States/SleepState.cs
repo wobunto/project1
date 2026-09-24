@@ -1,6 +1,6 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipant;
-using static MyGame.Utilities.Utility;
+using MyGame.BattleParticipants;
+using MyGame.Utilities;
 
 
 namespace MyGame.States

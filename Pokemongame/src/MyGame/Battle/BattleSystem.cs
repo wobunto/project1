@@ -1,25 +1,32 @@
-using MyGame.Logs;
+using MyGame.Views;
+using MyGame.BattleParticipants;
 
 namespace MyGame.BattleSystem
 {
     public class BattleSystem
     {
-        
-        
+        private IPlayerView _battleView;
 
-        public void StartBattle()
+        public BattleSystem(IPlayerView view)
         {
-            GameLog.Info("포켓몬 배틀을 시작합니다!");
+            _battleView = view;
+        }
+
+        public void StartTrianerBattle(BattleParticipant player, BattleParticipant Enemy)
+        {
+             
+            _battleView.DisplayMessage($"{Enemy.Name}과의 배틀이 시작됐다!");
 
             while (true)        
             {
- 
-
-
-
-
-                GameLog.Info("-----------------------------------");
+                 _battleView.DisplayMessage("-----------------------------------");
+                
             }
+        }
+    
+        public void TurnSelect(BattleParticipant selector)
+        {
+                selector.SelectCommand();
         }
     }
 

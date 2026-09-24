@@ -25,7 +25,8 @@ namespace MyGame.Commands
 
         public override void Execute()
         {
-            _trainer.ConsumeItem(_item.Key, _useOne);
+            if(!_trainer.ConsumeItem(_item.Key, _useOne))
+                throw new InvalidOperationException("현재 소지하지 않은 아이템을 선택했습니다.");
             
             IItemEffect effect = ItemEffectFactory.Create(_item.Effect);
             
