@@ -1,4 +1,5 @@
-using MyGame.Controllers;
+using System.Formats.Asn1;
+using MyGame.BattleControllers;
 using MyGame.Inputs;
 using MyGame.Logs;
 using MyGame.Pokemons;
@@ -18,16 +19,25 @@ namespace MyGame.ControllerStates
             _canCancel = canCancel;
         }
             
-        public override void Enter(PlayerController context)
+        public override void Enter(IBattleStateContext context)
         {
             context.View.DisplayPartyMenu(context.Player.Party);
         }
         
          public override void HandleInput(
-            PlayerController context,
+            IBattleStateContext context,
             Input input)
         {
-            if(_canCancel && context.TryBackState(input)) return;
+            if (input.IsCancel)
+            {
+                if (_canCancel)
+                    context.PopState(); // 이전 상태(메뉴)로 복귀
+                                
+                else
+                    // 강제 교체일 때는 취소 불가 메시지 출력
+                    context.View.DisplayMessage("지금은 교체를 취소할 수 없습니다. 포켓몬을 선택하세요!");
+                return;
+            }
 
             int index = input.Value - 1;
             

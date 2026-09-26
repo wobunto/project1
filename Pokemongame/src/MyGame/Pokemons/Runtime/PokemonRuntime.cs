@@ -3,71 +3,151 @@ using MyGame.Moves;
 using MyGame.Types;
 using MyGame.States;
 using MyGame.PokemonDatas;
+using static MyGame.Rules.PokemonRules;
 using MyGame.BattleCalculators;
 using MyGame.Utilities;
 
 namespace MyGame.Pokemons
-{
-    public class PokemonRuntime : IBattlePokemon, IItemTarget
-    {     //전투 중에 변하는 포켓몬 스탯
-        public const int MaxMoveSlot = 4;         //기술 개수는 총 4개
-        
+{  
+    public class PokemonRuntime : IBattlePokemon, IItemTarget //전투 중에 변하는 포켓몬 스탯 
+    {        // 랭크 및 제약이 있는 스탯들의 백킹 필드
+        private int _attackStage;
+        private int _speedStage;
+        private int _level;
+        private int _currentHp;
+
         private readonly List<MoveRuntime> _moves = new(MaxMoveSlot);    //기술 리스트
-        public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     //기술 리스트
-
+        // --------------------------------------------------
+        // [2] 기본 정보 Base Data
+        // --------------------------------------------------
         public PokemonData Data {get; private set;}
-        public int Level {get; private set;}
-        public int Exp {get; private set;}
-        public int CurrentHp {get; private set;}
-        public int AttackStage{get; set;}              //공격 랭크
-        public int SpeedStage{get;set;}                //속도 랭크
-        public EffectState CurrentEffectState {get; private set;}               //저림, 수면 등의 상태
-
         public string Name => Data.Name;
+        public int Exp {get; private set;}
         public IReadOnlyList<PokemonType> Types => Data.Types;
-        
-        public int MaxHp => BattleCalculator.CalculateMaxHp(Data.BaseHp, Level);
-        public int CurrentSpeed => BattleCalculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
-        public int CurrentAttack =>  BattleCalculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
+        public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     
 
-        private int _nextLevelUpMoveIndex = 0;
+        // --------------------------------------------------
+        // [3] 현재 전투 상태 
+        // --------------------------------------------------
+        public EffectState CurrentEffectState {get; private set;}               //저림, 수면 등의 상태
         public bool IsFainted => CurrentHp <= 0;
+
+        public int Level 
+        {
+            get => _level; 
+            private set => _level = Math.Clamp(value, 1, 100);
+        }
+
+        public int CurrentHp
+        {
+            get => _currentHp; 
+            private set => _currentHp = Math.Clamp(value, 0, MaxHp);
+        }
+        //   랭크
+        public int AttackStage
+        {
+            get => _attackStage; 
+            private set => _attackStage = Math.Clamp(value,0,6);
+        }   
+
+        public int SpeedStage    
+        {
+            get => _speedStage; 
+            private set => _speedStage = Math.Clamp(value,0,6);
+        }    
+        // --------------------------------------------------
+        // [4] 최종 계산 스탯 
+        // --------------------------------------------------
+        public int MaxHp 
+            => BattleCalculator.CalculateMaxHp(Data.BaseHp, Level);
+
+        public int CurrentSpeed 
+            => BattleCalculator.CalculateCurrentSpeed(Data.BaseSpeed, SpeedStage);
+
+        public int CurrentAttackDamage 
+            =>  BattleCalculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
 
         public PokemonRuntime(PokemonData data, int level)
         {
-            Reinitialize(data, level);
-        }
-        
-        [MemberNotNull(nameof(Data))]
-        internal void Reinitialize(PokemonData data, int level)
-        {
-            Data = data;             //초기화  ?? throw new ArgumentNullException(nameof(data))
-            Level = Math.Clamp(level,1,100);
+            if(data == null)
+                throw new ArgumentNullException(nameof(data));
+            
+            Data = data;            
+            _level = level;
             CurrentHp = MaxHp;
+        }
+        // ==================================================
+        // [5] 전투 생명주기 및 HP (Combat LifeCycle & HP)
+        // ==================================================
+        public void TakeDamage(int damage) //데미지가 음수 일 수 있지만 재미 요소
+        {
+            if (IsFainted) return;
 
-            //_moves.Clear(); 필요한지 안한지 고민좀 해봐야 할 듯
+            CurrentHp -= damage;
+                
+            if (IsFainted)    // 기절 시 필요한 부가 처리 (랭크 초기화 등)
+                OnFainted();
+        }
+        
+        public bool TryHeal(int amount)
+        {
+            if(IsFainted)
+                return false;
+
+            if(CurrentHp >= MaxHp)
+                return false;
+
+            CurrentHp += amount;
+            return true;
         }
 
-        public void TakeDamage(int damage) //데미지가 음수 일 수 있지만 재미 요소
-            => CurrentHp = Math.Clamp(CurrentHp - damage, 0, MaxHp);  
-        
-        public void Heal(int amount)
-            => CurrentHp = Math.Clamp(CurrentHp + amount, 0, MaxHp);
-
-        public void FullHeal()
-            => CurrentHp = MaxHp;
-        
-        public void Revive()           //꼭 필요한가..?
-            => CurrentHp = MaxHp/2;
-        
-        public bool IsMoveSlotsFull()
-            => _moves.Count >= MaxMoveSlot;
-
-        public bool IsAbleMove()
+        public bool TryFullHeal()
         {
-            for(int i = 0; i < CurrentMoves.Count; i++)
+            if(IsFainted)
+                return false;
+
+            if (CurrentHp >= MaxHp && CurrentEffectState == EffectState.None)
+                return false;
+
+            CurrentHp = MaxHp;
+            SetEffectState(EffectState.None);  // 상태를 정상으로
+
+            return true;
+        }
+
+        public bool TryRevive() //나중에 인자로 풀피로 회복할 것인지 반피로 회복할 것인지 Enum으로 받아서 처리.      
+        {
+            if (!IsFainted)
+                return false;
+
+            CurrentHp = MaxHp/2;
+            return true;
+        }
+        // ==================================================
+        // [6] 랭크 및 상태 이상 (Stages & Status Effects)
+        // ==================================================
+        public void ModifyAttackStage(int amount) 
+            => AttackStage += amount; // 
+
+        public void ModifySpeedStage(int amount) 
+            => SpeedStage += amount; // 
+        
+        public bool TrySetEffectState(EffectState effect)
+        {
+            if (!(CurrentEffectState == EffectState.None))
+                return false;
+
+            SetEffectState(effect);
+            return true;
+        }
+        // ==================================================
+        // [7] 전투 행동 판정 (Battle Actions & Usability)
+        // ==================================================
+        public bool HasAnyUsableMove()
+        {
+            for(int i = 0; i < _moves.Count; i++)
             {
-                if(CurrentMoves[i].HasPP) // 나중에 || move.UseMove 가 true 인지 추가
+                if(_moves[i].HasPP) // 나중에 || move.UseMove 가 true 인지 추가
                     return true;     
             }
             return false;
@@ -80,7 +160,7 @@ namespace MyGame.Pokemons
             if (!Utility.IsValidIndex(index, MaxMoveSlot))
                 return MoveUsageResult.InvalidSlot;
 
-            if(index >= _moves.Count)   //기술의 개수보다 더 큰 인덱스.
+            if(index >= _moves.Count)   
                 return MoveUsageResult.EmptySlot;
 
             if(_moves[index].CurrentPP <= 0)
@@ -89,23 +169,9 @@ namespace MyGame.Pokemons
             move = _moves[index];
             return MoveUsageResult.Success;
         }
-
-        public bool TryGetPendingLevelUpMoveKey(out int key)   //일정 레벨이 되었는지 판단하는 메서드인데, 무브 데이터 쪽에 있어도 될지도
-        {
-            var autoMoves = Data.LevelUpAutoMoves;
-
-            if (_nextLevelUpMoveIndex >= autoMoves.Count || 
-                autoMoves[_nextLevelUpMoveIndex].Level != Level)
-            {
-                key = default;
-                return false;
-            }
-
-            key = autoMoves[_nextLevelUpMoveIndex].MoveKey;
-
-            return true;
-        }
-
+        // ==================================================
+        // [8] 기술 관리 및 인벤토리 (Move Management)
+        // ==================================================
         public bool TryAddMove(MoveData move)
         {
             if(_moves.Count >= MaxMoveSlot)
@@ -117,19 +183,39 @@ namespace MyGame.Pokemons
             return true;
         }
 
-        public void InsertMove(MoveData movedata, int changeMoveSlot)
+        public void ReplaceMove(MoveData movedata, int changeMoveSlot)
         {
-            if(!Utility.IsValidIndex(changeMoveSlot, MaxMoveSlot))
+            if(!Utility.IsValidIndex(changeMoveSlot, _moves.Count))
                 throw new InvalidOperationException("현재 잘못된 기술 슬롯을 선택했습니다..");
             
             var move = new MoveRuntime(movedata); // 무브데이터로 새로운 런타임 초기화
 
-            _moves.Add(move);
+            _moves[changeMoveSlot] = move;
         }
-
-        public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
-
-        public void SetEffectState(EffectState effect)   //포켓몬은 화상 상태에서 감전으로 바뀌지 않으니 try로 바꿔야 함
+        // ==================================================
+        // [9] 내부 보조 로직 (Private Helpers)
+        // ==================================================
+        private void SetEffectState(EffectState effect)  
             => CurrentEffectState = effect;
+        
+        private void OnFainted()
+        {
+            SetEffectState(EffectState.None);
+            AttackStage = Reset;
+            SpeedStage = Reset;
+        }
     }
 }
+
+  /*
+        [MemberNotNull(nameof(Data))] 
+        internal void Reinitialize(PokemonData data, int level)      필요한지 안한지 고민좀 해봐야 할 듯
+        {
+            Data = data;             //초기화  ?? throw new ArgumentNullException(nameof(data))
+            Level = Math.Clamp(level,1,100);
+            CurrentHp = MaxHp;
+
+            _moves.Clear(); 
+        }
+        */
+        

@@ -1,11 +1,17 @@
 using MyGame.Trainers;
+using MyGame.BattleSystem;
 
 namespace MyGame.Commands
 {
-   public class SwitchCommand : Command
+   public class SwitchCommand : IBattleCommand
     {
         private IBattleTrainer _trainer;
         private int _index;
+
+        public BattlePriority Priority 
+        {
+            get => BattlePriority.Behavior;
+        }  
 
         public SwitchCommand(
             IBattleTrainer trainer,
@@ -15,9 +21,10 @@ namespace MyGame.Commands
             _index = index;
         }
 
-        public override void Execute()
+        public void Execute()
         {
-            _trainer.SetActivePokemon(_index);
+            if(!_trainer.TrySetActivePokemon(_index))
+                throw new InvalidOperationException("포켓몬이 ActivePokemon으로 지정되지 못헀습니다.");
         }
     }
 }

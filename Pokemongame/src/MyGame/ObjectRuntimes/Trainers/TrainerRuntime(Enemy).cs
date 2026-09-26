@@ -1,9 +1,10 @@
-using MyGame.Trainers;
-
-namespace Pokemongame
+namespace MyGame.Trainers
 {
     public class EnemyRuntime : TrainerRuntime
     {
-        //아직 미구현
+        public EnemyRuntime(int nameId)
+            : base(nameId)
+        {
+        }
     }
 }

@@ -10,14 +10,13 @@ namespace MyGame.BattleCalculators
         public static bool IsFaster(int speedA, int speedB)
         {
             if (speedA == speedB)
-                return Chance.TryChance(50); // 동속일 때 50% 랜덤
+                return Utility.TryChance(50); // 동속일 때 50% 랜덤
 
             return speedA > speedB;
         }
-
+        
         public static int CalculateMaxHp(int baseHp, int level)
             => baseHp + (level * 3);
-
         /// <summary>
         /// 랭크 변화에 따른 스피드 배율 계산 (-6 ~ +6)
         /// </summary>
@@ -26,7 +25,6 @@ namespace MyGame.BattleCalculators
             float multiplier = GetStageMultiplier(speedStage);
             return (int)(baseSpeed * multiplier);
         }
-
         /// <summary>
         /// 랭크 변화에 따른 공격력 배율 계산 (-6 ~ +6)
         /// </summary>
@@ -35,7 +33,6 @@ namespace MyGame.BattleCalculators
             float multiplier = GetStageMultiplier(attackStage);
             return (int)(baseAttack * multiplier);
         }
-
         /// <summary>
         /// 랭크 단계(-6 ~ +6)를 배율로 변환 (포켓몬 공식 룰 간소화)
         /// +1: 1.5배, +2: 2.0배 / -1: 0.66배, -2: 0.5배
@@ -47,8 +44,6 @@ namespace MyGame.BattleCalculators
             
             return 2f / (2f - stage);
         }
-
-    
         /// <summary>
         /// 최종 데미지 계산 (무효 상성 시 0 데미지 보장)
         /// </summary>

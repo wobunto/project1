@@ -2,19 +2,19 @@ using MyGame.Pokemons;
 
 namespace MyGame.Trainers
 {
-    public interface IBattleTarget
+    public interface IBattleTargetTrainer
     {
-        IBattlePokemon ActivePokemon { get; }   // 호출할 때마다 "현재" 포켓몬을 반환
+        IBattlePokemon? ActivePokemon { get; }   // 호출할 때마다 "현재" 포켓몬을 반환
     }
 
-    public interface IBattleTrainer : IBattleTarget
+    public interface IBattleTrainer : IBattleTargetTrainer
     {     
         IReadOnlyList<PokemonRuntime> Party { get; }
         IReadOnlyDictionary<int, int> Inventory {get; }
 
         int NameId {get;}
 
-        void SetActivePokemon(int index);
+        bool TrySetActivePokemon(int index);
 
         bool CanBattle();
         bool CanSwitch(IBattlePokemon pokemon);

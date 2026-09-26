@@ -7,32 +7,40 @@ namespace MyGame.Pokemons
     public interface IBattlePokemon
     {  
         string Name {get;}
-        int SpeedStage {get;} 
-        int Level {get;}
-        int CurrentAttack { get; }
-        int AttackStage {get; } 
         int MaxHp { get; }
-        bool IsFainted {get;}
-
-        EffectState CurrentEffectState {get; }
-
         IReadOnlyList<PokemonType> Types {get;}
         IReadOnlyList<MoveRuntime> CurrentMoves {get;}
+
+        int Level {get;}
+        int CurrentAttackDamage { get; }
+        int CurrentSpeed {get;}
+        bool IsFainted {get;}
+        EffectState CurrentEffectState {get; }
         
-        bool IsAbleMove();
-        MoveUsageResult TryGetUsableMove(int index, out MoveRuntime? move);
+        bool TryHeal(int amount);
         void TakeDamage(int damage); 
+
+        void ModifySpeedStage(int amount);
+        void ModifyAttackStage(int amount);
+        bool TrySetEffectState(EffectState state);
+
+        MoveUsageResult TryGetUsableMove(int index, out MoveRuntime? move);
+        bool HasAnyUsableMove();
     }
 
     public interface IItemTarget
     {
+        int MaxHp { get; }
+
         bool IsFainted { get; }
         int CurrentHp { get; }
-        int MaxHp { get; }
     
-        void Heal(int amount);
-        void FullHeal();
-        void SetEffectState(EffectState state);
-        void Revive();
+        bool TryHeal(int amount);
+        bool TryFullHeal();
+        bool TryRevive();
+        
+        bool TrySetEffectState(EffectState state);
+        void ModifySpeedStage(int amount);
+        void ModifyAttackStage(int amount);
     }
 }

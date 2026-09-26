@@ -1,6 +1,7 @@
 using MyGame.Pokemons;
 using MyGame.Moves;
 using MyGame.Items;
+using MyGame.BattleCommanders;
 
 namespace MyGame.Views
 {
@@ -11,6 +12,7 @@ namespace MyGame.Views
         void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
         void DisplayPartyMenu(IReadOnlyList<PokemonRuntime> party);
         void DisplayMessage(String message);
+        void DisplayStartBattle(IBattleCommander Enemy);
     }
     
     public class ConsolePlayerView : IPlayerView
@@ -18,6 +20,11 @@ namespace MyGame.Views
         public void DisplayMessage(String message)
         {
             Console.WriteLine(message);
+        }
+
+        public void DisplayStartBattle(IBattleCommander Enemy)
+        {
+            DisplayMessage($"{Enemy.NameId}과의 배틀이 시작됐다!");
         }
 
         public void DisplayCommandMenu()

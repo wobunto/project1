@@ -1,7 +1,10 @@
+using MyGame.BattleSystem;
+
 namespace MyGame.Commands
 {
-    public abstract class Command
+    public interface IBattleCommand
     {
-        public abstract void Execute();
+        BattlePriority Priority {get;}
+        void Execute();
     }
 }

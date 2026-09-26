@@ -1,4 +1,4 @@
-using MyGame.Controllers;
+using MyGame.BattleControllers;
 using MyGame.Commands;
 using MyGame.Logs;
 using MyGame.Inputs;
@@ -10,7 +10,7 @@ namespace MyGame.ControllerStates
 {
     public class ItemState : PlayerState
     {
-        public override void Enter(PlayerController context)
+        public override void Enter(IBattleStateContext context)
         {
             IReadOnlyList<InventoryItem> items = GetValidInventory(context);
         
@@ -18,7 +18,7 @@ namespace MyGame.ControllerStates
         }
         
         public override void HandleInput(
-            PlayerController context,
+            IBattleStateContext context,
             Input input)
         {
             if(context.TryBackState(input)) return; 
@@ -57,7 +57,7 @@ namespace MyGame.ControllerStates
             //아이템으로 회복은 물론 상태회복,PP회복, 
             //데미지, 스피드 등의 랭크업도 가능하니 IBattle로 많은 기능
         }
-        private List<InventoryItem> GetValidInventory(PlayerController context)
+        private List<InventoryItem> GetValidInventory(IBattleStateContext context)
         {
             var result = new List<InventoryItem>();
 

@@ -4,37 +4,42 @@ using MyGame.ControllerStates;
 using MyGame.Logs;
 using MyGame.Views;
 using MyGame.Inputs;
+using MyGame.Pokemons;
 
-namespace MyGame.Controllers
+namespace MyGame.BattleControllers
 {
-    public class PlayerController : IBattleController
+    public class BattleController : IBattleStateContext
     {   
+        private readonly Stack<PlayerState> _stateStack = new Stack<PlayerState>();
+        private PlayerState? CurrentState 
+        {
+                get => _stateStack.Count > 0 ? _stateStack.Peek() : null;
+        }
+
         public IPlayerView View { get; }
         public IBattleTrainer Player { get; }
-        public IBattleTarget Enemy { get; }
-        
-        public bool ForceSwitch {get; private set;}       //얘가 여기 필요한가? 아직 미구현 
-        public bool IsTurnFinished { get; private set; }
-        public Command SelectedCommand { get; private set; }
-        
-        private readonly Stack<PlayerState> _stateStack = new Stack<PlayerState>();
-        
-        public PlayerState CurrentState => _stateStack.Peek();
+        public IBattleTargetTrainer Enemy { get; }
 
-        public PlayerController(
+        public bool ForceSwitch {get; private set;}
+        public bool IsTurnFinished { get; private set; }
+        public IBattleCommand SelectedCommand { get; private set; }
+        
+        public BattleController(
             IBattleTrainer player,
-            IBattleTarget enemy,
+            IBattleTargetTrainer enemy,
             IPlayerView view)
         {
+            if(enemy.ActivePokemon == null)           //배틀 컨트롤러는 배틀이 시작한 뒤 만들어지니 ActivePokemon이 존재해야 함
+                throw new InvalidOperationException("현재 enemy.ActivePokemon이 null입니다.");
+            if(player.ActivePokemon == null)
+                throw new InvalidOperationException("현재 player.ActivePokemon이 null입니다.");
+
             Player = player;
             Enemy = enemy;
             View = view;
-
+    
+            ForceSwitch = false;
             SelectedCommand = BattleCommandFactory.CreateErrorCommand();
-        }
-        public void Start()
-        {
-            
         }
 
         public void Enter()
@@ -67,6 +72,8 @@ namespace MyGame.Controllers
             }
 
             _stateStack.Pop();
+            
+            CurrentState?.Enter(this);
         }
 
         public void ResetState()
@@ -76,22 +83,37 @@ namespace MyGame.Controllers
             SelectedCommand = BattleCommandFactory.CreateErrorCommand();
             
             IsTurnFinished = false;
-            PushState(PlayerState.MenuSte);
+            PushState(PlayerState.MenuState);
         }
 
         public bool TryBackState(Input input)
         {
-            if (!input.IsCancel) return false;
-            
+            if (!input.IsCancel) 
+                return false;
+    
             PopState();
-            
             return true;
         }
 
-        public void FinishedTurn(Command command)
+        public void FinishedTurn(IBattleCommand command)
         {
             SelectedCommand = command;
+            ForceSwitch = false;
             IsTurnFinished = true;
+        }
+
+        public IBattlePokemon GetActivePokemon()
+        {
+            if(Player.ActivePokemon == null)
+                throw new InvalidOperationException("현재 ActivePokemon이 null입니다.");
+
+            return Player.ActivePokemon;
+        }
+        
+        public void PushForceSwitchState()
+        {
+            ForceSwitch = true;
+            PushState(PlayerState.SwitchState);
         }
     }
 }

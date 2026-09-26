@@ -3,6 +3,17 @@ namespace MyGame.Utilities
     public static class Utility
     {
         /// <summary>
+        /// 1부터 max까지의 정수 중 하나를 동일한 확률로 반환합니다.
+        /// </summary>
+        public static int RandomIndex(int max)
+        {
+            if (max <= 0)
+                throw new ArgumentOutOfRangeException(nameof(max));
+
+            return Random.Shared.Next(1, max + 1);
+        }
+
+        /// <summary>
         /// 지정한 정수나 실수 백분율(0 ~ 100)로 성공 여부를 반환합니다.
         /// 사용 예: if (Chance.TryChance(50)) // 50% 확률
         /// </summary>

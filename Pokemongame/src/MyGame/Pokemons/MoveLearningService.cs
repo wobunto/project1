@@ -2,10 +2,31 @@ using MyGame.Pokemons;
 using MyGame.Logs;
 using MyGame.Inputs;
 
+/*
 namespace MyGame.Moves
 {
-    public static class MoveLearningService
+    
+    public class MoveLearningService
     {
+        private int _nextLevelUpMoveIndex = 0;
+
+        public void AdvancePendingLevelUpMove() => _nextLevelUpMoveIndex++;
+
+        public bool TryGetPendingLevelUpMoveKey(out int key)   //일정 레벨이 되었는지 판단하는 메서드인데, 무브 데이터 쪽에 있어도 될지도
+        {
+            var autoMoves = Data.LevelUpAutoMoves;
+
+            if (_nextLevelUpMoveIndex >= autoMoves.Count || 
+                autoMoves[_nextLevelUpMoveIndex].Level != Level)
+            {
+                key = default;
+                return false;
+            }
+
+            key = autoMoves[_nextLevelUpMoveIndex].MoveKey;
+
+            return true;
+        }
         /// <summary>
         /// 플레이어가 기술을 배울 때의 콘솔 UI 상호작용을 처리합니다. 
         /// 나중에는 배틀 중에서도 레벨업하면 Move를 배울 수 있도록 PlayerControoler에 추가.
@@ -44,3 +65,4 @@ namespace MyGame.Moves
         }
     }
 }
+*/

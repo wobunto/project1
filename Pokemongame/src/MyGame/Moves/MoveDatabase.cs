@@ -7,17 +7,15 @@ namespace MyGame.Moves
 {
     public static class MoveDatabase
     {
-        private static readonly Dictionary<int, MoveData> _moves = new();
-
-        public static IReadOnlyDictionary<int, MoveData> Moves => _moves;
-
-        public const int IdStruggle = 999;
-
         private static readonly JsonSerializerOptions _jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
             Converters = { new JsonStringEnumConverter() }
         };
+        private static readonly Dictionary<int, MoveData> _moves = new();
+        
+        public const int IdStruggle = 999;
+        public static IReadOnlyDictionary<int, MoveData> Moves => _moves;
 
         public static void LoadMoveDatabase()
         {
@@ -31,7 +29,6 @@ namespace MyGame.Moves
 
             try
             {
-
                 string jsonString = File.ReadAllText(filePath);
                 List<MoveData>? moveList = JsonSerializer.Deserialize<List<MoveData>>(jsonString, _jsonOptions);
                 
@@ -61,7 +58,6 @@ namespace MyGame.Moves
         public static bool TryGet(int key, out MoveData? move)
             => _moves.TryGetValue(key, out move);
         
-
         public static MoveData Get(int key)
         {
             if (_moves.TryGetValue(key, out var move))
