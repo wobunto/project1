@@ -13,6 +13,7 @@ namespace MyGame.BattleStatus
         {
             _stateTurn = _start;
         }
+        public override EffectState Kind => EffectState.Sleep;
 
         public override BeforeActionResult OnBeforeAction()
         {

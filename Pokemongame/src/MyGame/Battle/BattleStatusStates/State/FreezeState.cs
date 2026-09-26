@@ -8,6 +8,7 @@ namespace MyGame.BattleStatus
         private int _stateTurn = 0;
 
         public FreezeState(IBattlePokemon pokemon) : base(pokemon) { }
+        public override EffectState Kind => EffectState.Freeze;
 
         public override BeforeActionResult OnBeforeAction()
         {

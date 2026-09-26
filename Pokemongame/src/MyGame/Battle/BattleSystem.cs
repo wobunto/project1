@@ -7,6 +7,7 @@ namespace MyGame.BattleSystems
     public class BattleSystem
     {
         private IPlayerView _battleView;
+        private bool _isPlayerCommand;
         private List<IBattleCommand> _actionList = new();
 
         public BattleSystem(IPlayerView view)
@@ -29,29 +30,89 @@ namespace MyGame.BattleSystems
 
                 ExecuteAction();
                 
-                ActionResult(player, enemy);
-                
+                if(!CanNextAction(player, enemy))
+                    return;
+              
+                ExecuteAction();
+
+                ProcessTurnEndEffects();
+
+                if(!CanNextAction(player, enemy))
+                    return;
             }
         }
     
         private void SelectAction(IBattleCommander selector)
-        {
-            _actionList.Add(selector.SelectCommand());
-        }
-        
+            =>_actionList.Add(selector.SelectCommand());
+    
         private void ExecuteAction()
         {
             _actionList[0].Execute();
+            _isPlayerCommand = _actionList[0].IsPlayerCommand;
+            
             _actionList.RemoveAt(0);
         }
 
-        private void ActionResult(PlayerCommander player, AiCommander enemy)
+        private bool CanNextAction(PlayerCommander player, AiCommander enemy)
         {
-            player.IsActivePokemonFainted();
-            enemy.IsActivePokemonFainted();
+            var playerResult = player.IsActivePokemonFainted();
+            var enemyResult = enemy.IsActivePokemonFainted();
+            
+            if(IsBatteEnd(playerResult, enemyResult))  
+                return false;
+            
+            if(_actionList.Count >= 0)
+                return true;
+
+            if (_isPlayerCommand)
+            {
+                if(enemyResult == TurnResult.SwitchPokemon)
+                    _actionList.RemoveAt(0);
+            }
+            else
+            {
+                if(playerResult == TurnResult.SwitchPokemon)
+                     _actionList.RemoveAt(0);
+            }
+
+            return true;
         }
 
-        private int CompareCommand(IBattleCommand x, IBattleCommand y)
+        private bool IsBatteEnd(TurnResult playerResult, TurnResult enemyResult)
+        {
+            if(playerResult == TurnResult.AllFainted)
+            {
+                PlayerWin();
+                return true;
+            }
+
+            if(enemyResult == TurnResult.AllFainted)
+            {
+                PlayerLose();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ProcessTurnEndEffects() { /* 화상/독 데미지 등 */ }
+ 
+        private void PlayerWin()
+        {
+            BattleEnd();
+        }
+
+        private void PlayerLose()
+        {
+            BattleEnd();
+        }
+
+        private void BattleEnd()
+        {
+            //초기화 로직.
+        }
+
+        private int CompareCommand(IBattleCommand x, IBattleCommand y) //둘 다 행동이 같다면 트레이너 우선.
         {
             int Result = y.Priority.CompareTo(x.Priority);
 
@@ -65,11 +126,6 @@ namespace MyGame.BattleSystems
             }
             return 0;
         }
-
-        private bool CheckBattleEnd() => /* 모든 포켓몬 기절 여부 확인 */ false;
-        private void ProcessTurnEndEffects() { /* 화상/독 데미지 등 */ }
-
-        
     }
 }
 

@@ -6,5 +6,6 @@ namespace MyGame.BattleStatus
     public class NormalState : PokemonState
     {
         public NormalState(IBattlePokemon pokemon) : base(pokemon) { }
+        public override EffectState Kind => EffectState.None;
     }
 }

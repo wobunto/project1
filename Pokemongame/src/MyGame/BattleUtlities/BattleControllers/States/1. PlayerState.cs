@@ -14,7 +14,7 @@ namespace MyGame.ControllerStates
         public abstract void HandleInput(
             IBattleStateContext context,
             Input input);
-        public virtual void Resume(IBattleStateContext context) { }
+        //public virtual void Resume(IBattleStateContext context) { } 현재 Resume과 Enter에 차이가 없으므로 오류는 나지 않음.
         public virtual void Update(IBattleStateContext context) { }
         public virtual void Enter(IBattleStateContext context) { }
     }

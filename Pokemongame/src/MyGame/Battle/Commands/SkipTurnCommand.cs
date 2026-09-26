@@ -4,15 +4,17 @@ namespace MyGame.Commands
    public class SkipTurnCommand : IBattleCommand
     {
         private string _reason;
-        
+        public bool IsPlayerCommand{get;}
+       
         public BattlePriority Priority 
         {
             get => BattlePriority.Speed;
         }    
 
-        public SkipTurnCommand(string reason)
+        public SkipTurnCommand(string reason, bool isPlayer)
         {
             _reason = reason;
+            IsPlayerCommand = isPlayer;
         }
 
         public void Execute()

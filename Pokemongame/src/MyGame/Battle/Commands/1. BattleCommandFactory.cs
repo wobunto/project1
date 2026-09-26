@@ -7,37 +7,33 @@ namespace MyGame.Commands
 {
     public static class BattleCommandFactory
     {
-        private static ErrorCommand? _cashedErrorCommand;
-        // 일반 공격 커맨드 생성
+        // Null Object는 static readonly로 단순하고 안전하게 캐싱
+        public static readonly ErrorCommand Error = new();
+
         public static AttackCommand CreateAttackCommand(IBattlePokemon attacker, IBattleTargetTrainer defender, MoveRuntime move)
         {
-            if(!move.HasPP)      //AttackState에서 체크했어야 할 PP가 통과된 심각한 상태.
-              throw new InvalidOperationException("현재 pp가 0인 기술을 사용했습니다.");
-        
-            return new AttackCommand(attacker, defender, move);
+            if (!move.HasPP)
+                throw new InvalidOperationException("현재 PP가 0인 기술을 사용했습니다.");
+
+            return new AttackCommand(attacker, defender, move, attacker.IsPlayers);
         }
 
         public static AttackCommand CreateStruggleCommand(IBattlePokemon attacker, IBattleTargetTrainer defender)
         {
             var struggleMove = MoveFactory.GetStruggle();
-            return new AttackCommand(attacker, defender, struggleMove);
+            return new AttackCommand(attacker, defender, struggleMove, attacker.IsPlayers);
         }
 
         public static SwitchCommand CreateSwitchCommand(IBattleTrainer trainer, int index)
-            => new SwitchCommand(trainer, index);
+            => new SwitchCommand(trainer, index, trainer.IsPlayer);
 
         public static UseItemCommand CreateUseItemCommand(IBattleTrainer trainer, IItemTarget pokemon, ItemData item)
-            => new UseItemCommand(trainer, pokemon, item);
-        
-        public static SkipTurnCommand CreateSkipTurnCommand(string reason)
-            => new SkipTurnCommand(reason);
+            => new UseItemCommand(trainer, pokemon, item, trainer.IsPlayer);
+
+        public static SkipTurnCommand CreateSkipTurnCommand(IBattleTrainer trainer, string reason)
+            => new SkipTurnCommand(reason, trainer.IsPlayer);
 
         public static ExitCommand CreateExitCommand()
-            => new ExitCommand();    
-
-        public static ErrorCommand CreateErrorCommand()
-        {
-            return _cashedErrorCommand ??= new ErrorCommand();
-        }
+            => new ExitCommand();
     }
 }

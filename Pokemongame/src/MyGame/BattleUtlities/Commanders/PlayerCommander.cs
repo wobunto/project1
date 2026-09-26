@@ -40,7 +40,7 @@ namespace MyGame.BattleCommanders
         public TurnResult IsActivePokemonFainted()
         {
             var activePokemon = _playerController.Player.ActivePokemon!;
-            if(activePokemon.IsFainted)
+            if(!activePokemon.IsFainted)
                 return TurnResult.None;
                 
             _playerController.PushForceSwitchState();

@@ -5,6 +5,8 @@ namespace MyGame.Commands
 {
     public class ErrorCommand : IBattleCommand
     {
+        public bool IsPlayerCommand {get;}
+           
         public BattlePriority Priority 
         {
             get => BattlePriority.Behavior;

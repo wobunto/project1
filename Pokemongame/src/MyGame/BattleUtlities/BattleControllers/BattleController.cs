@@ -41,7 +41,7 @@ namespace MyGame.BattleControllers
 
             ForceSwitch = false;
             SetPokemonStatus(player.Party);
-            SelectedCommand = BattleCommandFactory.CreateErrorCommand();
+            SelectedCommand = BattleCommandFactory.Error;
         }
 
         public void Enter()
@@ -82,7 +82,7 @@ namespace MyGame.BattleControllers
         {
              _stateStack.Clear();
             
-            SelectedCommand = BattleCommandFactory.CreateErrorCommand();
+            SelectedCommand = BattleCommandFactory.Error;
             
             IsTurnFinished = false;
             PushState(PlayerState.MenuState);
@@ -117,6 +117,7 @@ namespace MyGame.BattleControllers
             ForceSwitch = true;
             PushState(PlayerState.SwitchState);
         }
+
         private void SetPokemonStatus(IReadOnlyList<PokemonRuntime> party)
         {
             foreach (IBattlePokemon pokemon in party)

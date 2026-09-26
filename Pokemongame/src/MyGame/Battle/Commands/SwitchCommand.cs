@@ -7,6 +7,7 @@ namespace MyGame.Commands
     {
         private IBattleTrainer _trainer;
         private int _index;
+        public bool IsPlayerCommand{get;}
 
         public BattlePriority Priority 
         {
@@ -15,10 +16,12 @@ namespace MyGame.Commands
 
         public SwitchCommand(
             IBattleTrainer trainer,
-            int index)
+            int index,
+            bool isPlayer)
         {
             _trainer = trainer;
             _index = index;
+             IsPlayerCommand = isPlayer;
         }
 
         public void Execute()

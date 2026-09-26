@@ -1,4 +1,6 @@
+using MyGame.BattleCalculators;
 using MyGame.PokemonDatas;
+using MyGame.BattleStatus;
 
 namespace MyGame.Pokemons
 {
@@ -10,7 +12,10 @@ namespace MyGame.Pokemons
                     throw new InvalidOperationException(
                     $"포켓몬 ID {key}가 존재하지 않습니다.");
             
-            return new PokemonRuntime(data!,level);             
+            var pokemon = new PokemonRuntime(data!,level);
+            pokemon.NewStatus(); 
+            
+            return pokemon;             
         }
         
     }

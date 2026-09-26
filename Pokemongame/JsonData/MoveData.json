@@ -6,7 +6,7 @@
         "Power": 40,
         "Accuracy": 100,
         "BasePP": 30,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     },
     {
@@ -16,7 +16,7 @@
         "Power": 90,
         "Accuracy": 100,
         "BasePP": 15,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": ["InflictBurn"],
         "EffectChance": 10
     },
@@ -27,7 +27,7 @@
         "Power": 90,
         "Accuracy": 100,
         "BasePP": 15,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     },
     {
@@ -37,7 +37,7 @@
         "Power": 120,
         "Accuracy": 100,
         "BasePP": 10,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     },
     {
@@ -47,7 +47,7 @@
         "Power": 75,
         "Accuracy": 100,
         "BasePP": 15,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": ["InflictParalysis"],
         "EffectChance": 10
     },
@@ -58,7 +58,7 @@
         "Power": 90,
         "Accuracy": 95,
         "BasePP": 15,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     },
     {
@@ -68,7 +68,7 @@
         "Power": 75,
         "Accuracy": 90,
         "BasePP": 10,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     },
     {
@@ -78,7 +78,7 @@
         "Power": 50,
         "Accuracy": 100,
         "BasePP": 999,
-        "Priority": "None",
+        "Priority": "Speed",
         "Effects": []
     }
 ]

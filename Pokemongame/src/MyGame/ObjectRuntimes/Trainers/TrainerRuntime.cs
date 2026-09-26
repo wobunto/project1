@@ -13,15 +13,17 @@ namespace MyGame.Trainers
         private readonly List<PokemonRuntime> _party = new(MaxPartySlot);
         protected readonly Dictionary<int, int> _inventory = new();  //itemKey -> count
 
+        public bool IsPlayer {get; }
         public int NameId {get; init;}    
         public IBattlePokemon? ActivePokemon { get; private set;}
 
         public IReadOnlyList<PokemonRuntime> Party => _party;
         public IReadOnlyDictionary<int, int> Inventory => _inventory;
 
-        public TrainerRuntime(int nameId)
+        protected TrainerRuntime(int nameId, bool isPlayer)
         {
             NameId = nameId; 
+            IsPlayer = isPlayer;
             ActivePokemon = null;  //전투 진입 시점에 활성화.
         }
         // ==================================================

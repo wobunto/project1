@@ -1,5 +1,6 @@
 using MyGame.Pokemons;
-using MyGame.States;
+using MyGame.BattleStatus;
+using MyGame.Logs;
 
 namespace MyGame.Items
 {
@@ -19,7 +20,8 @@ namespace MyGame.Items
     
         public void Apply(IItemTarget pokemon, int value)
         {
-            pokemon.Heal(value);
+            if(!pokemon.TryHeal(value))
+                GameLog.Info($"{pokemon.Name}에게 아무효과 없었다...");
         }
     }
     
@@ -32,8 +34,9 @@ namespace MyGame.Items
     
         public void Apply(IItemTarget pokemon, int value = 0)
         {
-            pokemon.FullHeal();
-            pokemon.SetEffectState(EffectState.None);
+            if(!pokemon.TryFullHeal())
+                GameLog.Info($"{pokemon.Name}에게 아무효과 없었다...");
+
         }
     }
     
@@ -46,8 +49,8 @@ namespace MyGame.Items
     
         public void Apply(IItemTarget pokemon, int value = 0)
         {
-            pokemon.Revive();
-            pokemon.FullHeal();
+            if(!pokemon.TryRevive())
+                GameLog.Error("현재 Apply하는 시점과 전 포켓몬의 IsFainted 상태가 불일치합니다.");
         }
     }
     

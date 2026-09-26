@@ -5,13 +5,14 @@ namespace MyGame.BattleStatus
     public class PokemonStatus
     {   
         protected readonly IBattlePokemon _pokemon;
-        public PokemonState? CurrentState { get; private set; }
+
+        public PokemonState CurrentState { get; private set; }
+        public EffectState Kind => CurrentState.Kind;
 
         public PokemonStatus(IBattlePokemon pokemon)
         {
-            _pokemon = pokemon;
-
-            ChangeState(_pokemon.CurrentEffectState); // 생성 시 기존 포켓몬의 상태.
+        _pokemon = pokemon;
+            CurrentState = new NormalState(pokemon);
         }
 
         public void ChangeState(EffectState status)
@@ -19,12 +20,7 @@ namespace MyGame.BattleStatus
             CurrentState = StatusFactory.Create(status, _pokemon);
         }
         
-        public void NormalState()
-        {
-            CurrentState =  StatusFactory.Create(EffectState.None, _pokemon);
-        }
-
-        public virtual BeforeActionResult OnBeforeAction() => CurrentState!.OnBeforeAction();
+        public virtual BeforeActionResult OnBeforeAction() => CurrentState.OnBeforeAction();
         public virtual void OnTurnEnd() => CurrentState!.OnTurnEnd();
         
         public virtual float ModifyAttack(float currentAttack) => CurrentState!.ModifyAttack(currentAttack);

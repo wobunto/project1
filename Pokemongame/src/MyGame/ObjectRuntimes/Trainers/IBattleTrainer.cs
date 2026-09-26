@@ -11,7 +11,7 @@ namespace MyGame.Trainers
     {     
         IReadOnlyList<PokemonRuntime> Party { get; }
         IReadOnlyDictionary<int, int> Inventory {get; }
-
+        bool IsPlayer {get; }
         int NameId {get;}
 
         bool TrySetActivePokemon(int index);

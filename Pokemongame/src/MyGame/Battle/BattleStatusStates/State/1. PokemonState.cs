@@ -5,7 +5,8 @@ namespace MyGame.BattleStatus
     public abstract class PokemonState
     {
         protected readonly IBattlePokemon _pokemon;
-
+        public abstract EffectState Kind { get; }   // 이 State가 어떤 EffectState인지
+        
         public PokemonState(IBattlePokemon pokemon)
         {
             _pokemon = pokemon;

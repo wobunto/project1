@@ -5,6 +5,7 @@ using MyGame.PokemonDatas;
 using static MyGame.Rules.PokemonRules;
 using MyGame.BattleCalculators;
 using MyGame.Utilities;
+using MyGame.BattleCommanders;
 
 namespace MyGame.Pokemons
 {  
@@ -14,6 +15,7 @@ namespace MyGame.Pokemons
         private int _speedStage;
         private int _level;
         private int _currentHp;
+        private PokemonStatus? _status;               //저림, 수면 등의 상태
 
         private readonly List<MoveRuntime> _moves = new(MaxMoveSlot);    //기술 리스트
         // --------------------------------------------------
@@ -22,13 +24,15 @@ namespace MyGame.Pokemons
         public PokemonData Data {get; private set;}
         public string Name => Data.Name;
         public int Exp {get; private set;}
+        public bool IsPlayers {get;}
         public IReadOnlyList<PokemonType> Types => Data.Types;
         public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     
 
         // --------------------------------------------------
         // [3] 현재 전투 상태 
         // --------------------------------------------------
-        public EffectState CurrentEffectState {get; private set;}               //저림, 수면 등의 상태
+        public EffectState CurrentEffectState => _status!.Kind; //저림, 수면 등의 상태
+
         public bool IsFainted => CurrentHp <= 0;
 
         public int Level 
@@ -46,13 +50,13 @@ namespace MyGame.Pokemons
         public int AttackStage
         {
             get => _attackStage; 
-            private set => _attackStage = Math.Clamp(value,0,6);
+            private set => _attackStage = Math.Clamp(value,-6,6);
         }   
 
         public int SpeedStage    
         {
             get => _speedStage; 
-            private set => _speedStage = Math.Clamp(value,0,6);
+            private set => _speedStage = Math.Clamp(value,-6,6);
         }    
         // --------------------------------------------------
         // [4] 최종 계산 스탯 
@@ -66,7 +70,7 @@ namespace MyGame.Pokemons
         public int CurrentAttackDamage 
             =>  BattleCalculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
 
-        public PokemonRuntime(PokemonData data, int level)
+        public PokemonRuntime(PokemonData data, int level, bool isPlayers = false)
         {
             if(data == null)
                 throw new ArgumentNullException(nameof(data));
@@ -74,6 +78,7 @@ namespace MyGame.Pokemons
             Data = data;            
             _level = level;
             CurrentHp = MaxHp;
+            IsPlayers = isPlayers;
         }
         // ==================================================
         // [5] 전투 생명주기 및 HP (Combat LifeCycle & HP)
@@ -142,6 +147,11 @@ namespace MyGame.Pokemons
         // ==================================================
         // [7] 전투 행동 판정 (Battle Actions & Usability)
         // ==================================================
+        public BeforeActionResult TryExecute()
+        {
+            return _status!.OnBeforeAction();    
+        }
+
         public bool HasAnyUsableMove()
         {
             for(int i = 0; i < _moves.Count; i++)
@@ -194,8 +204,21 @@ namespace MyGame.Pokemons
         // ==================================================
         // [9] 내부 보조 로직 (Private Helpers)
         // ==================================================
-        private void SetEffectState(EffectState effect)  
-            => CurrentEffectState = effect;
+        public void NewStatus()
+        {
+            if(_status != null)
+                return;
+
+             _status = new PokemonStatus(this);
+        }
+
+        private void SetEffectState(EffectState effect)
+        {
+            if(_status == null)
+                throw new InvalidOperationException("현재 포켓몬의 Status가 null입니다.");
+
+            _status.ChangeState(effect);
+        }
         
         private void OnFainted()
         {

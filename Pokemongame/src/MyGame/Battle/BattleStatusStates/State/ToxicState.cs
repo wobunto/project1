@@ -14,6 +14,7 @@ namespace MyGame.BattleStatus
         {
             _stateTurn = _start;
         }
+        public override EffectState Kind => EffectState.Toxic;
 
         public override void OnTurnEnd()
         {
@@ -24,7 +25,7 @@ namespace MyGame.BattleStatus
                 _stateTurn);
 
             _pokemon.TakeDamage(damage);
-            BattleLog.LogStatusDamged(_pokemon, _pokemon.CurrentEffectState, damage);
+            BattleLog.LogStatusDamged(_pokemon, Kind, damage);
         }
     }
 }
