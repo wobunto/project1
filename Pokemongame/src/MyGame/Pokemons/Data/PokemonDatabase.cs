@@ -12,7 +12,7 @@ namespace MyGame.PokemonDatas
         
         public static void LoadPokemonDatabase()
         {
-            string filePath = "PokemonData.json";
+            string filePath = "JsonData/PokemonData.json";
 
             if (!File.Exists(filePath))
             {
@@ -36,6 +36,8 @@ namespace MyGame.PokemonDatas
                 {
                     _pokemons[pokemon.Id] = pokemon;
                 }
+
+                 GameLog.Info($"포켓몬 데이터 {_pokemons.Count}개 로드 완료");
             }
         }
 

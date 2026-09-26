@@ -7,6 +7,7 @@ namespace MyGame.ControllerStates
     {
         public override void Enter(IBattleStateContext context)
         {
+            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
             context.View.DisplayCommandMenu();
         }
         

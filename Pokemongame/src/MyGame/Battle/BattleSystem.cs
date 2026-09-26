@@ -27,7 +27,7 @@ namespace MyGame.BattleSystems
                SelectAction(enemy);
                 
                 _actionList.Sort(CompareCommand);
-
+                
                 ExecuteAction();
                 
                 if(!CanNextAction(player, enemy))
@@ -51,6 +51,8 @@ namespace MyGame.BattleSystems
             _isPlayerCommand = _actionList[0].IsPlayerCommand;
             
             _actionList.RemoveAt(0);
+            
+            Thread.Sleep(5000);
         }
 
         private bool CanNextAction(PlayerCommander player, AiCommander enemy)
@@ -61,7 +63,7 @@ namespace MyGame.BattleSystems
             if(IsBatteEnd(playerResult, enemyResult))  
                 return false;
             
-            if(_actionList.Count >= 0)
+            if(_actionList.Count <= 0)
                 return true;
 
             if (_isPlayerCommand)

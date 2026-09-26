@@ -3,6 +3,7 @@ using MyGame.PokemonDatas;
 
 namespace MyGame.Trainers
 {
+    /*
     public class WildRuntime
     {
         private readonly PokemonRuntime _wild;
@@ -24,4 +25,5 @@ namespace MyGame.Trainers
             _wild.Reinitialize(data!, level);
         }
     }
+    */
 }

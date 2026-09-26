@@ -20,6 +20,9 @@ namespace MyGame.BattleCommanders
                   _aiTrainer = aiTrainer;
                   _target = target;
                   NameId = _aiTrainer.NameId;
+
+                  if(!_aiTrainer.TrySetFirstActivePokemon())
+                        throw new InvalidOperationException("현재 enemy의 ActivePokemon이 null 입니다.");
             }
 
             public IBattleCommand SelectCommand()   //초급 AI (무작위로 스킬을 씀)
@@ -41,12 +44,11 @@ namespace MyGame.BattleCommanders
             public TurnResult IsActivePokemonFainted()
             {
                   NullCheckActivePokemon();
-                  TurnResult result;
 
                   if(!_aiTrainer.ActivePokemon!.IsFainted)
                         return TurnResult.None;
                   
-                  result = TrySwitchCommand();
+                  var result = TrySwitchCommand();
                   
                   return result;            
             }
@@ -59,11 +61,10 @@ namespace MyGame.BattleCommanders
                            _aiTrainer.Party[i].IsFainted)
                               continue;
 
-                        if(!_aiTrainer.TrySetActivePokemon(i))
-                            throw new InvalidOperationException("적 트레이너의 Party 인덱스와 실제 인덱스가 일치하지 않습니다.");  
+                        BattleCommandFactory.CreateSwitchCommand(_aiTrainer, i);
+
                         return TurnResult.SwitchPokemon;
                   }
-
                   return TurnResult.AllFainted;
             }     
 

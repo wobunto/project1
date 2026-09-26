@@ -6,13 +6,13 @@ namespace MyGame.Items
 {
     public static class ItemDatabase
     {
-        private static Dictionary<int, ItemData> _items = new();
+        private static readonly Dictionary<int, ItemData> _items = new();
 
         public static IReadOnlyDictionary<int, ItemData> Items => _items;
         
         public static void LoadItemDatabase()
         {
-            string filePath = "ItemData.json";
+            string filePath = "JsonData/ItemData.json";
 
             if (!File.Exists(filePath))
             {

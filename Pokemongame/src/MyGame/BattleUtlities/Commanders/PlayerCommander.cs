@@ -14,6 +14,9 @@ namespace MyGame.BattleCommanders
         {
             _playerController = controller;
             NameId = _playerController.Player.NameId;
+            
+            if(!_playerController.Player.TrySetFirstActivePokemon())
+                throw new InvalidOperationException("현재 player의 ActivePokemon이 null 입니다.");
         }
 
         public IBattleCommand SelectCommand()
@@ -40,13 +43,14 @@ namespace MyGame.BattleCommanders
         public TurnResult IsActivePokemonFainted()
         {
             var activePokemon = _playerController.Player.ActivePokemon!;
+            
             if(!activePokemon.IsFainted)
                 return TurnResult.None;
-                
-            _playerController.PushForceSwitchState();
 
             if(!_playerController.Player.CanBattle())
                 return TurnResult.AllFainted;
+
+           _playerController.PushForceSwitchState();
 
             while (!_playerController.IsTurnFinished)
             {
@@ -61,6 +65,7 @@ namespace MyGame.BattleCommanders
                 
                 _playerController.HandleInput(input);
             }
+            _playerController.SelectedCommand.Execute();
 
             return TurnResult.SwitchPokemon;
         }

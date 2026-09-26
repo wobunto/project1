@@ -5,7 +5,6 @@ using MyGame.Logs;
 using MyGame.Views;
 using MyGame.Inputs;
 using MyGame.Pokemons;
-using MyGame.BattleStatus;
 
 namespace MyGame.BattleControllers
 {
@@ -30,17 +29,11 @@ namespace MyGame.BattleControllers
             IBattleTargetTrainer enemy,
             IPlayerView view)
         {
-            if(enemy.ActivePokemon == null)           //배틀 컨트롤러는 배틀이 시작한 뒤 만들어지니 ActivePokemon이 존재해야 함
-                throw new InvalidOperationException("현재 enemy.ActivePokemon이 null입니다.");
-            if(player.ActivePokemon == null)
-                throw new InvalidOperationException("현재 player.ActivePokemon이 null입니다.");
-
             Player = player;
             Enemy = enemy;
             View = view;
 
             ForceSwitch = false;
-            SetPokemonStatus(player.Party);
             SelectedCommand = BattleCommandFactory.Error;
         }
 
@@ -116,14 +109,6 @@ namespace MyGame.BattleControllers
         {
             ForceSwitch = true;
             PushState(PlayerState.SwitchState);
-        }
-
-        private void SetPokemonStatus(IReadOnlyList<PokemonRuntime> party)
-        {
-            foreach (IBattlePokemon pokemon in party)
-            {
-                PokemonStatus state = new(pokemon);
-            }
         }
     }
 }

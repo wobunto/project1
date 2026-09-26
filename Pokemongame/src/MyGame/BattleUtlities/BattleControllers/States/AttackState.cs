@@ -8,7 +8,9 @@ namespace MyGame.ControllerStates
     public class AttackState : PlayerState
     {
         public override void Enter(IBattleStateContext context)
-        {          
+        {    
+            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!); 
+        
             var activePokemon = context.Player.ActivePokemon!;
 
             if (!activePokemon.HasAnyUsableMove())

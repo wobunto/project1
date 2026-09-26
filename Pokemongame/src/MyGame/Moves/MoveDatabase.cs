@@ -19,7 +19,7 @@ namespace MyGame.Moves
 
         public static void LoadMoveDatabase()
         {
-           string filePath = "MoveData.json";
+           string filePath = "JsonData/MoveData.json";
 
             if (!File.Exists(filePath))
             {
@@ -35,7 +35,6 @@ namespace MyGame.Moves
                 if(moveList == null)
                 {
                     GameLog.Error("[Movedatabase] 데이터가 비어 있습니다.");
-
                     return;
                 }
 
@@ -64,7 +63,7 @@ namespace MyGame.Moves
                 return move;
             
             // TryGet이 아닌 Get에서는 데이터가 없으면 심각한 에러이므로 예외를 던짐
-            throw new KeyNotFoundException($"MoveDatabase: {key}번 기술 데이터가 누락되었습니다. 엑셀 데이터를 확인하세요.");
+            throw new KeyNotFoundException($"MoveDatabase: {key}번 기술 데이터가 누락되었습니다. json 데이터를 확인하세요.");
         }
     }   
 }

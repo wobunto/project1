@@ -13,7 +13,8 @@ namespace MyGame.ControllerStates
         public override void Enter(IBattleStateContext context)
         {
             IReadOnlyList<InventoryItem> items = GetValidInventory(context);
-        
+
+            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
             context.View.DisplayItemMenu(items);
         }
         
@@ -27,9 +28,9 @@ namespace MyGame.ControllerStates
 
             int index = input.Value - 1;
 
-            if(!Utility.IsValidIndex(index,items.Count))
+            if(!Utility.IsValidIndex(index, items.Count))
             {
-                context.View.DisplayMessage("잘못된 번호를 선택하셨습니다.");
+                context.View.DisplayMessage("아이템의 잘못된 번호를 선택하셨습니다.");
                 return;
             }
             
@@ -43,11 +44,10 @@ namespace MyGame.ControllerStates
                 {
                     IItemTarget pokemon = context.Player.Party[index];
 
-                    var itemCmd = new UseItemCommand(
-                        context.Player, 
-                        pokemon,
-                        itemData
-                        );
+                    var itemCmd = BattleCommandFactory.CreateUseItemCommand( context.Player, 
+                                                                            pokemon,
+                                                                            itemData);
+                    
                     context.FinishedTurn(itemCmd);
                 },
                 filter: effect.CanApply // 도메인에 위임된 규칙

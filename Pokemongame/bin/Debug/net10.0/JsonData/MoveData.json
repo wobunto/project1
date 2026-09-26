@@ -1,0 +1,84 @@
+[
+    {
+        "Key": 101,
+        "Name": "몸통박치기",
+        "Type": "Normal",
+        "Power": 40,
+        "Accuracy": 100,
+        "BasePP": 30,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 102,
+        "Name": "화염방사",
+        "Type": "Fire",
+        "Power": 90,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": ["InflictBurn"],
+        "EffectChance": 10
+    },
+    {
+        "Key": 103,
+        "Name": "파도타기",
+        "Type": "Water",
+        "Power": 90,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 104,
+        "Name": "솔라빔",
+        "Type": "Grass",
+        "Power": 120,
+        "Accuracy": 100,
+        "BasePP": 10,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 105,
+        "Name": "번개펀치",
+        "Type": "Electric",
+        "Power": 75,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": ["InflictParalysis"],
+        "EffectChance": 10
+    },
+    {
+        "Key": 106,
+        "Name": "공중날기",
+        "Type": "Wind",
+        "Power": 90,
+        "Accuracy": 95,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 107,
+        "Name": "스톤엣지",
+        "Type": "Stone",
+        "Power": 75,
+        "Accuracy": 90,
+        "BasePP": 10,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 999,
+        "Name": "발버둥",
+        "Type": "Normal",
+        "Power": 50,
+        "Accuracy": 100,
+        "BasePP": 999,
+        "Priority": "Speed",
+        "Effects": []
+    }
+]

@@ -15,7 +15,7 @@ namespace MyGame.Trainers
         int NameId {get;}
 
         bool TrySetActivePokemon(int index);
-
+        bool TrySetFirstActivePokemon();
         bool CanBattle();
         bool CanSwitch(IBattlePokemon pokemon);
         bool HasItem(int itemKey);

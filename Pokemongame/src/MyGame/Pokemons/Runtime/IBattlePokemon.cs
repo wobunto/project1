@@ -15,6 +15,7 @@ namespace MyGame.Pokemons
         int Level {get;}
         int CurrentAttackDamage { get; }
         int CurrentSpeed {get;}
+        int CurrentHp {get;}
         bool IsFainted {get;}
         public EffectState CurrentEffectState {get;}
         
