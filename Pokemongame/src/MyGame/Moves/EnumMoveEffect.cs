@@ -25,6 +25,6 @@ namespace MyGame.Moves
         RaiseEvasion, 
         LowerEvasion,
 
-        Heal,
+        Heal
     }
 }

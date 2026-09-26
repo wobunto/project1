@@ -1,5 +1,5 @@
 using MyGame.Logs;
-using MyGame.BattleSystem;
+using MyGame.BattleSystems;
 
 namespace MyGame.Commands
 {

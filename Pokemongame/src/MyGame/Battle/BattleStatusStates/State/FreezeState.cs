@@ -1,8 +1,7 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipants;
 using  MyGame.Utilities;
 
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {   
     public class FreezeState : PokemonState
     {

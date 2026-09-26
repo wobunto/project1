@@ -2,8 +2,9 @@ using MyGame.Pokemons;
 using MyGame.Moves;
 using MyGame.Items;
 using MyGame.Logs;
+using MyGame.BattleStatus;
 
-namespace MyGame.BattleSystem
+namespace MyGame.BattleSystems
 {
     public static class BattleLog
     {
@@ -25,12 +26,17 @@ namespace MyGame.BattleSystem
         public static void LogDamage(this IBattlePokemon defender, int damage) 
             => GameLog.Info($"{defender.Name}에게 {damage}의 피해를 입혔다!");
 
+        public static void LogStatusDamged(IBattlePokemon pokemon, EffectState status, int damage)
+        {
+            GameLog.Info($"{pokemon.Name}이 {status}로 인해 {damage}의 피해를 입혔다!");
+        }
+
         public static void LogFaint(this PokemonRuntime defender) 
         {
             GameLog.Info($"{defender.Name}이(가) 쓰러졌다.");
             GameLog.Info("-------------------------------------");
         }
-        public static void LogBattleResult(this IBattlePokemon attacker, IBattlePokemon defender, MoveData move, int damage, float finalMultiplier)
+        public static void LogBattleResult(IBattlePokemon attacker, IBattlePokemon defender, MoveData move, int damage, float finalMultiplier)
         {
             GameLog.Info("-------------------------------------");
             attacker.LogAttack(move);

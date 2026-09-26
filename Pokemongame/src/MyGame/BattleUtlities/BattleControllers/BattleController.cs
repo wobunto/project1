@@ -5,6 +5,7 @@ using MyGame.Logs;
 using MyGame.Views;
 using MyGame.Inputs;
 using MyGame.Pokemons;
+using MyGame.BattleStatus;
 
 namespace MyGame.BattleControllers
 {
@@ -37,8 +38,9 @@ namespace MyGame.BattleControllers
             Player = player;
             Enemy = enemy;
             View = view;
-    
+
             ForceSwitch = false;
+            SetPokemonStatus(player.Party);
             SelectedCommand = BattleCommandFactory.CreateErrorCommand();
         }
 
@@ -114,6 +116,13 @@ namespace MyGame.BattleControllers
         {
             ForceSwitch = true;
             PushState(PlayerState.SwitchState);
+        }
+        private void SetPokemonStatus(IReadOnlyList<PokemonRuntime> party)
+        {
+            foreach (IBattlePokemon pokemon in party)
+            {
+                PokemonStatus state = new(pokemon);
+            }
         }
     }
 }

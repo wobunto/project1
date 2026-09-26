@@ -1,20 +1,20 @@
 using MyGame.BattleCalculators;
 using MyGame.Pokemons;
-using MyGame.BattleParticipants;
+using MyGame.BattleSystems;
 
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {
     public class BurnState : PokemonState
     {
         public BurnState(IBattlePokemon pokemon) : base(pokemon) { }
 
-        public override TurnEndResult OnTurnEnd()
+        public override void OnTurnEnd()
         {
             var damage = StatusEffectCalculator.BurnDamage(_pokemon.MaxHp);
             
             _pokemon.TakeDamage(damage);
-
-            return _pokemon.IsFainted ? TurnEndResult.Fainted : TurnEndResult.Damaged;
+            
+            BattleLog.LogStatusDamged(_pokemon, _pokemon.CurrentEffectState, damage);
         }
     }
 }

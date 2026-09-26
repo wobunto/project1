@@ -1,8 +1,8 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipants;
 using MyGame.BattleCalculators;
+using MyGame.BattleSystems;
 
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {
     public class ToxicState : PokemonState
     {
@@ -15,7 +15,7 @@ namespace MyGame.States
             _stateTurn = _start;
         }
 
-        public override StatusTurnResult TryExecute()
+        public override void OnTurnEnd()
         {
             _stateTurn++;
 
@@ -24,11 +24,7 @@ namespace MyGame.States
                 _stateTurn);
 
             _pokemon.TakeDamage(damage);
-
-            if (IsDead())
-                return StatusTurnResult.Death;
-
-            return StatusTurnResult.None;
+            BattleLog.LogStatusDamged(_pokemon, _pokemon.CurrentEffectState, damage);
         }
     }
 }

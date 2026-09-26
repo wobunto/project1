@@ -1,4 +1,4 @@
-namespace MyGame.BattleSystem
+namespace MyGame.BattleSystems
 {
     public enum BattlePriority
     {

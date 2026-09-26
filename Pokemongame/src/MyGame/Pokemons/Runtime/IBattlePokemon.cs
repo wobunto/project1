@@ -1,6 +1,6 @@
 using MyGame.Moves;
 using MyGame.Types;
-using MyGame.States;
+using MyGame.BattleStatus;
 
 namespace MyGame.Pokemons
 {

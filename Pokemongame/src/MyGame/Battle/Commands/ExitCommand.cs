@@ -1,4 +1,4 @@
-using MyGame.BattleSystem;
+using MyGame.BattleSystems;
 
 namespace MyGame.Commands
 {

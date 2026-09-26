@@ -1,0 +1,5 @@
+/workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.AssemblyInfoInputs.cache
+/workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.AssemblyInfo.cs
+/workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.csproj.CoreCompileInputs.cache
+/workspaces/project1/Pokemongame/obj/Debug/net10.0/Pokemongame.sourcelink.json

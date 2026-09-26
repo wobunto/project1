@@ -1,7 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using MyGame.Moves;
 using MyGame.Types;
-using MyGame.States;
+using MyGame.BattleStatus;
 using MyGame.PokemonDatas;
 using static MyGame.Rules.PokemonRules;
 using MyGame.BattleCalculators;

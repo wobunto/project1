@@ -1,7 +1,7 @@
 using MyGame.Pokemons;
 using MyGame.Items;
 using MyGame.Trainers;
-using MyGame.BattleSystem;
+using MyGame.BattleSystems;
 
 namespace MyGame.Commands
 { 

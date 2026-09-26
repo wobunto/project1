@@ -2,7 +2,7 @@ using MyGame.Views;
 using MyGame.Commands;
 using MyGame.BattleCommanders;
 
-namespace MyGame.BattleSystem
+namespace MyGame.BattleSystems
 {
     public class BattleSystem
     {
@@ -63,7 +63,6 @@ namespace MyGame.BattleSystem
             {
                 return attackY.AttackerSpeed.CompareTo(attackX.AttackerSpeed);
             }
-
             return 0;
         }
 

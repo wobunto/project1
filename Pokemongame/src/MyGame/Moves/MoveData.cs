@@ -1,5 +1,5 @@
 using MyGame.Types;
-using MyGame.BattleSystem;
+using MyGame.BattleSystems;
 
 namespace MyGame.Moves
 {

@@ -1,7 +1,5 @@
-using System.Formats.Asn1;
 using MyGame.BattleControllers;
 using MyGame.Inputs;
-using MyGame.Logs;
 using MyGame.Pokemons;
 using MyGame.Utilities;
 namespace MyGame.ControllerStates

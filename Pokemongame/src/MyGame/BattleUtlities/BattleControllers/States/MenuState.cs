@@ -1,7 +1,5 @@
 using MyGame.BattleControllers;
-using MyGame.Pokemons;
 using MyGame.Inputs;
-using MyGame.Commands;
 
 namespace MyGame.ControllerStates
 {

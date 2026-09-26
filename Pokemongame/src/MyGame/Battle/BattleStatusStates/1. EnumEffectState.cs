@@ -1,4 +1,4 @@
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {
     public enum EffectState
     {

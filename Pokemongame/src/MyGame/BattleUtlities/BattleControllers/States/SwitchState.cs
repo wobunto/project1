@@ -1,7 +1,6 @@
 using MyGame.BattleControllers;
 using MyGame.Commands;
 using MyGame.Inputs;
-using MyGame.Moves;
 
 namespace MyGame.ControllerStates
 {

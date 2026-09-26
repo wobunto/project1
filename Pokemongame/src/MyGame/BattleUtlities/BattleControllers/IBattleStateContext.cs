@@ -3,8 +3,6 @@ using MyGame.Trainers;
 using MyGame.ControllerStates;
 using MyGame.Commands;
 using MyGame.Inputs;
-using MyGame.Pokemons;
-
 
 namespace MyGame.BattleControllers
 {

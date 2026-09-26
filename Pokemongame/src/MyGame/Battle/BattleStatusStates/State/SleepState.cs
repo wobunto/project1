@@ -1,9 +1,7 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipants;
 using MyGame.Utilities;
 
-
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {
     public class SleepState : PokemonState
     {
@@ -16,14 +14,14 @@ namespace MyGame.States
             _stateTurn = _start;
         }
 
-        public override StatusTurnResult TryExecute()
+        public override BeforeActionResult OnBeforeAction()
         {
             _stateTurn++;
 
             if (IsSleep())
-                return StatusTurnResult.Sleep;
+                return BeforeActionResult.ASleep;
 
-            return StatusTurnResult.None;
+            return BeforeActionResult.WokeUp;
         }
 
         private bool IsSleep()
@@ -31,7 +29,7 @@ namespace MyGame.States
             if (_stateTurn >= 3)
                 return false;
 
-            if (_stateTurn == 2 && TryChance(33))
+            if (_stateTurn == 2 && Utility.TryChance(33))
                 return false;
 
             return true;

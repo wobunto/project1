@@ -1,8 +1,7 @@
 using MyGame.Pokemons;
-using MyGame.BattleParticipants;
 using MyGame.Utilities;
 
-namespace MyGame.States
+namespace MyGame.BattleStatus
 {
 
    public class ParalysisState : PokemonState
@@ -15,7 +14,7 @@ namespace MyGame.States
         if (Utility.TryChance(25))
             return BeforeActionResult.Paralyzed;
 
-        return BeforeActionResult.CanAct;
+        return BeforeActionResult.None;
     }
 }
 }

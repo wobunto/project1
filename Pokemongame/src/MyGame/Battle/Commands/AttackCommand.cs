@@ -3,7 +3,8 @@ using MyGame.Moves;
 using MyGame.Trainers;
 using MyGame.Types;
 using MyGame.BattleCalculators;
-using MyGame.BattleSystem;
+using MyGame.BattleSystems;
+using MyGame.Logs;
 
 namespace MyGame.Commands
 {
@@ -35,30 +36,34 @@ namespace MyGame.Commands
         {
             if(_defendTrainer.ActivePokemon == null)
                 throw new InvalidOperationException("defnederTrainer의 ActivePokemon이 null입니다.");
-
+            
             var _defender = _defendTrainer.ActivePokemon;
             
             float typeMultiplier = 
                     TypeEffectiveness.CalculateTypeMultiplier(
                     _move.MoveType,
                     _defender.Types
-                );
-
-            int currentAttack = _attacker.CurrentAttackDamage;
+                    );
 
             int damage = BattleCalculator.CalculateDamage(
-                        currentAttack,
+                        _attacker.CurrentAttackDamage,
                         typeMultiplier
                         );
 
             _defender.TakeDamage(damage);
 
-            _attacker.LogBattleResult(
+            BattleLog.LogBattleResult(
+                _attacker,
                 _defender,
                 _move.Data,
                 damage,
                 typeMultiplier
-            );
+                );
+        }
+        
+        public void TryExecute()
+        {
+            
         }
     }
 }
