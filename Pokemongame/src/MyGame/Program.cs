@@ -7,6 +7,7 @@ using MyGame.Pokemons;
 using MyGame.PokemonDatas;
 using MyGame.Moves;
 using MyGame.Rules;
+using MyGame.Items;
 namespace MyGame
 {
     class Program{
@@ -15,6 +16,7 @@ namespace MyGame
         {
             PokemonDatabase.LoadPokemonDatabase();
             MoveDatabase.LoadMoveDatabase();
+            ItemDatabase.LoadItemDatabase();
 
             PlayerRuntime player = new(PokemonRules.PlayerId);
             EnemyRuntime enemy = new(1);
@@ -53,9 +55,13 @@ namespace MyGame
             PlayerCommander playerCommander = new(controller);
             AiCommander aiCommander = new(enemy, player);
 
-            BattleSystem battle =  new(view);
-            
-            battle.StartTrianerBattle(playerCommander ,aiCommander);
+            BattleSystem battle = new(view);
+            List<IBattleCommander> _participants = new();
+            _participants.Add(playerCommander);
+            _participants.Add(aiCommander);
+
+            battle.SetupBattle(_participants);
+            battle.StartTrainerBattle();
         }
     }
 }

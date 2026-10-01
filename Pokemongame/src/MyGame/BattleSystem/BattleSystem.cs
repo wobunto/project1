@@ -1,3 +1,5 @@
+using System.Linq;
+
 using MyGame.Views;
 using MyGame.Commands;
 using MyGame.BattleCommanders;
@@ -18,7 +20,7 @@ namespace MyGame.BattleSystems
             _battleView = view;
         }
 
-        public void SetupBattle(IEnumerable<IBattleCommander> participants)
+        public void SetupBattle(IEnumerable<IBattleCommander> participants) //이때 플레이어가 제일 첫번쨰로 들어감.
         {
             _participants.Clear();
             _participants.AddRange(participants);
@@ -35,7 +37,7 @@ namespace MyGame.BattleSystems
             RunBattleLoop();
         }
 
-        public void RunBattleLoop()
+        private void RunBattleLoop()
         {
             while (!IsBattleEnd())        
             {
@@ -44,7 +46,10 @@ namespace MyGame.BattleSystems
                     _actionList.Add(p.SelectCommand());
                 }
                 
-                _actionList.Sort(CompareCommand);
+                 _actionList = _actionList             
+                    .OrderByDescending(command => command.Priority) //Priority가 높은 순서로 정렬
+                    .ThenByDescending(GetAttackSpeed)              //priority가 같고 둘다 Attack이면 Speed 순으로 정렬
+                    .ToList();
                 
                 ExecuteActions();
             }
@@ -55,11 +60,15 @@ namespace MyGame.BattleSystems
             while(TryExecuteNextAction())
             {
                 HandleFaintedPokemon();
-                
                 if(_isBattleOver)
                     return;
             }
+
             ProcessTurnEndEffects();
+
+            HandleFaintedPokemon();
+            if(_isBattleOver)
+                return;
         }
 
         private bool TryExecuteNextAction()
@@ -82,7 +91,10 @@ namespace MyGame.BattleSystems
                 if(p.Trainer.ActivePokemon!.IsFainted)
                 {
                     if(p.Trainer.CanBattle())        
-                        RemovePendingActionsFor(p);        
+                        {
+                            _actionList.Add(p.GetForcedSwitchCommand());
+                            RemovePendingActionsFor(p);   
+                        }     
                     else
                     {
                         if(p.Trainer.NameId == PokemonRules.PlayerId)
@@ -107,27 +119,20 @@ namespace MyGame.BattleSystems
 
             if(_isPlayerDefeated)
             {
-                //player가 졌을 때
+                //player가 졌을 때 돈을 잃고 기절한 포켓몬을 전부 살림.
                 return true;
             }
 
-            //player가 이겼을 때
+            //player가 이겼을 때 돈을 얻고 포켓몬 유지.
 
             return true;
         }
 
-        private int CompareCommand(IBattleCommand x, IBattleCommand y) //둘 다 행동이 같다면 트레이너 우선.
+        private int GetAttackSpeed(IBattleCommand command)  
         {
-            int result = y.Priority.CompareTo(x.Priority);
+            if (command is AttackCommand attack)
+                return attack.AttackerSpeed;
 
-             if (result != 0)
-                return result;
-
-            if (x is AttackCommand attackX &&
-                y is AttackCommand attackY)
-            {
-                return attackY.AttackerSpeed.CompareTo(attackX.AttackerSpeed);
-            }
             return 0;
         }
     }
