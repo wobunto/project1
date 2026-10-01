@@ -1,20 +1,19 @@
-using MyGame.Logs;
 using MyGame.BattleSystems;
 
 namespace MyGame.Commands
 {
-    public class ErrorCommand : IBattleCommand
+    public class ExitCommand : IBattleCommand
     {
-        public bool IsPlayerCommand {get;}
-           
+        public bool IsPlayerCommand {get; }
+        public int TrainerId {get;}
         public BattlePriority Priority 
         {
             get => BattlePriority.Behavior;
         }  
-        
+
         public void Execute()
         {
-            GameLog.Error("액션이 선택되지 않았습니다!");
+            // 도망 실행
         }
     }
 }

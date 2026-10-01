@@ -1,14 +1,16 @@
 using MyGame.Commands;
 using MyGame.BattleControllers;
 using MyGame.Inputs;
-using MyGame.Pokemons;
+using MyGame.Trainers;
 
 namespace MyGame.BattleCommanders
 {
     public class PlayerCommander : IBattleCommander
     {
         private BattleController _playerController;
-        public int NameId {get;}
+        
+        public int NameId { get; }
+        public IBattleTrainer Trainer => _playerController.Player;
 
         public PlayerCommander(BattleController controller)
         {
@@ -19,55 +21,40 @@ namespace MyGame.BattleCommanders
                 throw new InvalidOperationException("현재 player의 ActivePokemon이 null 입니다.");
         }
 
+        // 1. 일반 명령 선택
         public IBattleCommand SelectCommand()
         {
             _playerController.ResetState();
-
-            while (!_playerController.IsTurnFinished)
-            {
-                // 입력 감지 (Unity의 Input, 콘솔의 Console.ReadKey 등)
-                Input input = ConsoleInputManager.GetNumberKey();
-                
-                if (input.Type == InputType.None)
-                {
-                    Thread.Sleep(100);
-                    continue;
-                }
-                
-                _playerController.HandleInput(input);
-            }
+            
+            WaitUntilTurnFinished();
 
             return _playerController.SelectedCommand;
         }
 
-        public TurnResult IsActivePokemonFainted()
+        // 2. 강제 교체 처리
+        public IBattleCommand GetForcedSwitchCommand()
         {
-            var activePokemon = _playerController.Player.ActivePokemon!;
-            
-            if(!activePokemon.IsFainted)
-                return TurnResult.None;
+            _playerController.PushForceSwitchState();
+     
+            WaitUntilTurnFinished();
 
-            if(!_playerController.Player.CanBattle())
-                return TurnResult.AllFainted;
+            return _playerController.SelectedCommand;
+        }
 
-           _playerController.PushForceSwitchState();
-
+        private void WaitUntilTurnFinished()
+        {
             while (!_playerController.IsTurnFinished)
             {
-                // 입력 감지 (Unity의 Input, 콘솔의 Console.ReadKey 등)
                 Input input = ConsoleInputManager.GetNumberKey();
                 
                 if (input.Type == InputType.None)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(20); 
                     continue;
                 }
                 
                 _playerController.HandleInput(input);
             }
-            _playerController.SelectedCommand.Execute();
-
-            return TurnResult.SwitchPokemon;
         }
     }
 }

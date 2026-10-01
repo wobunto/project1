@@ -6,17 +6,17 @@ using MyGame.BattleSystems;
 using MyGame.Pokemons;
 using MyGame.PokemonDatas;
 using MyGame.Moves;
+using MyGame.Rules;
 namespace MyGame
 {
     class Program{
-    const int Player = 0;
 
         static void Main(string[] args)
         {
             PokemonDatabase.LoadPokemonDatabase();
             MoveDatabase.LoadMoveDatabase();
 
-            PlayerRuntime player = new(Player);
+            PlayerRuntime player = new(PokemonRules.PlayerId);
             EnemyRuntime enemy = new(1);
             ConsolePlayerView view = new();
 

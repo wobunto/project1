@@ -5,7 +5,7 @@ namespace MyGame.Commands
     public interface IBattleCommand
     {
         BattlePriority Priority {get;}
-        bool IsPlayerCommand { get; }
+        int TrainerId { get; }
         void Execute();
     }
 }

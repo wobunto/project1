@@ -10,25 +10,24 @@ namespace MyGame.Commands
 {
     public class AttackCommand : IBattleCommand
     {
-        public BattlePriority Priority {get; init;}  
-        public bool IsPlayerCommand { get; }
-
-        public int AttackerSpeed { get;}
-
         private IBattlePokemon  _attacker;
         private IBattleTargetTrainer _defendTrainer;
         private MoveRuntime _move;
 
+        public BattlePriority Priority {get; init;}  
+        public int TrainerId { get; }
+        public int AttackerSpeed { get;}
+
         public AttackCommand(
             IBattlePokemon attacker,
             IBattleTargetTrainer defendTrainer,
-            MoveRuntime move, bool isPlayer)
+            MoveRuntime move, int trainerId)
         {
             _attacker = attacker;
             _defendTrainer = defendTrainer;
             _move = move;
             AttackerSpeed = _attacker.CurrentSpeed;
-            IsPlayerCommand = isPlayer;
+            TrainerId = trainerId;
 
             Priority = move.Data.Priority;
         }

@@ -7,23 +7,25 @@ namespace MyGame.Commands
     {
         private IBattleTrainer _trainer;
         private int _index;
-        public bool IsPlayerCommand{get;}
+
+        public int TrainerId {get;}
 
         public BattlePriority Priority 
         {
             get => BattlePriority.Behavior;
         }  
 
-        public SwitchCommand(
+         public SwitchCommand(
             IBattleTrainer trainer,
             int index,
-            bool isPlayer)
+            int trainerId)
         {
             _trainer = trainer;
             _index = index;
-             IsPlayerCommand = isPlayer;
+            TrainerId = trainerId;
         }
-
+         
+    
         public void Execute()
         {
             if(!_trainer.TrySetActivePokemon(_index))

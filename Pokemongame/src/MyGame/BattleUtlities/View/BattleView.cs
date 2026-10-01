@@ -10,9 +10,9 @@ namespace MyGame.Views
     {
         void DisplayCommandMenu();
          void DisplayPokemon(IBattlePokemon playerPokemon, IBattlePokemon enemyPokemon);
-        void DisplayAttackMenu(IReadOnlyList<MoveRuntime?> CurrentMoves);
+        void DisplayAttackMenu(IEnumerable<MoveRuntime?> CurrentMoves);
         void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
-        void DisplayPartyMenu(IReadOnlyList<PokemonRuntime> party);
+        void DisplayPartyMenu(IEnumerable<PokemonRuntime> party);
         void DisplayMessage(String message);
         void DisplayStartBattle(IBattleCommander Enemy);
     }
@@ -53,7 +53,7 @@ namespace MyGame.Views
             DisplayBackInfo();
         }
 
-        public void DisplayAttackMenu(IReadOnlyList<MoveRuntime?> CurrentMoves)
+        public void DisplayAttackMenu(IEnumerable<MoveRuntime?> CurrentMoves)
         {
             
             var move1 = CurrentMoves.ElementAtOrDefault(0);
@@ -91,7 +91,7 @@ namespace MyGame.Views
         }
         
         
-        public void DisplayPartyMenu(IReadOnlyList<PokemonRuntime> party)
+        public void DisplayPartyMenu(IEnumerable<PokemonRuntime> party)
         {
        
             PokemonRuntime? pokemon1 = party.ElementAtOrDefault(0);

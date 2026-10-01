@@ -14,6 +14,7 @@ namespace MyGame.BattleCommanders
             private readonly IBattleTargetTrainer _target; 
 
             public int NameId { get; }
+            public IBattleTrainer Trainer => _aiTrainer;
 
             public AiCommander(IBattleTrainer aiTrainer, IBattleTargetTrainer target)
             {
@@ -41,31 +42,28 @@ namespace MyGame.BattleCommanders
                   return BattleCommandFactory.CreateAttackCommand(currentPokemon,_target,selectMove);
             }
 
-            public TurnResult IsActivePokemonFainted()
-            {
-                  NullCheckActivePokemon();
-
-                  if(!_aiTrainer.ActivePokemon!.IsFainted)
-                        return TurnResult.None;
-                  
-                  var result = TrySwitchCommand();
-                  
-                  return result;            
+            public IBattleCommand GetForcedSwitchCommand()
+            {       
+                  if(TrySwitchCommand(out IBattleCommand command))
+                        return command;            
             }
 
-            private TurnResult TrySwitchCommand()
+            private bool TrySwitchCommand(out IBattleCommand command)
             {
+                  command = BattleCommandFactory.Error;
+
                   for(int i = 0; i < _aiTrainer.Party.Count; i++)
                   {
                         if(_aiTrainer.Party[i] == _aiTrainer.ActivePokemon || 
                            _aiTrainer.Party[i].IsFainted)
                               continue;
 
-                        BattleCommandFactory.CreateSwitchCommand(_aiTrainer, i);
+                        command = BattleCommandFactory.CreateSwitchCommand(_aiTrainer, i);
 
-                        return TurnResult.SwitchPokemon;
+                        return true;
                   }
-                  return TurnResult.AllFainted;
+
+                  return false;
             }     
 
             private IReadOnlyList<MoveRuntime> GetUsableMoves(IBattlePokemon pokemon)
