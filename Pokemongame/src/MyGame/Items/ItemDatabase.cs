@@ -35,6 +35,7 @@ namespace MyGame.Items
                 {
                     _items[items.Key] = items;
                 }
+                GameLog.Info("아이템 데이터 베이스가 정상적으로 로드되었습니다.");
             }
         }
         

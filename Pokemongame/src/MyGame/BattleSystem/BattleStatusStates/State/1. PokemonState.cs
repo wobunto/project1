@@ -12,7 +12,7 @@ namespace MyGame.BattleStatus
             _pokemon = pokemon;
         }
 
-        public virtual BeforeActionResult OnBeforeAction() => BeforeActionResult.None;
+        public virtual BeforeActionResult OnBeforeAction() => BeforeActionResult.Pass;
         public virtual void OnTurnEnd() {}
         
         public virtual float ModifyAttack(float currentAttack) => currentAttack;

@@ -24,6 +24,11 @@ namespace MyGame.BattleSystems
         {
             _participants.Clear();
             _participants.AddRange(participants);
+
+            _actionList.Clear();
+
+            _isBattleOver = false;
+            _isPlayerDefeated = false;
         }
 
         public void StartTrainerBattle() //우선은 트레이너 배틀만. 나중에 Dry를 생각해서 야생 포켓몬도 호환 가능하게 만들 예정
@@ -39,7 +44,7 @@ namespace MyGame.BattleSystems
 
         private void RunBattleLoop()
         {
-            while (!IsBattleEnd())        
+            while (!_isBattleOver)        
             {
                 foreach (var p in _participants)
                 {
@@ -53,20 +58,19 @@ namespace MyGame.BattleSystems
                 
                 ExecuteActions();
             }
+            BattleEnd();
         }
  
         private void ExecuteActions()
         {
             while(TryExecuteNextAction())
             {
-                HandleFaintedPokemon();
                 if(_isBattleOver)
                     return;
             }
 
             ProcessTurnEndEffects();
 
-            HandleFaintedPokemon();
             if(_isBattleOver)
                 return;
         }
@@ -79,21 +83,31 @@ namespace MyGame.BattleSystems
             _actionList[0].Execute();
             _actionList.RemoveAt(0);
 
+            HandleFaintedPokemon();
+
             return true;
         }
 
-        private void ProcessTurnEndEffects() { /* 화상/독 데미지 등 */ }
+        private void ProcessTurnEndEffects() 
+        {
+            foreach (var p in _participants)
+            {             
+                p.Trainer.ActivePokemon!.OnAfterAction();    /* 화상/독 데미지 등 */ 
+                HandleFaintedPokemon();
+            }
+        }
 
         private void HandleFaintedPokemon()
         {
             foreach (var p in _participants)
-            {
-                if(p.Trainer.ActivePokemon!.IsFainted)
+           {            
+                if(p.Trainer.ActivePokemon!.IsFainted)   
                 {
                     if(p.Trainer.CanBattle())        
                         {
-                            _actionList.Add(p.GetForcedSwitchCommand());
-                            RemovePendingActionsFor(p);   
+                            RemovePendingActionsFor(p);  
+                            var switchCommand = p.GetForcedSwitchCommand();
+                            switchCommand.Execute(); 
                         }     
                     else
                     {
@@ -112,20 +126,15 @@ namespace MyGame.BattleSystems
             _actionList.RemoveAll(c => c.TrainerId == commander.Trainer.NameId);
         }
 
-        private bool IsBattleEnd()
+        private void BattleEnd()
         {
-            if(!_isBattleOver)
-                return false;
-
             if(_isPlayerDefeated)
             {
                 //player가 졌을 때 돈을 잃고 기절한 포켓몬을 전부 살림.
-                return true;
+         
             }
 
             //player가 이겼을 때 돈을 얻고 포켓몬 유지.
-
-            return true;
         }
 
         private int GetAttackSpeed(IBattleCommand command)  

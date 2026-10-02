@@ -36,10 +36,10 @@ namespace MyGame.ControllerStates
             if (result == MoveUsageResult.Success)
             {
             // 성공: 기술이 있고 PP도 있음
-                var attack = BattleCommandFactory.CreateAttackCommand(_attacker,_defender, move!);
+                var attack = BattleCommandFactory.CreateAttackCommand(_attacker,_defender, move!, context.Player.NameId);
                 context.FinishedTurn(attack);
                 return;
-            }
+            }  
 
             context.View.DisplayMessage(MoveLog.GetErrorMessage(result));  //MoveLog에서 가져오는게 불편
         }
@@ -49,7 +49,7 @@ namespace MyGame.ControllerStates
             context.View.DisplayMessage($"{context.Player.ActivePokemon!.Name}은 현재 사용할 수 있는 기술이 없다...");
 
             var activePokemon = context.Player.ActivePokemon;
-            var struggle = BattleCommandFactory.CreateStruggleCommand(activePokemon, context.Enemy);
+            var struggle = BattleCommandFactory.CreateStruggleCommand(activePokemon, context.Enemy, context.Player.NameId);
 
             context.FinishedTurn(struggle);
             return;

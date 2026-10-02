@@ -13,19 +13,6 @@
     ]
   },
   {
-    "Id": 7,
-    "Name": "라프라스",
-    "BaseSpeed": 6,
-    "BaseHp": 355,
-    "BaseAttack": 65,
-    "Types": ["Water"],
-    "LearnMovesKey": [101, 103, 107],
-    "LevelUpAutoMoves": [
-      { "Level": 32, "MoveKey": 103 },
-      { "Level": 38, "MoveKey": 107 }
-    ]
-  },
-  {
     "Id": 4,
     "Name": "파이리",
     "BaseSpeed": 65,
@@ -49,6 +36,163 @@
     "LevelUpAutoMoves": [
       { "Level": 33, "MoveKey": 105 },
       { "Level": 39, "MoveKey": 107 }
+    ]
+  },
+  {
+    "Id": 25,
+    "Name": "피카츄",
+    "BaseSpeed": 90,
+    "BaseHp": 35,
+    "BaseAttack": 55,
+    "Types": ["Electric"],
+    "LearnMovesKey": [101, 105, 111, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 105 },
+      { "Level": 15, "MoveKey": 111 },
+      { "Level": 20, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 27,
+    "Name": "모래두지",
+    "BaseSpeed": 40,
+    "BaseHp": 50,
+    "BaseAttack": 75,
+    "Types": ["Ground"],
+    "LearnMovesKey": [101, 107, 112],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 107 },
+      { "Level": 20, "MoveKey": 112 }
+    ]
+  },
+  {
+    "Id": 37,
+    "Name": "식스테일",
+    "BaseSpeed": 65,
+    "BaseHp": 38,
+    "BaseAttack": 41,
+    "Types": ["Fire"],
+    "LearnMovesKey": [101, 102, 108],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 102 },
+      { "Level": 16, "MoveKey": 108 }
+    ]
+  },
+  {
+    "Id": 39,
+    "Name": "푸린",
+    "BaseSpeed": 20,
+    "BaseHp": 115,
+    "BaseAttack": 45,
+    "Types": ["Normal"],
+    "LearnMovesKey": [101, 103, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 103 },
+      { "Level": 18, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 54,
+    "Name": "고라파덕",
+    "BaseSpeed": 55,
+    "BaseHp": 50,
+    "BaseAttack": 52,
+    "Types": ["Water"],
+    "LearnMovesKey": [101, 103, 109],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 103 },
+      { "Level": 18, "MoveKey": 109 }
+    ]
+  },
+  {
+    "Id": 58,
+    "Name": "가디",
+    "BaseSpeed": 60,
+    "BaseHp": 55,
+    "BaseAttack": 70,
+    "Types": ["Fire"],
+    "LearnMovesKey": [101, 102, 108],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 108 },
+      { "Level": 20, "MoveKey": 102 }
+    ]
+  },
+  {
+    "Id": 74,
+    "Name": "꼬마돌",
+    "BaseSpeed": 20,
+    "BaseHp": 40,
+    "BaseAttack": 80,
+    "Types": ["Stone", "Ground"],
+    "LearnMovesKey": [101, 107, 112],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 107 },
+      { "Level": 20, "MoveKey": 112 }
+    ]
+  },
+  {
+    "Id": 120,
+    "Name": "별가사리",
+    "BaseSpeed": 85,
+    "BaseHp": 30,
+    "BaseAttack": 45,
+    "Types": ["Water"],
+    "LearnMovesKey": [103, 109, 111],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 103 },
+      { "Level": 12, "MoveKey": 109 },
+      { "Level": 20, "MoveKey": 111 }
+    ]
+  },
+  {
+    "Id": 125,
+    "Name": "에레브",
+    "BaseSpeed": 95,
+    "BaseHp": 65,
+    "BaseAttack": 83,
+    "Types": ["Electric"],
+    "LearnMovesKey": [101, 105, 111, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 105 },
+      { "Level": 20, "MoveKey": 111 },
+      { "Level": 28, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 131,
+    "Name": "라프라스",
+    "BaseSpeed": 60,
+    "BaseHp": 130,
+    "BaseAttack": 85,
+    "Types": ["Water", "Ice"],
+    "LearnMovesKey": [101, 103, 109, 115],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 103 },
+      { "Level": 25, "MoveKey": 109 },
+      { "Level": 32, "MoveKey": 115 }
+    ]
+  },
+  {
+    "Id": 124,
+    "Name": "루주라",
+    "BaseSpeed": 95,
+    "BaseHp": 65,
+    "BaseAttack": 50,
+    "Types": ["Ice"],
+    "LearnMovesKey": [101, 103, 115],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 15, "MoveKey": 103 },
+      { "Level": 25, "MoveKey": 115 }
     ]
   }
 ]

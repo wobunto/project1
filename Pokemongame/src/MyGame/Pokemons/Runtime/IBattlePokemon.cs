@@ -8,7 +8,6 @@ namespace MyGame.Pokemons
     {  
         string Name {get;}
         int MaxHp { get; }
-        bool IsPlayers {get; }
         IReadOnlyList<PokemonType> Types {get;}
         IReadOnlyList<MoveRuntime> CurrentMoves {get;}
 
@@ -26,7 +25,8 @@ namespace MyGame.Pokemons
         void ModifyAttackStage(int amount);
         bool TrySetEffectState(EffectState state);
 
-        BeforeActionResult TryExecute();
+        BeforeActionResult CheckBeforeAction();
+        void OnAfterAction();
         MoveUsageResult TryGetUsableMove(int index, out MoveRuntime? move);
         bool HasAnyUsableMove();
     }

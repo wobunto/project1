@@ -20,7 +20,7 @@ namespace MyGame.BattleStatus
             _stateTurn++;
 
             if (IsSleep())
-                return BeforeActionResult.ASleep;
+                return BeforeActionResult.Asleep;
 
             return BeforeActionResult.WokeUp;
         }

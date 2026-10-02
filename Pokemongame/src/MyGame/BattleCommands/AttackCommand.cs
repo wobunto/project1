@@ -16,7 +16,7 @@ namespace MyGame.Commands
 
         public BattlePriority Priority {get; init;}  
         public int TrainerId { get; }
-        public int AttackerSpeed { get;}
+        public int AttackerSpeed => _attacker.CurrentSpeed;
 
         public AttackCommand(
             IBattlePokemon attacker,
@@ -26,7 +26,6 @@ namespace MyGame.Commands
             _attacker = attacker;
             _defendTrainer = defendTrainer;
             _move = move;
-            AttackerSpeed = _attacker.CurrentSpeed;
             TrainerId = trainerId;
 
             Priority = move.Data.Priority;
@@ -36,12 +35,19 @@ namespace MyGame.Commands
         {
             if(_defendTrainer.ActivePokemon == null)
                 throw new InvalidOperationException("defnederTrainer의 ActivePokemon이 null입니다.");
-            
-            if(!TryExecute()) // 상태 이상 등으로 공격 실패 가능.
+             
+            var result = _attacker.CheckBeforeAction();
+
+            if(!result.CanAct)
             {
-                GameLog.Info("행동 불가능");
+                //result.Event 를 이용해서 관찰자에게 보내기/
                 return;
-            }
+            }  
+            
+
+            if(!_move.TryConsumePP())
+                throw new InvalidOperationException("attacker의 move pp가 0입니다."); //AttackState에서 pp체크가 안된 상황.
+            
             var _defender = _defendTrainer.ActivePokemon;
             
             float typeMultiplier = 
@@ -64,18 +70,6 @@ namespace MyGame.Commands
                 damage,
                 typeMultiplier
                 );
-        }
-        
-        public bool TryExecute()
-        {
-            var Result = _attacker.TryExecute();
-            if(Result == BattleStatus.BeforeActionResult.ASleep ||
-                Result == BattleStatus.BeforeActionResult.Frozen ||
-                Result == BattleStatus.BeforeActionResult.Paralyzed
-            )
-                return false;
-            
-            return true;
         }
     }
 }

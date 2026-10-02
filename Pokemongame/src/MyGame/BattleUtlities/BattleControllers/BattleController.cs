@@ -68,7 +68,7 @@ namespace MyGame.BattleControllers
 
             _stateStack.Pop();
             
-            CurrentState?.Enter(this);
+            CurrentState?.Resume(this);
         }
 
         public void ResetState()
@@ -108,6 +108,7 @@ namespace MyGame.BattleControllers
         public void PushForceSwitchState()
         {
             ForceSwitch = true;
+            IsTurnFinished = false;
             PushState(PlayerState.SwitchState);
         }
     }

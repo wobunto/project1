@@ -40,9 +40,12 @@ namespace MyGame.BattleSystems
         {
             GameLog.Info("-------------------------------------");
             attacker.LogAttack(move);
+            Thread.Sleep(3000);
             defender.LogDamage(damage);
+            Thread.Sleep(3000);
             LogEffective(finalMultiplier);
             GameLog.Info("-------------------------------------");
+            Thread.Sleep(3000);
         }
 
         public static void LogSelectAction()

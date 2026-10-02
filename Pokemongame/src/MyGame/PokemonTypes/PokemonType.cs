@@ -10,6 +10,7 @@ namespace MyGame.Types
         Ground,
         Wind,
         Stone,
+        Ice,
         Max
     }
 }

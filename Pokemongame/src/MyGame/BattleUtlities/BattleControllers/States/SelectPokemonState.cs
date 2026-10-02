@@ -21,6 +21,13 @@ namespace MyGame.ControllerStates
         {
             context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
             context.View.DisplayPartyMenu(context.Player.Party);
+            if(_canCancel)
+            {
+                 context.View.DisplayBackInfo();
+                 return;
+            }
+            
+            context.View.DisplayCantBack();
         }
         
          public override void HandleInput(

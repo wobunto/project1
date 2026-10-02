@@ -46,7 +46,8 @@ namespace MyGame.ControllerStates
 
                     var itemCmd = BattleCommandFactory.CreateUseItemCommand( context.Player, 
                                                                             pokemon,
-                                                                            itemData);
+                                                                            itemData,
+                                                                            context.Player.NameId);
                     
                     context.FinishedTurn(itemCmd);
                 },
@@ -57,6 +58,15 @@ namespace MyGame.ControllerStates
             //아이템으로 회복은 물론 상태회복,PP회복, 
             //데미지, 스피드 등의 랭크업도 가능하니 IBattle로 많은 기능
         }
+        
+        public override void Resume(IBattleStateContext context) 
+        {
+            IReadOnlyList<InventoryItem> items = GetValidInventory(context);
+            
+            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+            context.View.DisplayItemMenu(items);
+        }
+
         private List<InventoryItem> GetValidInventory(IBattleStateContext context)
         {
             var result = new List<InventoryItem>();

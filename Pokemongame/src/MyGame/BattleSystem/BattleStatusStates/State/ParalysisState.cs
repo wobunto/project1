@@ -14,8 +14,8 @@ namespace MyGame.BattleStatus
         // 25% 확률로 몸이 저려 행동 불가
         if (Utility.TryChance(25))
             return BeforeActionResult.Paralyzed;
-
-        return BeforeActionResult.None;
+        
+        return BeforeActionResult.Pass;
     }
 }
 }

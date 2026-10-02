@@ -13,7 +13,6 @@ namespace MyGame.BattleStatus
         public override BeforeActionResult OnBeforeAction()
         {
             _stateTurn++;
-
             // 4턴째이거나 20% 확률로 해제
             if (_stateTurn > 3 || Utility.TryChance(20))
             {
@@ -21,7 +20,7 @@ namespace MyGame.BattleStatus
                 return BeforeActionResult.Thawed; // "얼음이 녹았다!"
             }
 
-            return BeforeActionResult.Frozen; // "얼어붙어서 움직일 수 없다!"
+            return BeforeActionResult.Frozen; 
         }
     }
 }

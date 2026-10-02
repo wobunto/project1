@@ -9,12 +9,14 @@ namespace MyGame.Views
     public interface IPlayerView
     {
         void DisplayCommandMenu();
-         void DisplayPokemon(IBattlePokemon playerPokemon, IBattlePokemon enemyPokemon);
+        void DisplayPokemon(IBattlePokemon playerPokemon, IBattlePokemon enemyPokemon);
         void DisplayAttackMenu(IEnumerable<MoveRuntime?> CurrentMoves);
         void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
         void DisplayPartyMenu(IEnumerable<PokemonRuntime> party);
         void DisplayMessage(String message);
         void DisplayStartBattle(IBattleCommander Enemy);
+        void DisplayBackInfo();
+        void DisplayCantBack();
     }
     
     public class ConsolePlayerView : IPlayerView
@@ -23,9 +25,15 @@ namespace MyGame.Views
         {
             Console.WriteLine(message);
         }
+
         public void DisplayBackInfo()
         {
             DisplayMessage("돌아가시려면 z 나 백 스페이스를 눌러주세요.");
+        }
+
+        public void DisplayCantBack()
+        {
+             DisplayMessage("현재 교체를 해야 합니다.");
         }
 
         public void DisplayStartBattle(IBattleCommander Enemy)
@@ -50,7 +58,6 @@ namespace MyGame.Views
             DisplayMessage("1. 싸운다  2. 가방");
             DisplayMessage("3. 교체    4. 도망친다");
             DisplayMessage("==============================");
-            DisplayBackInfo();
         }
 
         public void DisplayAttackMenu(IEnumerable<MoveRuntime?> CurrentMoves)
@@ -106,7 +113,6 @@ namespace MyGame.Views
             DisplayMessage($" 3. {FormatPokemon(pokemon3),-18} 4. {FormatPokemon(pokemon4),-18}");
             DisplayMessage($" 5. {FormatPokemon(pokemon5),-18} 6. {FormatPokemon(pokemon6),-18}");
             DisplayMessage("========================================");
-            DisplayBackInfo();
         }
 
         private string FormatMove(MoveRuntime move)

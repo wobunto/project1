@@ -11,7 +11,7 @@ namespace MyGame.BattleStatus
 
         public PokemonStatus(IBattlePokemon pokemon)
         {
-        _pokemon = pokemon;
+            _pokemon = pokemon;
             CurrentState = new NormalState(pokemon);
         }
 

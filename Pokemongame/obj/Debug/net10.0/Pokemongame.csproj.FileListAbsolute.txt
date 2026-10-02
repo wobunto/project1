@@ -15,3 +15,4 @@
 /workspaces/project1/Pokemongame/obj/Debug/net10.0/ref/Pokemongame.dll
 /workspaces/project1/Pokemongame/bin/Debug/net10.0/JsonData/PokemonData.json
 /workspaces/project1/Pokemongame/bin/Debug/net10.0/JsonData/MoveData.json
+/workspaces/project1/Pokemongame/bin/Debug/net10.0/JsonData/ItemData.json

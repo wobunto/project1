@@ -80,5 +80,107 @@
         "BasePP": 999,
         "Priority": "Speed",
         "Effects": []
+    },
+    {
+        "Key": 108,
+        "Name": "불꽃펀치",
+        "Type": "Fire",
+        "Power": 75,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": ["InflictBurn"],
+        "EffectChance": 10
+    },
+    {
+        "Key": 109,
+        "Name": "아쿠아테일",
+        "Type": "Water",
+        "Power": 90,
+        "Accuracy": 90,
+        "BasePP": 10,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 110,
+        "Name": "리프블레이드",
+        "Type": "Grass",
+        "Power": 90,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 111,
+        "Name": "10만볼트",
+        "Type": "Electric",
+        "Power": 90,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": ["InflictParalysis"],
+        "EffectChance": 10
+    },
+    {
+        "Key": 112,
+        "Name": "지진",
+        "Type": "Ground",
+        "Power": 100,
+        "Accuracy": 100,
+        "BasePP": 10,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 113,
+        "Name": "스톤샤워",
+        "Type": "Stone",
+        "Power": 75,
+        "Accuracy": 90,
+        "BasePP": 10,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 114,
+        "Name": "에어슬래시",
+        "Type": "Wind",
+        "Power": 75,
+        "Accuracy": 95,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 115,
+        "Name": "냉동펀치",
+        "Type": "Ice",
+        "Power": 75,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 116,
+        "Name": "메가드레인",
+        "Type": "Grass",
+        "Power": 40,
+        "Accuracy": 100,
+        "BasePP": 15,
+        "Priority": "Speed",
+        "Effects": []
+    },
+    {
+        "Key": 117,
+        "Name": "전광석화",
+        "Type": "Normal",
+        "Power": 40,
+        "Accuracy": 100,
+        "BasePP": 30,
+        "Priority": "ForceFirst",
+        "Effects": []
     }
 ]

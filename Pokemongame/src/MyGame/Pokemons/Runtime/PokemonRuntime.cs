@@ -24,7 +24,6 @@ namespace MyGame.Pokemons
         public PokemonData Data {get; private set;}
         public string Name => Data.Name;
         public int Exp {get; private set;}
-        public bool IsPlayers {get;}
         public IReadOnlyList<PokemonType> Types => Data.Types;
         public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     
 
@@ -70,7 +69,7 @@ namespace MyGame.Pokemons
         public int CurrentAttackDamage 
             =>  BattleCalculator.CalculateCurrentAttack(Data.BaseAttack, AttackStage);
 
-        public PokemonRuntime(PokemonData data, int level, bool isPlayers = false)
+        public PokemonRuntime(PokemonData data, int level)
         {
             if(data == null)
                 throw new ArgumentNullException(nameof(data));
@@ -78,7 +77,8 @@ namespace MyGame.Pokemons
             Data = data;            
             _level = level;
             CurrentHp = MaxHp;
-            IsPlayers = isPlayers;
+         
+            _status = new PokemonStatus(this);
         }
         // ==================================================
         // [5] 전투 생명주기 및 HP (Combat LifeCycle & HP)
@@ -147,9 +147,14 @@ namespace MyGame.Pokemons
         // ==================================================
         // [7] 전투 행동 판정 (Battle Actions & Usability)
         // ==================================================
-        public BeforeActionResult TryExecute()
+        public BeforeActionResult CheckBeforeAction()
         {
             return _status!.OnBeforeAction();    
+        }
+
+        public void OnAfterAction()
+        {
+            _status!.OnTurnEnd();
         }
 
         public bool HasAnyUsableMove()
@@ -204,14 +209,6 @@ namespace MyGame.Pokemons
         // ==================================================
         // [9] 내부 보조 로직 (Private Helpers)
         // ==================================================
-        public void NewStatus()
-        {
-            if(_status != null)
-                return;
-
-             _status = new PokemonStatus(this);
-        }
-
         private void SetEffectState(EffectState effect)
         {
             if(_status == null)

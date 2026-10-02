@@ -34,37 +34,40 @@ namespace MyGame.BattleCommanders
                   var usableMoves = GetUsableMoves(currentPokemon);
                   
                   if(usableMoves.Count == 0)   // 사용 가능한 기술이 0개이므로 발버둥 실행
-                        return BattleCommandFactory.CreateStruggleCommand(currentPokemon, _target);
+                        return BattleCommandFactory.CreateStruggleCommand(currentPokemon, _target, _aiTrainer.NameId);
                   
                   int randomindex = Utility.RandomIndex(usableMoves.Count);
                   var selectMove = usableMoves[randomindex - 1];
 
-                  return BattleCommandFactory.CreateAttackCommand(currentPokemon,_target,selectMove);
+                  return BattleCommandFactory.CreateAttackCommand(currentPokemon,_target,selectMove, _aiTrainer.NameId);
             }
 
             public IBattleCommand GetForcedSwitchCommand()
             {       
-                  if(TrySwitchCommand(out IBattleCommand command))
-                        return command;            
-            }
+                  int nextPokemonIndex = GetNextAlivePokemonIndex();
 
-            private bool TrySwitchCommand(out IBattleCommand command)
-            {
-                  command = BattleCommandFactory.Error;
-
-                  for(int i = 0; i < _aiTrainer.Party.Count; i++)
+                  if (nextPokemonIndex == -1)    // CanBattle()을 통과하고 왔으므로 무조건 생존 포켓몬이 존재함
                   {
-                        if(_aiTrainer.Party[i] == _aiTrainer.ActivePokemon || 
-                           _aiTrainer.Party[i].IsFainted)
-                              continue;
-
-                        command = BattleCommandFactory.CreateSwitchCommand(_aiTrainer, i);
-
-                        return true;
+                        throw new InvalidOperationException("교체 가능한 포켓몬이 없는데 강제 교체가 호출되었습니다.");
                   }
 
-                  return false;
+                  return BattleCommandFactory.CreateSwitchCommand(_aiTrainer, nextPokemonIndex, _aiTrainer.NameId);
             }     
+
+            private int GetNextAlivePokemonIndex()
+            {
+                  for (int i = 0; i < _aiTrainer.Party.Count; i++)
+                  {
+                        var pokemon = _aiTrainer.Party[i];
+                        
+                        // 현재 나와있는 포켓몬이 아니고, 기절하지 않은 포켓몬 선택
+                        if (pokemon != _aiTrainer.ActivePokemon && !pokemon.IsFainted)
+                        {
+                        return i;
+                        }
+                  }
+                  return -1;
+            }
 
             private IReadOnlyList<MoveRuntime> GetUsableMoves(IBattlePokemon pokemon)
             {

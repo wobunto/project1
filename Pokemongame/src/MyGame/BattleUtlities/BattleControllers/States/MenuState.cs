@@ -15,8 +15,6 @@ namespace MyGame.ControllerStates
             IBattleStateContext context,
             Input input)
         {
-          
-
             switch (input.Value)
             {
                 case 1:
@@ -39,7 +37,12 @@ namespace MyGame.ControllerStates
                     context.View.DisplayMessage("잘못된 번호입니다.");
                     break;
             }   
-        } 
-     
+        }
+
+        public override void Resume(IBattleStateContext context) 
+        {
+            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+            context.View.DisplayCommandMenu();
+        }
     }
 }

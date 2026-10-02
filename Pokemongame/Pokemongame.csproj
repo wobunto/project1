@@ -15,6 +15,11 @@
       <None Update="JsonData/MoveData.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>  
+      
+      <None Update="JsonData/ItemData.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>  
+
   </ItemGroup>
 
 </Project>
