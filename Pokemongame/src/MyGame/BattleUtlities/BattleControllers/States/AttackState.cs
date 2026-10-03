@@ -9,7 +9,7 @@ namespace MyGame.ControllerStates
     {
         public override void Enter(IBattleStateContext context)
         {    
-            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!); 
+            //관찰자에게 알림?
         
             var activePokemon = context.Player.ActivePokemon!;
 
@@ -46,9 +46,9 @@ namespace MyGame.ControllerStates
 
         private void GetStruggleState(IBattleStateContext context)
         {
-            context.View.DisplayMessage($"{context.Player.ActivePokemon!.Name}은 현재 사용할 수 있는 기술이 없다...");
+            //뷰 호출
 
-            var activePokemon = context.Player.ActivePokemon;
+            var activePokemon = context.Player.ActivePokemon!;
             var struggle = BattleCommandFactory.CreateStruggleCommand(activePokemon, context.Enemy, context.Player.NameId);
 
             context.FinishedTurn(struggle);

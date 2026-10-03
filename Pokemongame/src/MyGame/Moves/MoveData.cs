@@ -7,7 +7,6 @@ namespace MyGame.Moves
     {
          //스킬 기본 데이터. 파워. 정확도. pp
         public int Key { get; init; }
-        public required string Name { get; init; }
         public PokemonType Type { get; init; }
         public int Power { get; init; }
         public int Accuracy { get; init; }

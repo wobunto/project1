@@ -3,6 +3,7 @@ using MyGame.Moves;
 using MyGame.Items;
 using MyGame.Logs;
 using MyGame.BattleStatus;
+using MyGame.NameTables;
 
 namespace MyGame.BattleSystems
 {
@@ -10,8 +11,8 @@ namespace MyGame.BattleSystems
     {
         public static void LogCurrentStat(PokemonRuntime playerPokemon,PokemonRuntime enemyPokemon)
         {
-            GameLog.Info($"내 {playerPokemon.Name}의 현재 상태 [Lv.{playerPokemon.Level} hp: {playerPokemon.CurrentHp}/{playerPokemon.MaxHp}]");
-            GameLog.Info($"상대 {enemyPokemon.Name}의 현재 상태 [Lv.{enemyPokemon.Level} hp: {enemyPokemon.CurrentHp}/{enemyPokemon.MaxHp}]");
+            GameLog.Info($"내 {NameTable.GetPokemon(playerPokemon!.Id)}의 현재 상태 [Lv.{playerPokemon.Level} hp: {playerPokemon.CurrentHp}/{playerPokemon.MaxHp}]");
+            GameLog.Info($"상대 {NameTable.GetPokemon(enemyPokemon!.Id)}의 현재 상태 [Lv.{enemyPokemon.Level} hp: {enemyPokemon.CurrentHp}/{enemyPokemon.MaxHp}]");
         }
 
         public static void LogEffective(float finalMultiplier)
@@ -21,19 +22,19 @@ namespace MyGame.BattleSystems
         }
 
         public static void LogAttack(this IBattlePokemon attacker, MoveData move) 
-            => GameLog.Info($"{attacker.Name}의 {move.Name}!");
+            => GameLog.Info($"{NameTable.GetPokemon(attacker.Id)}의 {MoveNameTable.Get(move.Key)}!");
        
         public static void LogDamage(this IBattlePokemon defender, int damage) 
-            => GameLog.Info($"{defender.Name}에게 {damage}의 피해를 입혔다!");
+            => GameLog.Info($"{NameTable.GetPokemon(defender.Id)}에게 {damage}의 피해를 입혔다!");
 
         public static void LogStatusDamged(IBattlePokemon pokemon, EffectState status, int damage)
         {
-            GameLog.Info($"{pokemon.Name}이 {status}로 인해 {damage}의 피해를 입혔다!");
+            GameLog.Info($"{NameTable.GetPokemon(pokemon.Id)}이 {status}로 인해 {damage}의 피해를 입혔다!");
         }
 
         public static void LogFaint(this PokemonRuntime defender) 
         {
-            GameLog.Info($"{defender.Name}이(가) 쓰러졌다.");
+            GameLog.Info($"{NameTable.GetPokemon(defender.Id)}이(가) 쓰러졌다.");
             GameLog.Info("-------------------------------------");
         }
         public static void LogBattleResult(IBattlePokemon attacker, IBattlePokemon defender, MoveData move, int damage, float finalMultiplier)
@@ -57,7 +58,7 @@ namespace MyGame.BattleSystems
         public static void LogChoiceMove(this PokemonRuntime pokemon)
         {
             GameLog.Info("-------------------------------------");
-            GameLog.Info($"{pokemon.Name}은 어떤 스킬을 사용할까?");
+            GameLog.Info($"{NameTable.GetPokemon(pokemon.Id)}은 어떤 스킬을 사용할까?");
 
             MoveLog.LogCurrentMoves(pokemon);
         }
@@ -71,24 +72,6 @@ namespace MyGame.BattleSystems
                 ItemDatabase.TryGetItem(key, out var data);
                 GameLog.Info($" {i}.[ {data?.Name ?? "알 수 없음"} x{count} ]");
                 i++;
-            }
-        }
-
-        public static void LogParty(IReadOnlyList<PokemonRuntime> party)
-        {
-            GameLog.Info("[ 포켓몬 목록 ]");
-
-            for (int i = 0; i < party.Count; i++)
-            {
-                PokemonRuntime? pokemon = party[i];
-
-                if (pokemon is null)
-                {
-                    GameLog.Info($" {i + 1}.[ 없음 ]");
-                    continue;
-                }
-
-                GameLog.Info($" {i + 1}.[ {pokemon.Name} Lv.{pokemon.Level} HP:{pokemon.CurrentHp}/{pokemon.MaxHp} ]");
             }
         }
     }

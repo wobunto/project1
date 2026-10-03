@@ -1,16 +1,25 @@
 namespace MyGame.Types
 {
-    public enum PokemonType 
-    { 
-        Normal = 0, 
-        Fire, 
-        Water, 
-        Grass,
+    public enum PokemonType
+    {
+        Normal = 0,
+        Fire,
+        Water,
         Electric,
-        Ground,
-        Wind,
-        Stone,
+        Grass,
         Ice,
+        Fighting,
+        Poison,
+        Ground,
+        Flying,
+        Psychic,
+        Bug,
+        Rock,
+        Ghost,
+        Dragon,
+        Dark,
+        Steel,
+
         Max
     }
 }

@@ -1,11 +1,11 @@
 [
   {
     "Id": 1,
-    "Name": "이상해씨",
     "BaseSpeed": 45,
     "BaseHp": 45,
     "BaseAttack": 49,
-    "Types": ["Grass"],
+    "BaseDefense": 49,
+    "Types": ["Grass", "Poison"],
     "LearnMovesKey": [101, 104],
     "LevelUpAutoMoves": [
       { "Level": 5, "MoveKey": 101 },
@@ -14,10 +14,10 @@
   },
   {
     "Id": 4,
-    "Name": "파이리",
     "BaseSpeed": 65,
     "BaseHp": 39,
     "BaseAttack": 52,
+    "BaseDefense": 43,
     "Types": ["Fire"],
     "LearnMovesKey": [101, 102],
     "LevelUpAutoMoves": [
@@ -27,11 +27,11 @@
   },
   {
     "Id": 6,
-    "Name": "리자몽",
     "BaseSpeed": 10,
     "BaseHp": 220,
     "BaseAttack": 84,
-    "Types": ["Fire", "Wind"],
+    "BaseDefense": 78,
+    "Types": ["Fire", "Flying"],
     "LearnMovesKey": [101, 102, 104, 105, 106, 107],
     "LevelUpAutoMoves": [
       { "Level": 33, "MoveKey": 105 },
@@ -40,10 +40,10 @@
   },
   {
     "Id": 25,
-    "Name": "피카츄",
     "BaseSpeed": 90,
     "BaseHp": 35,
     "BaseAttack": 55,
+    "BaseDefense": 40,
     "Types": ["Electric"],
     "LearnMovesKey": [101, 105, 111, 117],
     "LevelUpAutoMoves": [
@@ -55,10 +55,10 @@
   },
   {
     "Id": 27,
-    "Name": "모래두지",
     "BaseSpeed": 40,
     "BaseHp": 50,
     "BaseAttack": 75,
+    "BaseDefense": 85,
     "Types": ["Ground"],
     "LearnMovesKey": [101, 107, 112],
     "LevelUpAutoMoves": [
@@ -69,10 +69,10 @@
   },
   {
     "Id": 37,
-    "Name": "식스테일",
     "BaseSpeed": 65,
     "BaseHp": 38,
     "BaseAttack": 41,
+    "BaseDefense": 40,
     "Types": ["Fire"],
     "LearnMovesKey": [101, 102, 108],
     "LevelUpAutoMoves": [
@@ -83,10 +83,10 @@
   },
   {
     "Id": 39,
-    "Name": "푸린",
     "BaseSpeed": 20,
     "BaseHp": 115,
     "BaseAttack": 45,
+    "BaseDefense": 20,
     "Types": ["Normal"],
     "LearnMovesKey": [101, 103, 117],
     "LevelUpAutoMoves": [
@@ -97,10 +97,10 @@
   },
   {
     "Id": 54,
-    "Name": "고라파덕",
     "BaseSpeed": 55,
     "BaseHp": 50,
     "BaseAttack": 52,
+    "BaseDefense": 48,
     "Types": ["Water"],
     "LearnMovesKey": [101, 103, 109],
     "LevelUpAutoMoves": [
@@ -111,10 +111,10 @@
   },
   {
     "Id": 58,
-    "Name": "가디",
     "BaseSpeed": 60,
     "BaseHp": 55,
     "BaseAttack": 70,
+    "BaseDefense": 45,
     "Types": ["Fire"],
     "LearnMovesKey": [101, 102, 108],
     "LevelUpAutoMoves": [
@@ -125,11 +125,11 @@
   },
   {
     "Id": 74,
-    "Name": "꼬마돌",
     "BaseSpeed": 20,
     "BaseHp": 40,
     "BaseAttack": 80,
-    "Types": ["Stone", "Ground"],
+    "BaseDefense": 100,
+    "Types": ["Rock", "Ground"],
     "LearnMovesKey": [101, 107, 112],
     "LevelUpAutoMoves": [
       { "Level": 5, "MoveKey": 101 },
@@ -139,10 +139,10 @@
   },
   {
     "Id": 120,
-    "Name": "별가사리",
     "BaseSpeed": 85,
     "BaseHp": 30,
     "BaseAttack": 45,
+    "BaseDefense": 55,
     "Types": ["Water"],
     "LearnMovesKey": [103, 109, 111],
     "LevelUpAutoMoves": [
@@ -153,10 +153,10 @@
   },
   {
     "Id": 125,
-    "Name": "에레브",
     "BaseSpeed": 95,
     "BaseHp": 65,
     "BaseAttack": 83,
+    "BaseDefense": 57,
     "Types": ["Electric"],
     "LearnMovesKey": [101, 105, 111, 117],
     "LevelUpAutoMoves": [
@@ -168,10 +168,10 @@
   },
   {
     "Id": 131,
-    "Name": "라프라스",
     "BaseSpeed": 60,
     "BaseHp": 130,
     "BaseAttack": 85,
+    "BaseDefense": 80,
     "Types": ["Water", "Ice"],
     "LearnMovesKey": [101, 103, 109, 115],
     "LevelUpAutoMoves": [
@@ -183,16 +183,159 @@
   },
   {
     "Id": 124,
-    "Name": "루주라",
     "BaseSpeed": 95,
     "BaseHp": 65,
     "BaseAttack": 50,
-    "Types": ["Ice"],
+    "BaseDefense": 35,
+    "Types": ["Ice", "Psychic"],
     "LearnMovesKey": [101, 103, 115],
     "LevelUpAutoMoves": [
       { "Level": 5, "MoveKey": 101 },
       { "Level": 15, "MoveKey": 103 },
       { "Level": 25, "MoveKey": 115 }
+    ]
+  },
+  {
+    "Id": 7,
+    "BaseSpeed": 43,
+    "BaseHp": 44,
+    "BaseAttack": 48,
+    "BaseDefense": 65,
+    "Types": ["Water"],
+    "LearnMovesKey": [101, 103, 109],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 103 },
+      { "Level": 18, "MoveKey": 109 }
+    ]
+  },
+  {
+    "Id": 12,
+    "BaseSpeed": 70,
+    "BaseHp": 60,
+    "BaseAttack": 45,
+    "BaseDefense": 50,
+    "Types": ["Bug", "Flying"],
+    "LearnMovesKey": [101, 104, 108, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 104 },
+      { "Level": 18, "MoveKey": 108 },
+      { "Level": 25, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 19,
+    "BaseSpeed": 72,
+    "BaseHp": 35,
+    "BaseAttack": 56,
+    "BaseDefense": 35,
+    "Types": ["Normal"],
+    "LearnMovesKey": [101, 102, 107],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 107 },
+      { "Level": 20, "MoveKey": 102 }
+    ]
+  },
+  {
+    "Id": 35,
+    "BaseSpeed": 35,
+    "BaseHp": 70,
+    "BaseAttack": 45,
+    "BaseDefense": 48,
+    "Types": ["Normal"],
+    "LearnMovesKey": [101, 103, 108, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 103 },
+      { "Level": 20, "MoveKey": 108 },
+      { "Level": 28, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 43,
+    "BaseSpeed": 30,
+    "BaseHp": 45,
+    "BaseAttack": 50,
+    "BaseDefense": 55,
+    "Types": ["Grass", "Poison"],
+    "LearnMovesKey": [101, 104, 108, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 104 },
+      { "Level": 18, "MoveKey": 108 },
+      { "Level": 25, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 63,
+    "BaseSpeed": 90,
+    "BaseHp": 25,
+    "BaseAttack": 20,
+    "BaseDefense": 15,
+    "Types": ["Psychic"],
+    "LearnMovesKey": [101, 105, 115],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 105 },
+      { "Level": 20, "MoveKey": 115 }
+    ]
+  },
+  {
+    "Id": 66,
+    "BaseSpeed": 35,
+    "BaseHp": 70,
+    "BaseAttack": 80,
+    "BaseDefense": 50,
+    "Types": ["Fighting"],
+    "LearnMovesKey": [101, 107, 112],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 107 },
+      { "Level": 20, "MoveKey": 112 }
+    ]
+  },
+  {
+    "Id": 92,
+    "BaseSpeed": 80,
+    "BaseHp": 30,
+    "BaseAttack": 35,
+    "BaseDefense": 30,
+    "Types": ["Ghost", "Poison"],
+    "LearnMovesKey": [101, 108, 115, 117],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 12, "MoveKey": 108 },
+      { "Level": 20, "MoveKey": 115 },
+      { "Level": 28, "MoveKey": 117 }
+    ]
+  },
+  {
+    "Id": 129,
+    "BaseSpeed": 80,
+    "BaseHp": 20,
+    "BaseAttack": 10,
+    "BaseDefense": 55,
+    "Types": ["Water"],
+    "LearnMovesKey": [103],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 103 }
+    ]
+  },
+  {
+    "Id": 133,
+    "BaseSpeed": 55,
+    "BaseHp": 55,
+    "BaseAttack": 55,
+    "BaseDefense": 50,
+    "Types": ["Normal"],
+    "LearnMovesKey": [101, 102, 103, 108],
+    "LevelUpAutoMoves": [
+      { "Level": 5, "MoveKey": 101 },
+      { "Level": 10, "MoveKey": 102 },
+      { "Level": 18, "MoveKey": 103 },
+      { "Level": 25, "MoveKey": 108 }
     ]
   }
 ]

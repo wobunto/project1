@@ -6,7 +6,7 @@ namespace MyGame.Pokemons
 {
     public interface IBattlePokemon
     {  
-        string Name {get;}
+        int Id {get;}
         int MaxHp { get; }
         IReadOnlyList<PokemonType> Types {get;}
         IReadOnlyList<MoveRuntime> CurrentMoves {get;}
@@ -15,6 +15,7 @@ namespace MyGame.Pokemons
         int CurrentAttackDamage { get; }
         int CurrentSpeed {get;}
         int CurrentHp {get;}
+        int CurrentDefence {get;}
         bool IsFainted {get;}
         public EffectState CurrentEffectState {get;}
         
@@ -33,7 +34,7 @@ namespace MyGame.Pokemons
 
     public interface IItemTarget
     {
-        string Name {get;}
+        int Id {get;}
         int MaxHp { get; }
 
         bool IsFainted { get; }

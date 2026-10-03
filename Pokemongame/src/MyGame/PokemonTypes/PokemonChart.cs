@@ -12,7 +12,9 @@ namespace MyGame.Types
             // Normal
             PokemonType.Normal.Set(new[]
             {
-                (PokemonType.Stone, 0.5f)
+                (PokemonType.Rock, 0.5f),
+                (PokemonType.Ghost, 0.0f),
+                (PokemonType.Steel, 0.5f)
             });
 
             // Fire
@@ -22,7 +24,10 @@ namespace MyGame.Types
                 (PokemonType.Water, 0.5f),
                 (PokemonType.Grass, 2.0f),
                 (PokemonType.Ice, 2.0f),
-                (PokemonType.Stone, 0.5f)
+                (PokemonType.Bug, 2.0f),
+                (PokemonType.Rock, 0.5f),
+                (PokemonType.Dragon, 0.5f),
+                (PokemonType.Steel, 2.0f)
             });
 
             // Water
@@ -32,19 +37,8 @@ namespace MyGame.Types
                 (PokemonType.Water, 0.5f),
                 (PokemonType.Grass, 0.5f),
                 (PokemonType.Ground, 2.0f),
-                (PokemonType.Stone, 2.0f)
-            });
-
-            // Grass
-            PokemonType.Grass.Set(new[]
-            {
-                (PokemonType.Fire, 0.5f),
-                (PokemonType.Water, 2.0f),
-                (PokemonType.Grass, 0.5f),
-                (PokemonType.Ground, 2.0f),
-                (PokemonType.Wind, 0.5f),
-                (PokemonType.Stone, 2.0f),
-                (PokemonType.Ice, 0.5f)
+                (PokemonType.Rock, 2.0f),
+                (PokemonType.Dragon, 0.5f)
             });
 
             // Electric
@@ -54,36 +48,23 @@ namespace MyGame.Types
                 (PokemonType.Grass, 0.5f),
                 (PokemonType.Electric, 0.5f),
                 (PokemonType.Ground, 0.0f),
-                (PokemonType.Wind, 2.0f)
+                (PokemonType.Flying, 2.0f),
+                (PokemonType.Dragon, 0.5f)
             });
 
-            // Ground
-            PokemonType.Ground.Set(new[]
+            // Grass
+            PokemonType.Grass.Set(new[]
             {
-                (PokemonType.Fire, 2.0f),
+                (PokemonType.Fire, 0.5f),
+                (PokemonType.Water, 2.0f),
                 (PokemonType.Grass, 0.5f),
-                (PokemonType.Electric, 2.0f),
-                (PokemonType.Wind, 0.0f),
-                (PokemonType.Stone, 2.0f),
-                (PokemonType.Ice, 2.0f)
-            });
-
-            // Wind (Flying)
-            PokemonType.Wind.Set(new[]
-            {
-                (PokemonType.Grass, 2.0f),
-                (PokemonType.Electric, 0.5f),
-                (PokemonType.Stone, 0.5f),
-                (PokemonType.Ice, 1.0f)
-            });
-
-            // Stone (Rock)
-            PokemonType.Stone.Set(new[]
-            {
-                (PokemonType.Fire, 2.0f),
-                (PokemonType.Ice, 2.0f),
-                (PokemonType.Wind, 2.0f),
-                (PokemonType.Ground, 0.5f)
+                (PokemonType.Poison, 0.5f),
+                (PokemonType.Ground, 2.0f),
+                (PokemonType.Flying, 0.5f),
+                (PokemonType.Bug, 0.5f),
+                (PokemonType.Rock, 2.0f),
+                (PokemonType.Dragon, 0.5f),
+                (PokemonType.Steel, 0.5f)
             });
 
             // Ice
@@ -92,10 +73,135 @@ namespace MyGame.Types
                 (PokemonType.Fire, 0.5f),
                 (PokemonType.Water, 0.5f),
                 (PokemonType.Grass, 2.0f),
-                (PokemonType.Ground, 2.0f),
-                (PokemonType.Wind, 2.0f),
                 (PokemonType.Ice, 0.5f),
-                (PokemonType.Stone, 1.0f)
+                (PokemonType.Ground, 2.0f),
+                (PokemonType.Flying, 2.0f),
+                (PokemonType.Dragon, 2.0f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Fighting
+            PokemonType.Fighting.Set(new[]
+            {
+                (PokemonType.Normal, 2.0f),
+                (PokemonType.Ice, 2.0f),
+                (PokemonType.Poison, 0.5f),
+                (PokemonType.Flying, 0.5f),
+                (PokemonType.Psychic, 0.5f),
+                (PokemonType.Bug, 0.5f),
+                (PokemonType.Rock, 2.0f),
+                (PokemonType.Ghost, 0.0f),
+                (PokemonType.Dark, 2.0f),
+                (PokemonType.Steel, 2.0f)
+            });
+
+            // Poison
+            PokemonType.Poison.Set(new[]
+            {
+                (PokemonType.Grass, 2.0f),
+                (PokemonType.Poison, 0.5f),
+                (PokemonType.Ground, 0.5f),
+                (PokemonType.Rock, 0.5f),
+                (PokemonType.Ghost, 0.5f),
+                (PokemonType.Steel, 0.0f)
+            });
+
+            // Ground
+            PokemonType.Ground.Set(new[]
+            {
+                (PokemonType.Fire, 2.0f),
+                (PokemonType.Electric, 2.0f),
+                (PokemonType.Grass, 0.5f),
+                (PokemonType.Poison, 2.0f),
+                (PokemonType.Flying, 0.0f),
+                (PokemonType.Bug, 0.5f),
+                (PokemonType.Rock, 2.0f),
+                (PokemonType.Steel, 2.0f)
+            });
+
+            // Flying
+            PokemonType.Flying.Set(new[]
+            {
+                (PokemonType.Electric, 0.5f),
+                (PokemonType.Grass, 2.0f),
+                (PokemonType.Fighting, 2.0f),
+                (PokemonType.Bug, 2.0f),
+                (PokemonType.Rock, 0.5f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Psychic
+            PokemonType.Psychic.Set(new[]
+            {
+                (PokemonType.Fighting, 2.0f),
+                (PokemonType.Poison, 2.0f),
+                (PokemonType.Psychic, 0.5f),
+                (PokemonType.Steel, 0.5f),
+                (PokemonType.Dark, 0.0f)
+            });
+
+            // Bug
+            PokemonType.Bug.Set(new[]
+            {
+                (PokemonType.Fire, 0.5f),
+                (PokemonType.Grass, 2.0f),
+                (PokemonType.Fighting, 0.5f),
+                (PokemonType.Poison, 0.5f),
+                (PokemonType.Flying, 0.5f),
+                (PokemonType.Psychic, 2.0f),
+                (PokemonType.Ghost, 0.5f),
+                (PokemonType.Dark, 2.0f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Rock
+            PokemonType.Rock.Set(new[]
+            {
+                (PokemonType.Fire, 2.0f),
+                (PokemonType.Ice, 2.0f),
+                (PokemonType.Fighting, 0.5f),
+                (PokemonType.Ground, 0.5f),
+                (PokemonType.Flying, 2.0f),
+                (PokemonType.Bug, 2.0f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Ghost
+            PokemonType.Ghost.Set(new[]
+            {
+                (PokemonType.Normal, 0.0f),
+                (PokemonType.Psychic, 2.0f),
+                (PokemonType.Ghost, 2.0f),
+                (PokemonType.Dark, 0.5f)
+            });
+
+            // Dragon
+            PokemonType.Dragon.Set(new[]
+            {
+                (PokemonType.Dragon, 2.0f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Dark
+            PokemonType.Dark.Set(new[]
+            {
+                (PokemonType.Fighting, 0.5f),
+                (PokemonType.Psychic, 2.0f),
+                (PokemonType.Bug, 0.5f),
+                (PokemonType.Ghost, 2.0f),
+                (PokemonType.Dark, 0.5f),
+                (PokemonType.Steel, 0.5f)
+            });
+
+            // Steel
+            PokemonType.Steel.Set(new[]
+            {
+                (PokemonType.Fire, 0.5f),
+                (PokemonType.Water, 0.5f),
+                (PokemonType.Electric, 0.5f),
+                (PokemonType.Ice, 2.0f),
+                (PokemonType.Rock, 2.0f),
+                (PokemonType.Steel, 0.5f)
             });
         }
 
@@ -125,7 +231,7 @@ namespace MyGame.Types
     public static class TypeEffectiveness
     {
         /// <summary>
-        /// 듀얼 타입 방어 상성 누적 계산 (조기 탈출 최적화 포함)
+        /// 듀얼 타입 방어 상성 누적 계산
         /// </summary>
         public static float CalculateTypeMultiplier(
             this PokemonType attackType,
@@ -138,7 +244,7 @@ namespace MyGame.Types
                 float multiplier =
                     attackType.GetTypeMultiplier(defenseTypes[i]);
 
-                // 0배(무효) 상성이 하나라도 있으면 즉시 0 반환
+                // 하나라도 무효면 최종 결과는 0배
                 if (multiplier <= 0f)
                     return 0f;
 

@@ -15,11 +15,8 @@ namespace MyGame.PokemonDatas
             string filePath = "JsonData/PokemonData.json";
 
             if (!File.Exists(filePath))
-            {
-                GameLog.Error("JSON 파일을 찾을 수 없습니다.");
-                return;
-            }
-
+                throw new InvalidOperationException("json PokemonData 파일을 찾을 수 없습니다.");
+       
             string jsonString = File.ReadAllText(filePath);
 
             var options = new JsonSerializerOptions
@@ -36,8 +33,6 @@ namespace MyGame.PokemonDatas
                 {
                     _pokemons[pokemon.Id] = pokemon;
                 }
-
-                 GameLog.Info($"포켓몬 데이터 {_pokemons.Count}개 로드 완료");
             }
         }
 
@@ -47,7 +42,6 @@ namespace MyGame.PokemonDatas
                 return true;
             else 
             {
-                GameLog.Warn($"ID [{key}] 번에 해당하는 포켓몬 데이터가 없습니다.");
                 pokemon = null;
                 return false;
             }

@@ -123,7 +123,7 @@ namespace MyGame.BattleSystems
         
         private void RemovePendingActionsFor(IBattleCommander commander)
         {
-            _actionList.RemoveAll(c => c.TrainerId == commander.Trainer.NameId);
+            _actionList.RemoveAll(c => c.TrainerId == commander.Trainer.NameId); //나중에 포켓몬의 id로 판별 
         }
 
         private void BattleEnd()

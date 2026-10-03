@@ -3,14 +3,14 @@ namespace MyGame.Utilities
     public static class Utility
     {
         /// <summary>
-        /// 1부터 max까지의 정수 중 하나를 동일한 확률로 반환합니다.
+        /// 0부터 max 미만의 정수 중 하나를 동일한 확률로 반환합니다.
         /// </summary>
         public static int RandomIndex(int max)
         {
             if (max <= 0)
                 throw new ArgumentOutOfRangeException(nameof(max));
 
-            return Random.Shared.Next(1, max + 1);
+            return Random.Shared.Next(0, max);
         }
 
         /// <summary>

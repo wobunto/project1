@@ -9,20 +9,20 @@ using MyGame.BattleCommanders;
 
 namespace MyGame.Pokemons
 {  
-    public class PokemonRuntime : IBattlePokemon, IItemTarget //전투 중에 변하는 포켓몬 스탯 
+    public class PokemonRuntime : IBattlePokemon, IItemTarget, IViewPokemon //전투 중에 변하는 포켓몬 스탯 
     {        // 랭크 및 제약이 있는 스탯들의 백킹 필드
         private int _attackStage;
         private int _speedStage;
         private int _level;
         private int _currentHp;
-        private PokemonStatus? _status;               //저림, 수면 등의 상태
+        private PokemonStatus _status;               //저림, 수면 등의 상태
 
         private readonly List<MoveRuntime> _moves = new(MaxMoveSlot);    //기술 리스트
         // --------------------------------------------------
         // [2] 기본 정보 Base Data
         // --------------------------------------------------
         public PokemonData Data {get; private set;}
-        public string Name => Data.Name;
+        public int Id => Data.Id;
         public int Exp {get; private set;}
         public IReadOnlyList<PokemonType> Types => Data.Types;
         public IReadOnlyList<MoveRuntime> CurrentMoves => _moves.AsReadOnly();     
@@ -30,14 +30,14 @@ namespace MyGame.Pokemons
         // --------------------------------------------------
         // [3] 현재 전투 상태 
         // --------------------------------------------------
-        public EffectState CurrentEffectState => _status!.Kind; //저림, 수면 등의 상태
+        public EffectState CurrentEffectState => _status.Kind; //저림, 수면 등의 상태
 
         public bool IsFainted => CurrentHp <= 0;
-
+        
         public int Level 
         {
             get => _level; 
-            private set => _level = Math.Clamp(value, 1, 100);
+            private set => _level = Math.Clamp(value, 1, MaxLevel);
         }
 
         public int CurrentHp
@@ -56,7 +56,12 @@ namespace MyGame.Pokemons
         {
             get => _speedStage; 
             private set => _speedStage = Math.Clamp(value,-6,6);
-        }    
+        }
+
+        public int CurrentDefence
+        {
+            get => Data.BaseDefense;          //나중에 DefenseStage를 추가해서 계산.
+        }
         // --------------------------------------------------
         // [4] 최종 계산 스탯 
         // --------------------------------------------------
@@ -75,7 +80,7 @@ namespace MyGame.Pokemons
                 throw new ArgumentNullException(nameof(data));
             
             Data = data;            
-            _level = level;
+            Level = level;
             CurrentHp = MaxHp;
          
             _status = new PokemonStatus(this);
@@ -144,17 +149,18 @@ namespace MyGame.Pokemons
             SetEffectState(effect);
             return true;
         }
+
         // ==================================================
         // [7] 전투 행동 판정 (Battle Actions & Usability)
         // ==================================================
         public BeforeActionResult CheckBeforeAction()
         {
-            return _status!.OnBeforeAction();    
+            return _status.OnBeforeAction();    
         }
 
         public void OnAfterAction()
         {
-            _status!.OnTurnEnd();
+            _status.OnTurnEnd();
         }
 
         public bool HasAnyUsableMove()
@@ -211,9 +217,6 @@ namespace MyGame.Pokemons
         // ==================================================
         private void SetEffectState(EffectState effect)
         {
-            if(_status == null)
-                throw new InvalidOperationException("현재 포켓몬의 Status가 null입니다.");
-
             _status.ChangeState(effect);
         }
         

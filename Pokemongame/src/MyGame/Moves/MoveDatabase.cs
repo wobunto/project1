@@ -14,7 +14,6 @@ namespace MyGame.Moves
         };
         private static readonly Dictionary<int, MoveData> _moves = new();
         
-        public const int IdStruggle = 999;
         public static IReadOnlyDictionary<int, MoveData> Moves => _moves;
 
         public static void LoadMoveDatabase()
@@ -43,7 +42,7 @@ namespace MyGame.Moves
                 foreach (var move in moveList)
                 {
                     if (!_moves.TryAdd(move.Key, move))
-                        GameLog.Warn($"[MoveDatabase] 중복된 기술 Key가 발견되었습니다! Key: {move.Key}, Name: {move.Name}");
+                        GameLog.Warn($"[MoveDatabase] 중복된 기술 Key가 발견되었습니다! Key: {move.Key}");
                 }
 
                 GameLog.Info($"[MoveDatabase] 총 {_moves.Count}개의 기술 데이터가 성공적으로 로드되었습니다.");

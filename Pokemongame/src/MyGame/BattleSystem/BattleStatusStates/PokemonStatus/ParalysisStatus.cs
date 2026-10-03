@@ -9,7 +9,7 @@ namespace MyGame.BattleStatus
     public ParalysisState(IBattlePokemon pokemon) : base(pokemon) { }
     public override EffectState Kind => EffectState.Paralysis;
     
-    public override BeforeActionResult OnBeforeAction()
+    public override BeforeActionResult OnBeforeAction(PokemonStatus status)
     {
         // 25% 확률로 몸이 저려 행동 불가
         if (Utility.TryChance(25))

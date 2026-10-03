@@ -2,10 +2,10 @@ using MyGame.BattleSystems;
 
 namespace MyGame.Commands
 {
-    public class ExitCommand : IBattleCommand
+    public class ExitCommand : IBattleCommand 
     {
-        public bool IsPlayerCommand {get; }
-        public int TrainerId {get;}
+        public bool IsPlayerCommand {get; }      
+        public int TrainerId {get;}            //도망은 플레이어만 칠 수 있으니 0임.
         public BattlePriority Priority 
         {
             get => BattlePriority.Behavior;

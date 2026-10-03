@@ -14,7 +14,7 @@ namespace MyGame.ControllerStates
         {
             IReadOnlyList<InventoryItem> items = GetValidInventory(context);
 
-            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+            //관찰자에게 알림?
             context.View.DisplayItemMenu(items);
         }
         
@@ -26,15 +26,15 @@ namespace MyGame.ControllerStates
        
             var items = GetValidInventory(context);
 
-            int index = input.Value - 1;
+            int select = input.Value - 1;
 
-            if(!Utility.IsValidIndex(index, items.Count))
+            if(!Utility.IsValidIndex(select, items.Count))
             {
                 context.View.DisplayMessage("아이템의 잘못된 번호를 선택하셨습니다.");
                 return;
             }
             
-            var selectedItem = items[index];
+            var selectedItem = items[select];
             ItemData itemData = selectedItem.Data;
 
             IItemEffect effect = ItemEffectFactory.Create(itemData.Effect);
@@ -63,7 +63,7 @@ namespace MyGame.ControllerStates
         {
             IReadOnlyList<InventoryItem> items = GetValidInventory(context);
             
-            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+                 //관찰자에게 알림?
             context.View.DisplayItemMenu(items);
         }
 

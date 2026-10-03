@@ -19,8 +19,12 @@ namespace MyGame.BattleStatus
         {
             CurrentState = StatusFactory.Create(status, _pokemon);
         }
-        
-        public virtual BeforeActionResult OnBeforeAction() => CurrentState.OnBeforeAction();
+        public void CureState()
+        {
+            ChangeState(EffectState.None);
+        }
+
+        public virtual BeforeActionResult OnBeforeAction() => CurrentState.OnBeforeAction(this);
         public virtual void OnTurnEnd() => CurrentState!.OnTurnEnd();
         
         public virtual float ModifyAttack(float currentAttack) => CurrentState!.ModifyAttack(currentAttack);

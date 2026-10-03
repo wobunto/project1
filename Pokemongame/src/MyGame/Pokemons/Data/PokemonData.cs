@@ -5,14 +5,14 @@ namespace MyGame.PokemonDatas
     public class PokemonData 
     {    // 포켓몬 데이터
         public required int Id {get; init;}
-        public required string Name {get; init; }
         public required int BaseSpeed {get; init; }
         public required int BaseHp {get; init; }
         public required int BaseAttack {get; init; }
+        public required int BaseDefense {get; init; }
 
-        public List<PokemonType> Types {get; init;} = new();
-        public List<int> LearnMovesKey {get; init;} = new();
-        public List<LevelUpMove> LevelUpAutoMoves {get; init;} = new();
+        public List<PokemonType> Types {get;} = new();
+        public List<int> LearnMovesKey {get;} = new();
+        public List<LevelUpMove> LevelUpAutoMoves {get;} = new();
     }
     
     public record struct LevelUpMove(int Level, int MoveKey);

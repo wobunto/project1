@@ -4,7 +4,7 @@ using MyGame.Trainers;
 using MyGame.Types;
 using MyGame.BattleCalculators;
 using MyGame.BattleSystems;
-using MyGame.Logs;
+using MyGame.Utilities;
 
 namespace MyGame.Commands
 {
@@ -40,14 +40,19 @@ namespace MyGame.Commands
 
             if(!result.CanAct)
             {
-                //result.Event 를 이용해서 관찰자에게 보내기/
+                //result.Event 를 이용해서 관찰자에게 보내기.
                 return;
             }  
             
-
             if(!_move.TryConsumePP())
                 throw new InvalidOperationException("attacker의 move pp가 0입니다."); //AttackState에서 pp체크가 안된 상황.
             
+            if(!Utility.TryChance(_move.Data.Accuracy))
+            {
+                //기술 빗나감 관찰자 보내기.
+                return;
+            }
+
             var _defender = _defendTrainer.ActivePokemon;
             
             float typeMultiplier = 
@@ -58,6 +63,8 @@ namespace MyGame.Commands
 
             int damage = BattleCalculator.CalculateDamage(
                         _attacker.CurrentAttackDamage,
+                        _move.Data.Power,
+                        _defender.CurrentDefence,
                         typeMultiplier
                         );
 

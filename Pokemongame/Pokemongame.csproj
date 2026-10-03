@@ -19,6 +19,14 @@
       <None Update="JsonData/ItemData.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>  
+      
+        <None Update="JsonData/PokemonNames.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+
+          <None Update="JsonData/MoveNames.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
 
   </ItemGroup>
 

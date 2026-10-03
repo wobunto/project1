@@ -3,18 +3,7 @@ using MyGame.Utilities;
 namespace MyGame.BattleCalculators
 {
     public static class BattleCalculator
-    {
-        /// <summary>
-        /// 스피드 비교 (스피드가 같으면 50% 확률로 선공 결정)
-        /// </summary>
-        public static bool IsFaster(int speedA, int speedB)
-        {
-            if (speedA == speedB)
-                return Utility.TryChance(50); // 동속일 때 50% 랜덤
-
-            return speedA > speedB;
-        }
-        
+    {    
         public static int CalculateMaxHp(int baseHp, int level)
             => baseHp + (level * 3);
         /// <summary>
@@ -47,16 +36,18 @@ namespace MyGame.BattleCalculators
         /// <summary>
         /// 최종 데미지 계산 (무효 상성 시 0 데미지 보장)
         /// </summary>
-        public static int CalculateDamage(int effectiveAttack, float typeMultiplier)
-        {
-            // 상성 무효(0배)일 때는 데미지가 0
+        public static int CalculateDamage(int effectiveAttack, int movePower, int defense, float typeMultiplier)
+        {          
             if (typeMultiplier <= 0f)
                 return 0;
 
-            int damage = (int)(effectiveAttack * typeMultiplier);
-            
+            defense = Math.Max(1, defense);
+                
+            float damage = (float)effectiveAttack * movePower / defense;
+            int result = (int)(damage * typeMultiplier);
+        
             // 데미지가 들어가는 공격이면 최소 1 보장
-            return Math.Max(1, damage);
+            return Math.Max(1, result);
         }
     }
 }

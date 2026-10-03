@@ -2,6 +2,7 @@ using MyGame.Pokemons;
 using MyGame.Moves;
 using MyGame.Items;
 using MyGame.BattleCommanders;
+using MyGame.NameTables;
 using MyGame.Rules;
 
 namespace MyGame.Views
@@ -9,7 +10,7 @@ namespace MyGame.Views
     public interface IPlayerView
     {
         void DisplayCommandMenu();
-        void DisplayPokemon(IBattlePokemon playerPokemon, IBattlePokemon enemyPokemon);
+        void DisplayPokemon(IViewPokemon playerPokemon, IViewPokemon enemyPokemon);
         void DisplayAttackMenu(IEnumerable<MoveRuntime?> CurrentMoves);
         void DisplayItemMenu(IReadOnlyList<InventoryItem> inventory);
         void DisplayPartyMenu(IEnumerable<PokemonRuntime> party);
@@ -38,17 +39,15 @@ namespace MyGame.Views
 
         public void DisplayStartBattle(IBattleCommander Enemy)
         {
-            Console.Clear();
             DisplayMessage($"{Enemy.NameId}과의 배틀이 시작됐다!");
             Thread.Sleep(2000);
         }
 
-        public void DisplayPokemon(IBattlePokemon playerPokemon, IBattlePokemon enemyPokemon)
+        public void DisplayPokemon(IViewPokemon playerPokemon, IViewPokemon enemyPokemon)
         {
-            Console.Clear();
             DisplayMessage("==============================");
-            DisplayMessage($"{playerPokemon.Name} Level : {playerPokemon.Level}  체력: [{playerPokemon.CurrentHp}/{playerPokemon.MaxHp}]");
-            DisplayMessage($"{enemyPokemon.Name} Level : {enemyPokemon.Level}  체력: [{enemyPokemon.CurrentHp}/{enemyPokemon.MaxHp}]");
+            DisplayMessage($"{NameTable.GetPokemon(playerPokemon.Id)} Level : {playerPokemon.Level}  체력: [{playerPokemon.CurrentHp}/{playerPokemon.MaxHp}]");
+            DisplayMessage($"{NameTable.GetPokemon(enemyPokemon.Id)} Level : {enemyPokemon.Level}  체력: [{enemyPokemon.CurrentHp}/{enemyPokemon.MaxHp}]");
             DisplayMessage("==============================");
         }
 
@@ -100,7 +99,7 @@ namespace MyGame.Views
         
         public void DisplayPartyMenu(IEnumerable<PokemonRuntime> party)
         {
-       
+    
             PokemonRuntime? pokemon1 = party.ElementAtOrDefault(0);
             PokemonRuntime? pokemon2 = party.ElementAtOrDefault(1);
             PokemonRuntime? pokemon3 = party.ElementAtOrDefault(2);
@@ -122,17 +121,17 @@ namespace MyGame.Views
                 return "------"; // 기술이 등록되지 않은 빈 슬롯 표시
             }
 
-            return $"{move.Name} ({move.CurrentPP}/{move.MaxPP})";
+            return $"{MoveNameTable.Get(move.Data.Key)} ({move.CurrentPP}/{move.MaxPP})";
         }
         
-        private string FormatPokemon(PokemonRuntime? pokemon)
+        private string FormatPokemon(IViewPokemon? pokemon)
         {
             if (pokemon == null)
             {
                 return "--없음--"; // 
             }
 
-            return $"{pokemon.Name} ({pokemon.CurrentHp}/{pokemon.MaxHp})";
+            return $"{NameTable.GetPokemon(pokemon.Id)} ({pokemon.CurrentHp}/{pokemon.MaxHp})";
         }
         
     }

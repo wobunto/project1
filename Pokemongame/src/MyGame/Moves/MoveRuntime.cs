@@ -7,8 +7,8 @@ namespace MyGame.Moves
         public MoveData Data { get; private set;}
         public int CurrentPP { get; private set; }
 
-        public PokemonType MoveType { get; init;}
-        public string Name { get; init;}
+        public PokemonType MoveType => Data.Type;
+        public int Id => Data.Key;
         public int MaxPP => Data.BasePP;
 
         public bool HasPP => CurrentPP > 0;
@@ -17,8 +17,6 @@ namespace MyGame.Moves
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
             CurrentPP = data.BasePP;
-            Name = data.Name;
-            MoveType = data.Type;
         }
 
         // PP 소모 (0 밑으로 내려가지 않도록 방어)

@@ -10,13 +10,14 @@ namespace MyGame.BattleStatus
         public FreezeState(IBattlePokemon pokemon) : base(pokemon) { }
         public override EffectState Kind => EffectState.Freeze;
 
-        public override BeforeActionResult OnBeforeAction()
+        public override BeforeActionResult OnBeforeAction(PokemonStatus status)
         {
             _stateTurn++;
             // 4턴째이거나 20% 확률로 해제
             if (_stateTurn > 3 || Utility.TryChance(20))
             {
                 // _pokemon.CureStatus();  포켓몬 상태를 Normal/None으로 변경
+                status.CureState();
                 return BeforeActionResult.Thawed; // "얼음이 녹았다!"
             }
 

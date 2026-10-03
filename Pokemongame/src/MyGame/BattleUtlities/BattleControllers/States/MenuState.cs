@@ -7,7 +7,7 @@ namespace MyGame.ControllerStates
     {
         public override void Enter(IBattleStateContext context)
         {
-            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+                 //관찰자에게 알림?
             context.View.DisplayCommandMenu();
         }
         
@@ -41,7 +41,7 @@ namespace MyGame.ControllerStates
 
         public override void Resume(IBattleStateContext context) 
         {
-            context.View.DisplayPokemon(context.Player.ActivePokemon!, context.Enemy.ActivePokemon!);
+                 //관찰자에게 알림?
             context.View.DisplayCommandMenu();
         }
     }

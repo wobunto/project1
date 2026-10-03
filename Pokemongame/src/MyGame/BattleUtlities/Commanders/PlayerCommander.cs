@@ -2,6 +2,7 @@ using MyGame.Commands;
 using MyGame.BattleControllers;
 using MyGame.Inputs;
 using MyGame.Trainers;
+using System;
 
 namespace MyGame.BattleCommanders
 {
@@ -24,6 +25,8 @@ namespace MyGame.BattleCommanders
         // 1. 일반 명령 선택
         public IBattleCommand SelectCommand()
         {
+             ClearInputBuffer();
+             
             _playerController.ResetState();
             
             WaitUntilTurnFinished();
@@ -54,6 +57,15 @@ namespace MyGame.BattleCommanders
                 }
                 
                 _playerController.HandleInput(input);
+            }
+        }
+
+        private void ClearInputBuffer()
+        {
+            // KeyAvailable이 true인 동안 ReadKey를 호출해 버퍼의 남은 키를 소진
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true); // true를 전달하면 누른 키가 화면에 출력되지 않음
             }
         }
     }

@@ -1,5 +1,6 @@
 using MyGame.Moves;
 using MyGame.PokemonDatas;
+using MyGame.NameTables;
 
 namespace MyGame.Pokemons
 {
@@ -31,7 +32,7 @@ namespace MyGame.Pokemons
                     if (!pokemon.TryAddMove(move!))
                     {
                         throw new InvalidOperationException(
-                            $"포켓몬 {data!.Name}에게 기술 {move!.Name}을 추가할 수 없습니다.");
+                            $"포켓몬 {NameTable.GetPokemon(data!.Id)}에게 기술 {move!.Key}을 추가할 수 없습니다.");
                     }
                 }
             }

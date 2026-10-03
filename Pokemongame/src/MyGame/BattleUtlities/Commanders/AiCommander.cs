@@ -37,7 +37,7 @@ namespace MyGame.BattleCommanders
                         return BattleCommandFactory.CreateStruggleCommand(currentPokemon, _target, _aiTrainer.NameId);
                   
                   int randomindex = Utility.RandomIndex(usableMoves.Count);
-                  var selectMove = usableMoves[randomindex - 1];
+                  var selectMove = usableMoves[randomindex];
 
                   return BattleCommandFactory.CreateAttackCommand(currentPokemon,_target,selectMove, _aiTrainer.NameId);
             }

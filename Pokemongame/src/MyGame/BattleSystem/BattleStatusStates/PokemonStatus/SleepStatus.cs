@@ -15,13 +15,14 @@ namespace MyGame.BattleStatus
         }
         public override EffectState Kind => EffectState.Sleep;
 
-        public override BeforeActionResult OnBeforeAction()
+        public override BeforeActionResult OnBeforeAction(PokemonStatus status)
         {
             _stateTurn++;
 
             if (IsSleep())
                 return BeforeActionResult.Asleep;
 
+            status.CureState();
             return BeforeActionResult.WokeUp;
         }
 

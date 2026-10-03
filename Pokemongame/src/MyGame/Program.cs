@@ -20,10 +20,15 @@ namespace MyGame
             PokemonDatabase.LoadPokemonDatabase();
             MoveDatabase.LoadMoveDatabase();
             ItemDatabase.LoadItemDatabase();
-            PokemonDatabase.LoadPokemonDatabase();
-            MoveDatabase.LoadMoveDatabase();
-            ItemDatabase.LoadItemDatabase();
 
+            StartBattle();
+
+        }
+        
+
+        private static void StartBattle()
+        {
+        
             // ==========================================
             // Trainer
             // ==========================================
@@ -35,9 +40,25 @@ namespace MyGame
             // Player Pokemon
             // ==========================================
 
+            // ==========================================
+            // Player Pokemon
+            // ==========================================
+
+            // 괴력몬
+            var machamp = PokemonFactory.Create(
+                PokemonRules.Machop,
+                50,
+                new[]
+                {
+                    MoveRules.Tackle,
+                    MoveRules.BrickBreak,
+                    MoveRules.Earthquake,
+                    MoveRules.RockSlide
+                });
+
             // 리자몽
-            var rizard = PokemonFactory.Create(
-                6,
+            var charizard = PokemonFactory.Create(
+                PokemonRules.Charizard,
                 50,
                 new[]
                 {
@@ -46,9 +67,10 @@ namespace MyGame
                     MoveRules.ThunderPunch,
                     MoveRules.Fly
                 });
+
             // 피카츄
             var pikachu = PokemonFactory.Create(
-                25,
+                PokemonRules.Pikachu,
                 50,
                 new[]
                 {
@@ -57,9 +79,10 @@ namespace MyGame
                     MoveRules.Thunderbolt,
                     MoveRules.QuickAttack
                 });
+
             // 이상해씨
             var bulbasaur = PokemonFactory.Create(
-                1,
+                PokemonRules.Bulbasaur,
                 50,
                 new[]
                 {
@@ -69,13 +92,14 @@ namespace MyGame
                     MoveRules.MegaDrain
                 });
 
+
             // ==========================================
             // Enemy Pokemon
             // ==========================================
 
             // 라프라스
-            var laflas = PokemonFactory.Create(
-                131,
+            var lapras = PokemonFactory.Create(
+                PokemonRules.Lapras,
                 50,
                 new[]
                 {
@@ -87,19 +111,19 @@ namespace MyGame
 
             // 꼬마돌
             var geodude = PokemonFactory.Create(
-                74,
+                PokemonRules.Geodude,
                 50,
                 new[]
                 {
                     MoveRules.Tackle,
-                    MoveRules.StoneEdge,
                     MoveRules.RockSlide,
-                    MoveRules.Earthquake
+                    MoveRules.Earthquake,
+                    MoveRules.StoneEdge
                 });
 
             // 가디
             var growlithe = PokemonFactory.Create(
-                58,
+                PokemonRules.Growlithe,
                 50,
                 new[]
                 {
@@ -109,39 +133,44 @@ namespace MyGame
                     MoveRules.QuickAttack
                 });
 
+            // 팬텀
+            var gastly = PokemonFactory.Create(
+                PokemonRules.Gastly,
+                50,
+                new[]
+                {
+                    MoveRules.Tackle,
+                    MoveRules.ShadowBall,
+                    MoveRules.PoisonJab,
+                    MoveRules.Psychic
+                });
+
             // ==========================================
             // Party 구성
             // ==========================================
 
-            if (!player.TryAddPokemon(rizard))
-                Console.WriteLine("플레이어 파티에 리자몽을 추가할 수 없습니다.");
-
+            if (!player.TryAddPokemon(machamp))
+                Console.WriteLine("내 포켓몬이 추가가 안됨");
+            if (!player.TryAddPokemon(charizard))
+                Console.WriteLine("내 포켓몬이 추가가 안됨");
             if (!player.TryAddPokemon(pikachu))
-                Console.WriteLine("플레이어 파티에 피카츄를 추가할 수 없습니다.");
-
+                 Console.WriteLine("내 포켓몬이 추가가 안됨");
             if (!player.TryAddPokemon(bulbasaur))
-                Console.WriteLine("플레이어 파티에 이상해씨를 추가할 수 없습니다.");
+                 Console.WriteLine("내 포켓몬이 추가가 안됨");
 
-
-            if (!enemy.TryAddPokemon(laflas))
-                Console.WriteLine("AI 파티에 라프라스를 추가할 수 없습니다.");
-
+            if (!enemy.TryAddPokemon(lapras))
+                Console.WriteLine("적이 포켓몬이 추가가 안됨");
             if (!enemy.TryAddPokemon(geodude))
-                Console.WriteLine("AI 파티에 꼬마돌을 추가할 수 없습니다.");
-
+                 Console.WriteLine("적이 포켓몬이 추가가 안됨");
             if (!enemy.TryAddPokemon(growlithe))
-                Console.WriteLine("AI 파티에 가디를 추가할 수 없습니다.");
-
-
+                 Console.WriteLine("적이 포켓몬이 추가가 안됨");
+            if (!enemy.TryAddPokemon(gastly))
+                 Console.WriteLine("적이 포켓몬이 추가가 안됨");
             // ==========================================
             // Item
             // ==========================================
             player.AddItem(3, 10);
-
-            
-
-
-             // ==========================================
+            // ==========================================
             // Battle
             // ==========================================
             BattleController controller = new(

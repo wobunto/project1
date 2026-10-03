@@ -54,10 +54,7 @@ namespace MyGame.Trainers
             PokemonRuntime pokemon = Party[index];
 
             if(pokemon.IsFainted)
-              {
-                GameLog.Warn("기절한 포켓몬은 전투에 내보낼 수 없습니다.");
                 return false;
-            }
             
             ActivePokemon = pokemon;
             return true;

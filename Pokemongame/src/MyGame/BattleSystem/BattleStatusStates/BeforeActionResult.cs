@@ -5,7 +5,7 @@ namespace MyGame.BattleStatus
         public bool CanAct { get; }
         public StatusEvent Event { get; }
 
-        public BeforeActionResult(bool canAct, StatusEvent statusEvent)
+        private BeforeActionResult(bool canAct, StatusEvent statusEvent)
         {
             CanAct = canAct;
             Event = statusEvent;
