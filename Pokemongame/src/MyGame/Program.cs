@@ -8,6 +8,7 @@ using MyGame.PokemonDatas;
 using MyGame.Moves;
 using MyGame.Rules;
 using MyGame.Items;
+using MyGame.Types;
 namespace MyGame
 {
     class Program{
@@ -20,10 +21,18 @@ namespace MyGame
             PokemonDatabase.LoadPokemonDatabase();
             MoveDatabase.LoadMoveDatabase();
             ItemDatabase.LoadItemDatabase();
-
-            StartBattle();
-
-        }
+        
+        var charizard = PokemonFactory.Create(PokemonRules.Charizard, 
+                                            50, 
+                                            new[] 
+                                            { 
+                                                MoveRules.Tackle, 
+                                                MoveRules.FlameThrower, 
+                                                MoveRules.ThunderPunch, 
+                                                MoveRules.Fly 
+                                            }); 
+        Console.WriteLine($"{charizard.Types.Count}");
+       }
         
 
         private static void StartBattle()

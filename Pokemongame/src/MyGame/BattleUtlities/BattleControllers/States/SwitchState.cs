@@ -12,7 +12,7 @@ namespace MyGame.ControllerStates
             var selectState = new SelectPokemonState(
                 onSelected: (index) =>
                 {
-                    var switchCmd = BattleCommandFactory.CreateSwitchCommand(player, index, context.Player.NameId);
+                    var switchCmd = BattleCommandFactory.CreateSwitchCommand(player, index);
                     context.FinishedTurn(switchCmd);
                 },
                 filter: player.CanSwitch, // 도메인에 위임된 규칙

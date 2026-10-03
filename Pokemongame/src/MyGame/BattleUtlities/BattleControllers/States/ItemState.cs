@@ -46,8 +46,8 @@ namespace MyGame.ControllerStates
 
                     var itemCmd = BattleCommandFactory.CreateUseItemCommand( context.Player, 
                                                                             pokemon,
-                                                                            itemData,
-                                                                            context.Player.NameId);
+                                                                            itemData
+                                                                            );
                     
                     context.FinishedTurn(itemCmd);
                 },

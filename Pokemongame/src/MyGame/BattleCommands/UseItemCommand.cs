@@ -22,14 +22,13 @@ namespace MyGame.Commands
         public UseItemCommand(
             IBattleTrainer trainer,
             IItemTarget pokemon,
-            ItemData item,
-            int  trainerId
+            ItemData item
             )
         {
             _trainer = trainer;
             _pokemon = pokemon;
             _item = item;
-            TrainerId =  trainerId;
+            TrainerId =  _trainer.NameId;
         }
 
         public void Execute()
@@ -41,7 +40,6 @@ namespace MyGame.Commands
             
             effect.Apply(_pokemon, _item.EffectValue);
               
-            }
         }
-    
+    }
 }

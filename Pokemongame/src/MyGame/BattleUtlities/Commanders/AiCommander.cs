@@ -51,7 +51,7 @@ namespace MyGame.BattleCommanders
                         throw new InvalidOperationException("교체 가능한 포켓몬이 없는데 강제 교체가 호출되었습니다.");
                   }
 
-                  return BattleCommandFactory.CreateSwitchCommand(_aiTrainer, nextPokemonIndex, _aiTrainer.NameId);
+                  return BattleCommandFactory.CreateSwitchCommand(_aiTrainer, nextPokemonIndex);
             }     
 
             private int GetNextAlivePokemonIndex()

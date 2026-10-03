@@ -53,26 +53,26 @@ namespace MyGame.Commands
                 return;
             }
 
-            var _defender = _defendTrainer.ActivePokemon;
+            var defender = _defendTrainer.ActivePokemon;
             
             float typeMultiplier = 
                     TypeEffectiveness.CalculateTypeMultiplier(
                     _move.MoveType,
-                    _defender.Types
+                    defender.Types
                     );
 
             int damage = BattleCalculator.CalculateDamage(
                         _attacker.CurrentAttackDamage,
                         _move.Data.Power,
-                        _defender.CurrentDefence,
+                        defender.CurrentDefence,
                         typeMultiplier
                         );
 
-            _defender.TakeDamage(damage);
+            defender.TakeDamage(damage);
 
             BattleLog.LogBattleResult(
                 _attacker,
-                _defender,
+                defender,
                 _move.Data,
                 damage,
                 typeMultiplier

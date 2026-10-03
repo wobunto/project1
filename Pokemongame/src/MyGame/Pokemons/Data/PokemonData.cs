@@ -10,9 +10,9 @@ namespace MyGame.PokemonDatas
         public required int BaseAttack {get; init; }
         public required int BaseDefense {get; init; }
 
-        public List<PokemonType> Types {get;} = new();
-        public List<int> LearnMovesKey {get;} = new();
-        public List<LevelUpMove> LevelUpAutoMoves {get;} = new();
+        public required List<PokemonType> Types {get; init; } 
+        public required List<int> LearnMovesKey {get; init; } 
+        public required List<LevelUpMove> LevelUpAutoMoves {get; init; }
     }
     
     public record struct LevelUpMove(int Level, int MoveKey);

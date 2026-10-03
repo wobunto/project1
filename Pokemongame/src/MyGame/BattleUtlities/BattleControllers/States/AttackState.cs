@@ -24,19 +24,19 @@ namespace MyGame.ControllerStates
 
         public override void HandleInput(IBattleStateContext context, Input input)
         {
-            var _attacker = context.Player.ActivePokemon!;  
-            var _defender = context.Enemy;        
+            var attacker = context.Player.ActivePokemon!;  
+            var defender = context.Enemy;        
             
             if(context.TryBackState(input)) return;
             
             int index = input.Value - 1;
 
-            MoveUsageResult result = _attacker.TryGetUsableMove(index, out var move);
+            MoveUsageResult result = attacker.TryGetUsableMove(index, out var move);
 
             if (result == MoveUsageResult.Success)
             {
             // 성공: 기술이 있고 PP도 있음
-                var attack = BattleCommandFactory.CreateAttackCommand(_attacker,_defender, move!, context.Player.NameId);
+                var attack = BattleCommandFactory.CreateAttackCommand(attacker,defender, move!, context.Player.NameId);
                 context.FinishedTurn(attack);
                 return;
             }  

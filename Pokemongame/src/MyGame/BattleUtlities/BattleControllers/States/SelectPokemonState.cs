@@ -62,7 +62,7 @@ namespace MyGame.ControllerStates
             }
             
             context.PopState();
-            _onSelected?.Invoke(index); // 상위 상태에서 등록한 콜백 실행  
+            _onSelected.Invoke(index); // 상위 상태에서 등록한 콜백 실행  
         }
     }
 }

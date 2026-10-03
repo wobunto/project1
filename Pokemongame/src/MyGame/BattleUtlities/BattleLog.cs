@@ -18,7 +18,8 @@ namespace MyGame.BattleSystems
         public static void LogEffective(float finalMultiplier)
         {
             if(finalMultiplier > 1) GameLog.Info("효과가 굉장했다!");
-            else if(finalMultiplier < 1) GameLog.Info("효과가 별로인 듯하다...");
+            else if(finalMultiplier < 1) GameLog.Info("효과가 별로인 듯하다.");
+            else if(finalMultiplier <= 0) GameLog.Info("효과가 없다.");
         }
 
         public static void LogAttack(this IBattlePokemon attacker, MoveData move) 
@@ -41,9 +42,9 @@ namespace MyGame.BattleSystems
         {
             GameLog.Info("-------------------------------------");
             attacker.LogAttack(move);
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             defender.LogDamage(damage);
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             LogEffective(finalMultiplier);
             GameLog.Info("-------------------------------------");
             Thread.Sleep(3000);

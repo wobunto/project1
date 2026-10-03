@@ -17,12 +17,12 @@ namespace MyGame.Commands
 
          public SwitchCommand(
             IBattleTrainer trainer,
-            int index,
-            int trainerId)
+            int index
+            )
         {
             _trainer = trainer;
             _index = index;
-            TrainerId = trainerId;
+            TrainerId = _trainer.NameId;
         }
          
     
