@@ -1,0 +1,260 @@
+[
+  {
+    "Key": 101,
+    "Type": "Normal",
+    "Power": 40,
+    "Accuracy": 100,
+    "BasePP": 30,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 102,
+    "Type": "Fire",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": ["InflictBurn"],
+    "EffectChance": 10
+  },
+  {
+    "Key": 103,
+    "Type": "Water",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 104,
+    "Type": "Grass",
+    "Power": 120,
+    "Accuracy": 100,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 105,
+    "Type": "Electric",
+    "Power": 75,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": ["InflictParalysis"],
+    "EffectChance": 10
+  },
+  {
+    "Key": 106,
+    "Type": "Flying",
+    "Power": 90,
+    "Accuracy": 95,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 107,
+    "Type": "Rock",
+    "Power": 75,
+    "Accuracy": 90,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 108,
+    "Type": "Fire",
+    "Power": 75,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": ["InflictBurn"],
+    "EffectChance": 10
+  },
+  {
+    "Key": 109,
+    "Type": "Water",
+    "Power": 90,
+    "Accuracy": 90,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 110,
+    "Type": "Grass",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 111,
+    "Type": "Electric",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": ["InflictParalysis"],
+    "EffectChance": 10
+  },
+  {
+    "Key": 112,
+    "Type": "Ground",
+    "Power": 100,
+    "Accuracy": 100,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 113,
+    "Type": "Rock",
+    "Power": 75,
+    "Accuracy": 90,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 114,
+    "Type": "Flying",
+    "Power": 75,
+    "Accuracy": 95,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 115,
+    "Type": "Ice",
+    "Power": 75,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 116,
+    "Type": "Grass",
+    "Power": 40,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 117,
+    "Type": "Normal",
+    "Power": 40,
+    "Accuracy": 100,
+    "BasePP": 30,
+    "Priority": "ForceFirst",
+    "Effects": []
+  },
+  {
+    "Key": 118,
+    "Type": "Fighting",
+    "Power": 75,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 119,
+    "Type": "Poison",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": ["InflictPoison"],
+    "EffectChance": 30
+  },
+  {
+    "Key": 120,
+    "Type": "Psychic",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 121,
+    "Type": "Bug",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 122,
+    "Type": "Ghost",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 123,
+    "Type": "Dragon",
+    "Power": 90,
+    "Accuracy": 100,
+    "BasePP": 10,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 124,
+    "Type": "Dark",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 125,
+    "Type": "Steel",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 126,
+    "Type": "Poison",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 20,
+    "Priority": "Speed",
+    "Effects": ["InflictPoison"],
+    "EffectChance": 30
+  },
+  {
+    "Key": 127,
+    "Type": "Dragon",
+    "Power": 80,
+    "Accuracy": 100,
+    "BasePP": 15,
+    "Priority": "Speed",
+    "Effects": []
+  },
+  {
+    "Key": 999,
+    "Type": "Normal",
+    "Power": 50,
+    "Accuracy": 100,
+    "BasePP": 999,
+    "Priority": "Speed",
+    "Effects": []
+  }
+]

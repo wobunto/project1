@@ -1,0 +1,232 @@
+@page "/battle"
+@using MyGame.Services
+@using MyGame.BattleCommanders
+@using MyGame.BattleControllers
+@using MyGame.BattleSystems
+@using MyGame.ControllerStates
+@using MyGame.Inputs
+@using MyGame.Items
+@using MyGame.Moves
+@using MyGame.NameTables
+@using MyGame.Pokemons
+@using MyGame.Trainers
+@using MyGame.Views
+@inject BattleGameService GameService
+
+@rendermode InteractiveServer
+@implements IDisposable
+
+<!-- 1. 로딩 상태 체크: 초기화 전에는 UI를 렌더링하지 않음 -->
+@if (!GameService.IsInitialized || Controller == null)
+{
+    <div class="loading-box">
+        <p>배틀 데이터를 불러오는 중...</p>
+    </div>
+}
+else
+{
+    <div class="console-screen">
+        <!-- 1. 포켓몬 상태창 (상대 & 플레이어) -->
+        <div class="box pokemon-status">
+            <div class="box-title">================ BATTLE ================</div>
+            <div class="status-row">
+                <span class="label">[상대]</span> 
+                <span>@FormatPokemon(Controller.Enemy.ActivePokemon)</span>
+                <div class="hp-bar-bg">
+                    <div class="hp-bar-fill" style="width: @GetHpPercent(Controller.Enemy.ActivePokemon)%"></div>
+                </div>
+            </div>
+            <div class="status-row">
+                <span class="label">[나]  </span> 
+                <span>@FormatPokemon(Controller.Player.ActivePokemon)</span>
+                <div class="hp-bar-bg">
+                    <div class="hp-bar-fill" style="width: @GetHpPercent(Controller.Player.ActivePokemon)%"></div>
+                </div>
+            </div>
+            <div class="box-title">========================================</div>
+        </div>
+
+        <!-- 2. 메시지 / 안내창 -->
+        <div class="box message-box">
+            <p>@CurrentMessage</p>
+            @if (Controller.CurrentState is not MenuState)
+            {
+                <small class="back-hint">
+                    @(Controller.ForceSwitch ? "현재 교체를 해야 합니다." : "돌아가기: [뒤로 가기] 클릭")
+                </small>
+            }
+        </div>
+
+        <!-- 3. 메뉴 및 커맨드 창 -->
+        <div class="box action-box">
+            @switch (Controller.CurrentState)
+            {
+                case MenuState:
+                    <!-- 메인 메뉴 -->
+                    <div class="grid-2x2">
+                        <button class="cmd-btn" @onclick="() => SendInput(1)">1. 싸운다</button>
+                        <button class="cmd-btn" @onclick="() => SendInput(2)">2. 가방</button>
+                        <button class="cmd-btn" @onclick="() => SendInput(3)">3. 교체</button>
+                        <button class="cmd-btn" @onclick="() => SendInput(4)">4. 도망친다</button>
+                    </div>
+                    break;
+
+                case AttackState:
+                    <!-- 기술 선택 -->
+                    <div class="grid-2x2">
+                        @for (int i = 0; i < 4; i++)
+                        {
+                            int index = i + 1;
+                            var move = GetMoveAt(i);
+                            <button class="cmd-btn" @onclick="() => SendInput(index)" disabled="@(move == null || move.CurrentPP <= 0)">
+                                @index. @FormatMove(move)
+                            </button>
+                        }
+                    </div>
+                    <button class="back-btn" @onclick="SendCancel">돌아가기</button>
+                    break;
+
+                case ItemState itemState:
+                    <!-- 아이템 선택 -->
+                    <div class="item-list">
+                        @if (itemState.Items.Count == 0)
+                        {
+                            <div class="empty-msg">가방이 비어 있습니다.</div>
+                        }
+                        else
+                        {
+                            @for (int i = 0; i < itemState.Items.Count; i++)
+                            {
+                                int index = i + 1;
+                                var item = itemState.Items[i];
+                                <button class="list-btn" @onclick="() => SendInput(index)">
+                                    @index. [ @item.Data.Name x @item.Count ]
+                                </button>
+                            }
+                        }
+                    </div>
+                    <button class="back-btn" @onclick="SendCancel">돌아가기</button>
+                    break;
+
+                /* 교체 및 아이템 사용 대상 선택 공통 화면 */
+                case SelectPokemonState selectState:
+                    <div class="grid-2x3">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            int index = i + 1;
+                            var member = GetPartyMemberAt(i);
+                            bool canSelect = member != null && selectState.Filter(member);
+
+                            <button class="cmd-btn" @onclick="() => SendInput(index)" disabled="@(!canSelect)">
+                                @index. @FormatPokemon(member)
+                            </button>
+                        }
+                    </div>
+                    @if (selectState.CanCancel)
+                    {
+                        <button class="back-btn" @onclick="SendCancel">돌아가기</button>
+                    }
+                    break;
+
+                default:
+                    <div class="loading">행동 진행 중...</div>
+                    break;
+            }
+        </div>
+    </div>
+}
+
+@code {
+    // 1. Controller 프로퍼티를 GameService와 안전하게 연결
+    private BattleController? Controller => GameService.Controller;
+    private string CurrentMessage = "무엇을 할까?";
+
+    private IEnumerable<PokemonRuntime> _playerParty => Controller?.Player.Party ?? Enumerable.Empty<PokemonRuntime>();
+    private IEnumerable<MoveRuntime?> _currentMoves => Controller?.Player.ActivePokemon?.CurrentMoves ?? Enumerable.Empty<MoveRuntime?>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 화면에 메시지를 띄워줄 브릿지 View 생성
+        var bridgeView = new BlazorBattleView(msg =>
+        {
+            CurrentMessage = msg;
+            InvokeAsync(StateHasChanged);
+        });
+
+        // 배틀 세팅 및 시작 (비동기)
+        if (!GameService.IsInitialized)
+        {
+            _ = GameService.StartNewBattleAsync(view: bridgeView);
+        }
+
+        // 컨트롤러 상태 변경 시 화면 갱신 이벤트 등록
+        if (Controller != null)
+        {
+            Controller.OnStateChanged += HandleStateChanged;
+        }
+    }
+
+    private void HandleStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    // --- 마우스 입력 처리 ---
+    private void SendInput(int val)
+    {
+        // 프로젝트에 정의된 방식에 맞춰 호출 (Input.Number(val) 또는 new Input(val))
+        Controller?.HandleInput(Input.Number(val));
+    }
+
+    private void SendCancel()
+    {
+        Controller?.TryBackState(Input.Cancel);
+    }
+
+    // --- 포맷팅 함수 ---
+    private string FormatPokemon(IViewPokemon? p)
+    {
+        if (p == null) return "--없음--";
+        return $"{NameTable.GetPokemon(p.Id)} Lv.{p.Level} [{p.CurrentHp}/{p.MaxHp}]";
+    }
+
+    private string FormatMove(MoveRuntime? move)
+    {
+        if (move == null) return "------";
+        return $"{MoveNameTable.Get(move.Data.Key)} ({move.CurrentPP}/{move.MaxPP})";
+    }
+
+    private MoveRuntime? GetMoveAt(int index) => _currentMoves.ElementAtOrDefault(index);
+    private PokemonRuntime? GetPartyMemberAt(int index) => _playerParty.ElementAtOrDefault(index);
+
+    private int GetHpPercent(IViewPokemon? p)
+    {
+        if (p == null || p.MaxHp <= 0) return 0;
+        return Math.Clamp((int)((float)p.CurrentHp / p.MaxHp * 100), 0, 100);
+    }
+
+    public void Dispose()
+    {
+        if (Controller != null)
+        {
+            Controller.OnStateChanged -= HandleStateChanged;
+        }
+    }
+
+    // 배틀 시스템의 콘솔 메시지를 Blazor 화면의 CurrentMessage로 연결해주는 간이 View
+    private class BlazorBattleView : IPlayerView
+    {
+        private readonly Action<string> _onMessage;
+        public BlazorBattleView(Action<string> onMessage) => _onMessage = onMessage;
+
+        public void DisplayMessage(string message) => _onMessage(message);
+        public void DisplayBackInfo() { }
+        public void DisplayCantBack() => _onMessage("지금은 돌아갈 수 없습니다.");
+        public void DisplayStartBattle(IBattleCommander enemy) => _onMessage($"{enemy.NameId}과의 배틀이 시작됐다!");
+        public void DisplayPokemon(IViewPokemon p1, IViewPokemon p2) { }
+        public void DisplayCommandMenu() { }
+        public void DisplayAttackMenu(IEnumerable<MoveRuntime?> moves) { }
+        public void DisplayItemMenu(IReadOnlyList<InventoryItem> items) { }
+        public void DisplayPartyMenu(IEnumerable<PokemonRuntime> party) { }
+    }
+}

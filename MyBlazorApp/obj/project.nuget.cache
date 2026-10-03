@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "XEMiN+Kff1M=",
+  "success": true,
+  "projectFilePath": "/workspaces/project1/MyBlazorApp/MyBlazorApp.csproj",
+  "expectedPackageFiles": [
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.4/microsoft.aspnetcore.app.internal.assets.10.0.4.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.webassembly/10.0.12/microsoft.aspnetcore.components.webassembly.10.0.12.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.jsinterop.webassembly/10.0.12/microsoft.jsinterop.webassembly.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
