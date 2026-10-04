@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "05UIxR7t9lQ=",
+  "dgSpecHash": "mL6CeQbqE5A=",
   "success": true,
   "projectFilePath": "/workspaces/project1/Pokemongame/Pokemongame.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.components.webassembly/10.0.12/microsoft.aspnetcore.components.webassembly.10.0.12.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.jsinterop.webassembly/10.0.12/microsoft.jsinterop.webassembly.10.0.12.nupkg.sha512"
+  ],
   "logs": []
 }
