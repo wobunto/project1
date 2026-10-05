@@ -140,35 +140,75 @@ else
     // 1. Controller 프로퍼티를 GameService와 안전하게 연결
     private BattleController? Controller => GameService.Controller;
     private string CurrentMessage = "무엇을 할까?";
+    private bool _isDisposed = false;
 
-    private IEnumerable<PokemonRuntime> _playerParty => Controller?.Player.Party ?? Enumerable.Empty<PokemonRuntime>();
-    private IEnumerable<MoveRuntime?> _currentMoves => Controller?.Player.ActivePokemon?.CurrentMoves ?? Enumerable.Empty<MoveRuntime?>();
+    private IEnumerable<PokemonRuntime> _playerParty => Controller?.Player.Party ?? 
+                                                        Enumerable.Empty<PokemonRuntime>();
+    private IEnumerable<MoveRuntime?> _currentMoves => Controller?.Player.ActivePokemon?.CurrentMoves ?? 
+                                                        Enumerable.Empty<MoveRuntime?>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // 화면에 메시지를 띄워줄 브릿지 View 생성
-        var bridgeView = new BlazorBattleView(msg =>
+        if (firstRender)
         {
-            CurrentMessage = msg;
-            InvokeAsync(StateHasChanged);
-        });
+            var bridgeView = new BlazorBattleView(msg =>
+            {
+                if (!_isDisposed)
+                {
+                    CurrentMessage = msg;
+                    InvokeAsync(StateHasChanged);
+                }
+            });
 
-        // 배틀 세팅 및 시작 (비동기)
-        if (!GameService.IsInitialized)
+            // 배틀 초기화 및 시작
+            if (!GameService.IsInitialized)
+            {
+                // 백그라운드로 배틀 루프를 실행하되, 초기화 후 안전하게 이벤트를 연결
+                _ = RunBattleBackgroundAsync(bridgeView);
+            }
+            else
+            {
+                SubscribeEvents();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+    }
+
+    private async Task RunBattleBackgroundAsync(IPlayerView bridgeView)
+    {
+        // 💡 2. StartNewBattleAsync를 실행
+        // (만약 Service 내부에 Initialize와 RunLoop가 분리되어 있다면 Controller 생성 직후 바로 구독하는 것이 가장 이상적입니다)
+        var battleTask = GameService.StartNewBattleAsync(view: bridgeView);
+
+        // Controller가 준비될 때까지 잠시 대기 (컨트롤러 인스턴스 확보)
+        while (Controller == null && !GameService.IsInitialized)
         {
-            _ = GameService.StartNewBattleAsync(view: bridgeView);
+            await Task.Delay(50);
         }
 
-        // 컨트롤러 상태 변경 시 화면 갱신 이벤트 등록
+        // 💡 3. Controller가 준비된 직후 이벤트 구독 및 첫 화면 렌더링 강제 갱신!
+        SubscribeEvents();
+        await InvokeAsync(StateHasChanged);
+
+        // 배틀 루프 완료 대기
+        await battleTask;
+    }
+
+    private void SubscribeEvents()
+    {
         if (Controller != null)
         {
+            Controller.OnStateChanged -= HandleStateChanged; // 중복 구독 방지
             Controller.OnStateChanged += HandleStateChanged;
         }
     }
 
     private void HandleStateChanged()
     {
-        InvokeAsync(StateHasChanged);
+        if (!_isDisposed)
+        {
+            InvokeAsync(StateHasChanged);
+        }
     }
 
     // --- 마우스 입력 처리 ---
@@ -197,6 +237,7 @@ else
     }
 
     private MoveRuntime? GetMoveAt(int index) => _currentMoves.ElementAtOrDefault(index);
+
     private PokemonRuntime? GetPartyMemberAt(int index) => _playerParty.ElementAtOrDefault(index);
 
     private int GetHpPercent(IViewPokemon? p)
@@ -207,6 +248,8 @@ else
 
     public void Dispose()
     {
+        _isDisposed = true;
+
         if (Controller != null)
         {
             Controller.OnStateChanged -= HandleStateChanged;
@@ -230,3 +273,140 @@ else
         public void DisplayPartyMenu(IEnumerable<PokemonRuntime> party) { }
     }
 }
+
+<style>
+    /* 레트로 콘솔/터미널 스타일 테마 */
+    .console-screen {
+        font-family: 'Consolas', 'Courier New', monospace;
+        background-color: #121212;
+        color: #f0f0f0;
+        padding: 20px;
+        width: 520px;
+        margin: 20px auto;
+        border: 4px solid #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        outline: none; /* 포커스 아웃라인 제거 */
+        user-select: none;
+    }
+
+    .box {
+        background-color: #1a1a1a;
+        border: 2px solid #444;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .box-title {
+        color: #777;
+        text-align: center;
+        margin: 4px 0;
+        font-size: 13px;
+    }
+
+    /* 포켓몬 체력창 */
+    .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 6px 0;
+        font-size: 14px;
+    }
+
+    .label {
+        font-weight: bold;
+        color: #ffd700;
+        margin-right: 6px;
+    }
+
+    .hp-bar-bg {
+        width: 100px;
+        height: 8px;
+        background: #333;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-left: 10px;
+    }
+
+    .hp-bar-fill {
+        height: 100%;
+        background: #00e676;
+        transition: width 0.3s ease;
+    }
+
+    /* 메시지 창 */
+    .message-box {
+        min-height: 50px;
+        font-size: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .back-hint {
+        color: #888;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    /* 2열 2행 (커맨드/기술) */
+    .grid-2x2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    /* 2열 3행 (포켓몬 파티 목록) */
+    .grid-2x3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    /* 버튼 스타일 */
+    .cmd-btn, .list-btn, .back-btn {
+        font-family: inherit;
+        background-color: #262626;
+        color: #fff;
+        border: 1px solid #555;
+        padding: 10px;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+    .cmd-btn:hover:not(:disabled), .list-btn:hover:not(:disabled) {
+        background-color: #383838;
+        border-color: #ffd700;
+        color: #ffd700;
+    }
+
+    .cmd-btn:disabled {
+        color: #555;
+        cursor: not-allowed;
+        border-color: #333;
+    }
+
+    .back-btn {
+        width: 100%;
+        margin-top: 8px;
+        background-color: #331515;
+        border-color: #772222;
+        text-align: center;
+    }
+
+    .back-btn:hover {
+        background-color: #551a1a;
+    }
+
+    /* 가방 아이템 목록 */
+    .item-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 140px;
+        overflow-y: auto;
+    }
+</style>
