@@ -9,18 +9,6 @@ namespace MyGame.BattleSystems
 {
     public static class BattleLog
     {
-        public static void LogCurrentStat(
-            PokemonRuntime playerPokemon,
-            PokemonRuntime enemyPokemon)
-        {
-            GameLog.Info(
-                $"내 {NameTable.GetPokemon(playerPokemon!.Id)}의 현재 상태 " +
-                $"[Lv.{playerPokemon.Level} hp: {playerPokemon.CurrentHp}/{playerPokemon.MaxHp}]");
-
-            GameLog.Info(
-                $"상대 {NameTable.GetPokemon(enemyPokemon!.Id)}의 현재 상태 " +
-                $"[Lv.{enemyPokemon.Level} hp: {enemyPokemon.CurrentHp}/{enemyPokemon.MaxHp}]");
-        }
 
         public static string LogEffective(float finalMultiplier)
         {
@@ -34,6 +22,35 @@ namespace MyGame.BattleSystems
                 return "효과가 없다...";
 
             return "";
+        }
+
+        public static string LogBeforeAction(int id, StatusEvent status)
+        {
+            string name = NameTable.GetPokemon(id);
+
+            switch (status)
+            {
+                case StatusEvent.Thawed:
+                    return $"{name}의 얼음이 녹았다.";
+
+                case StatusEvent.WokeUp:
+                    return $"{name}이 깨어났다.";
+
+                case StatusEvent.Frozen:
+                    return $"{name}은 얼어서 움직일 수 없다.";
+
+                case StatusEvent.Paralyzed:
+                    return $"{name}은 마비되어 움직일 수 없다.";
+
+                case StatusEvent.Asleep:
+                    return $"{name}은 잠들어 있어서 움직일 수 없다.";
+
+                case StatusEvent.None:
+                    return string.Empty;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
         }
 
         public static string LogAttack(

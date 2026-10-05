@@ -7,6 +7,7 @@ using MyGame.BattleCalculators;
 using MyGame.BattleSystems;
 using MyGame.Utilities;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 
 namespace MyGame.Commands
 {
@@ -39,11 +40,23 @@ namespace MyGame.Commands
         {
             if(_defendTrainer.ActivePokemon == null) 
                 return ["상대 포켓몬이 없습니다."];
-            
+
+            var messages = new List<string>();
+
             var result = _attacker.CheckBeforeAction();
-            if(!result.CanAct)
-                return [$"{_attacker}은 행동할 수 없다."];
+
+            var statusMessage = BattleLog.LogBeforeAction(_attacker.Id, result.Event);
             
+            if (!string.IsNullOrEmpty(statusMessage))
+            {
+                messages.Add(statusMessage);
+            }
+
+            if (!result.CanAct)
+            {
+                return messages;
+            }
+      
             if(!_move.TryConsumePP())
                 throw new InvalidOperationException("attacker의 move pp가 0입니다."); //AttackState에서 pp체크가 안된 상황.
             
@@ -64,33 +77,34 @@ namespace MyGame.Commands
                     _move.Data.Power,
                     defender.CurrentDefence,
                     typeMultiplier
-                        );
+                );
 
             defender.TakeDamage(damage);
 
             //상태 이상 
-            var effectMessages = new List<string>();
+             var battleMessages = BattleLog.LogBattleResult(
+                _attacker,
+                defender,
+                _move.Data,
+                damage,
+                typeMultiplier,
+                []
+            );
+            messages.AddRange(battleMessages);
+
             var chance =_move.Data.EffectChance;
 
             foreach(var effect in _move.moveEffect)
             {
                 if(Utility.TryChance(chance))
                 {
-                   effectMessages.Add(HandleEffect(effect));
+                   messages.Add(HandleEffect(effect));
                 }
             }
-     
-            return BattleLog.LogBattleResult(
-                    _attacker,
-                    defender,
-                    _move.Data,
-                    damage,
-                    typeMultiplier,
-                    effectMessages
-                    );
 
-                //기술 부가 효과 실행
+            return messages;
         }
+
         private string HandleEffect(MoveEffect effect)
         {
             var defender = _defendTrainer.ActivePokemon!;

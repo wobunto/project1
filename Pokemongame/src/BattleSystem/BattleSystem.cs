@@ -160,10 +160,8 @@ namespace MyGame.BattleSystems
             // 1. 커맨드 종류에 따른 사전 연출 (필요 시)
             if (command is SwitchCommand)
             {
-                _battleView?.DisplayMessage("포켓몬을 교체합니다!");
                 await Task.Delay(1000);
             }
-
             // 2. 실제 데이터 연산(데미지 계산, PP 소모, 교체 등)은 기존 void Execute()로 순수하게 실행!
             var messages = command.Execute();
 
@@ -171,7 +169,7 @@ namespace MyGame.BattleSystems
             foreach (var message in messages)
             {
                 _battleView?.DisplayMessage(message);
-                await Task.Delay(1000); 
+                await Task.Delay(800); 
             }
         }
     }
